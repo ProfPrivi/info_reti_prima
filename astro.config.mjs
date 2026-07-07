@@ -8,7 +8,7 @@ export default defineConfig({
     base: '/info_reti_prima', // (ricorda lo slash iniziale!)
     integrations: [
         starlight({
-            title: 'Appunti di Informatica e reti',
+            title: 'Appunti di Informatica e reti per la Prima',
             logo: {
                 src: './src/assets/greppi_net.png',
             },

@@ -1,14 +1,22 @@
 ---
-title: Appunti Classe Prima
-description: Benvenuti nel sito degli appunti di Informatica e Reti.
-template: splash
-hero:
-  tagline: Sito ufficiale degli appunti di Informatica e Reti per la classe prima. Scegli un argomento dal menu per iniziare!
-  image:
-    file: ../../assets/greppi_net.png
-  actions:
-    - text: Vai all'Introduzione
-      link: /intro/
-      icon: right-arrow
-      variant: primary
+title: Informatica e Reti di Comunicazione
+tableOfContents: false
 ---
+import logoGreppi from '../../assets/greppi_net.png';
+
+
+<div style="text-align: center; display: flex; flex-direction: column; align-items: center; margin-top: 2rem;">
+  
+   {/* 1. L'IMMAGINE IN ALTO */}
+  <img src={logoGreppi.src} alt="Logo Villa Greppi" style="max-width: 200px; border-radius: 20px;" />
+
+  {/* 2. IL TESTO IN MEZZO */}
+  <div style="font-size: 1.2rem; text-align: left; line-height: 1.8; max-width: 800px;">
+    Il presente materiale non rappresenta l'unica risorsa dalla quale studiare, si ribadisce:<br/>
+    • l'importanza di prendere appunti a lezione<br/>
+    • consultare il materiale presente su Teams
+  </div>
+  <div style="font-size: 1rem; text-align: rght; line-height: 2; max-width: 800px;">
+    Dispensa a cura del Prof. Privitera
+  </div>
+</div>
