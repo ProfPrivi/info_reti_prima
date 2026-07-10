@@ -22,8 +22,8 @@ export default defineConfig({
                     collapsed: true,                        
                     items: [
                         { label: "1.1 Radici e Turing", link: '/lezione11/' },
-                        // { label: 'Le VLAN e il Tagging', link: '/vlan/' },
-                        // { label: 'Il routing', link: '/routing/' },
+                        { label: '1.2 Comunicazione e Linguaggi', link: '/lezione12/' },
+                        { label: "1.3 Binario ed Evoluzione dell'Hardware", link: '/lezione13/' },
                     ]
                 }, // <-- Virgola importantissima che separa le categorie!
 

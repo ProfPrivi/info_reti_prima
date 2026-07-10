@@ -11,7 +11,7 @@ Il termine nasce negli anni '60 in Francia (dal termine *Informatique*, coniato 
 
 L'informatica non è semplicemente "saper usare un computer". È la scienza che studia **come trattare, organizzare e gestire le informazioni in modo automatico**. Fin dall'antichità, la mente umana si è dimostrata geniale e creativa, ma ha un grande limite: è lenta e si stanca facilmente quando deve fare calcoli ripetitivi e noiosi. Da sempre, l'uomo ha cercato di costruire strumenti che facessero il "lavoro sporco" al posto suo.
 
-### Sviluppo: Dal pallottoliere al sogno dell'automazione
+### Sviluppo
 
 La storia dell'informatica è, di fatto, la storia del nostro tentativo di delegare la fatica mentale a una macchina. Vediamo le tappe fondamentali di questo viaggio.
 

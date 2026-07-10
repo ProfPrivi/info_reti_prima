@@ -1,0 +1,78 @@
+---
+title: 1.3 La Scelta del Binario e l'Evoluzione dell'Hardware
+description: La Scelta del Binario e l'Evoluzione dell'Hardware
+--- 
+
+import Transistor from '/src/components/transistor.astro';
+
+### Introduzione
+
+Nelle lezioni precedenti abbiamo scoperto che il computer comprende solo il **Codice Macchina** (0 e 1) e abbiamo visto che questi numeri rappresentano in realtà due diversi livelli di tensione elettrica. Abbiamo definito il "software" e la logica, ma ora dobbiamo rispondere alla domanda più affascinante di tutte: **come facciamo a intrappolare la logica di Alan Turing dentro dei pezzi di metallo e plastica?**
+
+Se potessimo prendere una potentissima lente di ingrandimento e guardare dentro il processore (la CPU) del vostro smartphone, non troveremmo piccoli ingranaggi che girano. Troveremmo semplicemente **miliardi di microscopici interruttori**. Il computer, nella sua essenza più profonda, non è un "cervello", ma un'immensa e velocissima rete di interruttori che si accendono e si spengono, incanalando l'elettricità per eseguire calcoli matematici.
+
+### Sviluppo
+
+#### 1. L'Interruttore: Il fondamento infallibile del sistema binario
+Pensate all'interruttore della luce della vostra camera. Ha solo due posizioni possibili:
+* **Spento (Circuito Aperto):** I fili sono staccati, la corrente non passa. Questo stato fisico corrisponde allo **0 logico**.
+* **Acceso (Circuito Chiuso):** I fili si toccano, la corrente passa. Questo corrisponde all'**1 logico**.
+
+Ma perché la tecnologia informatica si basa proprio sul "tutto o niente" invece di usare un interruttore a rotella (come il *dimmer*) per rappresentare i numeri da 0 a 9 in base all'intensità della corrente? 
+
+La risposta è l'**affidabilità contro il rumore**.
+Immaginate di essere a un concerto rock molto rumoroso e di dover comunicare con un amico in lontananza. Se provaste a urlare un numero da 1 a 10 usando un volume di voce diverso per ogni numero, il vostro amico si confonderebbe subito a causa della musica. Ma se invece usate una torcia accendendola e spegnendola, il messaggio arriverà perfetto. 
+Nei circuiti elettrici accade lo stesso: la corrente subisce continuamente cali, interferenze e dispersioni. Se il computer dovesse distinguere 10 livelli di tensione sottilissimi, commetterebbe errori in continuazione. Con solo due stati diametralmente opposti (Acceso e Spento), gli errori di calcolo vengono azzerati.
+
+#### 2. L'Evoluzione degli Interruttori: Da Golia a Davide
+Se un computer è fatto di interruttori, la storia dell'hardware è semplicemente la storia di come l'uomo ha cercato di rendere questi interruttori sempre più piccoli, più veloci e meno affamati di energia. Ci sono state tre grandi "ere" tecnologiche:
+
+**A. L'Era Elettromeccanica: I Relè (Anni '30 - '40)**
+I primi calcolatori non erano silenziosi, ma facevano un frastuono assordante. Usavano i **relè**, ovvero interruttori meccanici mossi da una calamita. Quando passava corrente, un'elettrocalamita attirava un braccetto di metallo che, muovendosi fisicamente, andava a sbattere contro un altro contatto per chiudere il circuito (*CLICK!*).
+* **Il problema:** Poiché dovevano muovere pezzi di metallo reali, erano lenti (potevano fare solo circa 50 click al secondo) e si usuravano o si incastravano continuamente.
+* **L'aneddoto storico:** Nel 1947, il gigantesco computer *Harvard Mark II* si bloccò improvvisamente. La geniale informatica Grace Hopper andò a ispezionare i relè e scoprì che una falena (un insetto) era rimasta schiacciata tra i contatti di metallo, impedendo alla corrente di passare. La falena fu incollata sul diario di bordo con la scritta *"Primo caso reale di bug trovato"*. Da quel giorno, ogni errore informatico viene chiamato **Bug** (insetto).
+
+**B. L'Era Elettronica: Le Valvole Termoioniche (Anni '40 - '50)**
+Per eliminare i lenti pezzi di metallo in movimento, gli scienziati iniziarono a usare le **valvole termoioniche**. Sembravano delle normali lampadine di vetro a incandescenza. Al loro interno, nel vuoto assoluto, riuscivano a far passare (1) o bloccare (0) un raggio invisibile di elettroni. Questo permetteva loro di "scattare" alla velocità della luce, migliaia di volte al secondo.
+* **Il problema:** Il primo vero computer della storia, l'ENIAC (1945), usava quasi 18.000 di queste valvole. Occupava una stanza di 160 metri quadrati, consumava l'energia di una piccola città (150 kilowatt) e generava così tanto calore da richiedere giganteschi condizionatori. Inoltre, proprio come le vecchie lampadine, le valvole si fulminavano di continuo: un team di tecnici doveva correre tutto il giorno per i corridoi del computer con dei carrelli pieni di valvole nuove per sostituire quelle bruciate, altrimenti il computer si fermava.
+
+**C. L'Era dello Stato Solido: Il Miracolo del Transistor (Dal 1947 a oggi)**
+La vera rivoluzione dell'informatica avvenne nei Laboratori Bell nel 1947, con l'invenzione del **Transistor**, considerata l'invenzione più importante del XX secolo.
+Il transistor fa esattamente lo stesso lavoro di un relè o di una valvola (blocca o fa passare la corrente per creare 0 e 1), ma è fatto di un piccolo blocco solido di materiale, senza vuoto e senza parti mobili. 
+Di cosa è fatto? Di **Silicio**, un semiconduttore ricavato dalla comune sabbia. I semiconduttori hanno una proprietà magica: normalmente non conducono elettricità (come la plastica), ma se vengono stimolati in un certo modo, diventano conduttori (come il rame).
+
+#### 3. Il Transistor: Il "Rubinetto" Elettronico
+Come funziona un transistor? Non servono formule complesse, basta immaginarlo come un **rubinetto dell'acqua**. Ma attenzione: invece dell'acqua, gestisce l'elettricità, e invece di aprirlo ruotando la manopola con la mano, lo aprite usando un'altra piccola scossa elettrica!
+
+Un transistor ha tre terminali (tre "tubi" di collegamento):
+1. **Collettore:** L'ingresso principale (il tubo dell'acqua che arriva dal muro).
+2. **Emettitore:** L'uscita (il lavandino dove cade l'acqua).
+3. **Base:** La manopola del rubinetto.
+
+Il trucco è tutto nella **Base**. 
+* Se **NON** inviamo corrente alla Base (0 Volt), il rubinetto resta chiuso. La corrente principale non può passare dal Collettore all'Emettitore. Il circuito è aperto: abbiamo uno **0 logico**.
+* Se inviamo una piccolissima corrente alla Base, il rubinetto si apre istantaneamente. La corrente principale fluisce liberamente verso l'Emettitore. Il circuito è chiuso: abbiamo un **1 logico**.
+
+Essendo realizzati scolpendo al microscopio dei minuscoli cristalli di silicio, i transistor possono essere rimpiccioliti a dismisura. Oggi, nel processore del vostro smartphone non ci sono 18.000 ingombranti valvole come nell'ENIAC, ma ci sono **miliardi di transistor invisibili a occhio nudo**, capaci di accendersi e spegnersi miliardi di volte al secondo senza mai generare troppo calore e senza mai rompersi. È questo il vero segreto della potenza della tecnologia moderna.
+
+---
+
+<Transistor />
+
+### Sintesi
+
+* **Il Binario contro il rumore:** Usare solo due stati fisici (Acceso/Spento) garantisce l'assoluta affidabilità. Nessuna interferenza elettrica può trasformare un segnale chiaramente acceso in uno spento.
+* **I Relè:** I primi interruttori dei computer erano elettromeccanici. Muovevano pezzi di metallo reali, risultando lenti, rumorosi e soggetti a usura (da qui nasce il termine "Bug" a causa di un insetto incastrato).
+* **Le Valvole Termoioniche:** Molto più veloci dei relè perché spostavano elettroni nel vuoto, ma enormi, affamate di energia e caldissime (si bruciavano come vecchie lampadine).
+* **Il Transistor:** L'invenzione a "stato solido" in Silicio che ha permesso l'informatica moderna. Si comporta come un rubinetto elettronico in cui una piccolissima corrente (nella Base) apre o chiude un flusso più grande (tra Collettore ed Emettitore). 
+
+---
+
+### Glossario
+
+* **Semiconduttore:** Materiale (come il Silicio) che ha caratteristiche intermedie tra un conduttore e un isolante, la cui conduttività può essere controllata artificialmente.
+* **Stato Solido:** Tecnologia elettronica che non utilizza parti meccaniche in movimento né fragili tubi a vuoto di vetro.
+* **Relè:** Dispositivo elettromeccanico rumoroso e lento in cui un elettromagnete muove fisicamente un contatto di metallo per chiudere un circuito.
+* **Valvola Termoionica:** Antico componente elettronico in vetro che controlla il flusso di elettroni nel vuoto; veloce ma ingombrante e molto fragile.
+* **Transistor:** Componente elettronico a stato solido a base di Silicio. Funge da interruttore rapidissimo ed è il "mattoncino" fondamentale di tutti i computer odierni.
+* **Bug:** Termine inglese (insetto) usato universalmente per indicare un errore o un malfunzionamento in un sistema informatico, nato da un guasto meccanico causato da una vera falena.

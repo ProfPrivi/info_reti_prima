@@ -1,0 +1,119 @@
+<div style="font-family: system-ui, -apple-system, sans-serif; background: #f8fafc; padding: 24px; border-radius: 16px; border: 1px solid #e2e8f0; max-width: 800px; margin: 0 auto; color: #1e293b; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+  
+  <div style="text-align: center; margin-bottom: 24px;">
+    <h3 style="margin: 0 0 8px 0; font-size: 24px; color: #0f172a;">Simulatore: Il Transistor (Rubinetto Elettronico)</h3>
+    <p style="margin: 0 0 16px 0; font-size: 15px; color: #64748b;">Premi l'interruttore per applicare tensione alla Base.</p>
+    
+    <button id="mainSwitch" style="background: #ef4444; color: white; border: none; padding: 12px 32px; font-size: 18px; font-weight: bold; border-radius: 8px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 12px rgba(239,68,68,0.3);">
+      BASE: SPENTA (0 Volt)
+    </button>
+  </div>
+
+  <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+    
+    <div style="flex: 1; min-width: 300px; background: white; padding: 20px; border-radius: 12px; border: 1px solid #cbd5e1; text-align: center; display: flex; flex-direction: column; align-items: center;">
+      <h4 style="margin-top: 0; margin-bottom: 20px; color: #3b82f6; font-size: 20px;">Vista Idraulica</h4>
+      
+      <div style="display: flex; align-items: center; justify-content: center; height: 220px; width: 100%;">
+        <div style="text-align: right; margin-right: 15px;">
+          <div style="font-size: 14px; font-weight: bold; color: #64748b;">Manopola<br>(Base)</div>
+          <div style="width: 40px; height: 16px; background: #94a3b8; margin-top: 8px; margin-left: auto; position: relative; border-radius: 4px;">
+            <div id="valveBlocker" style="position: absolute; right: -25px; top: -12px; width: 30px; height: 40px; background: #475569; border-radius: 4px; transition: transform 0.4s ease-in-out;"></div>
+          </div>
+        </div>
+        
+        <div style="width: 60px; height: 100%; background: #e2e8f0; border-radius: 8px; border: 2px solid #94a3b8; position: relative; overflow: hidden; flex-shrink: 0;">
+          <div style="position: absolute; top: 0; width: 100%; height: 50%; background: #3b82f6;"></div>
+          <div id="waterFlow" style="position: absolute; top: 50%; width: 100%; height: 0%; background: #3b82f6; transition: height 0.4s ease-in-out;">
+            <div style="width: 100%; height: 200%; background: repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(255,255,255,0.3) 10px, rgba(255,255,255,0.3) 20px); animation: flowDown 1s linear infinite;"></div>
+          </div>
+        </div>
+      </div>
+      
+      <p id="hydroStatus" style="font-weight: bold; color: #ef4444; margin-top: 20px; font-size: 16px;">Acqua bloccata</p>
+    </div>
+
+    <div style="flex: 1; min-width: 300px; background: white; padding: 20px; border-radius: 12px; border: 1px solid #cbd5e1; text-align: center; display: flex; flex-direction: column; align-items: center;">
+      <h4 style="margin-top: 0; margin-bottom: 10px; color: #eab308; font-size: 20px;">Vista Circuito</h4>
+      
+      <div id="lightbulb" style="font-size: 45px; filter: grayscale(100%); transition: all 0.3s; margin-bottom: -15px; z-index: 2;">
+        💡
+      </div>
+
+      <svg width="220" height="220" viewBox="0 0 200 200" style="max-width: 100%;">
+        <path d="M 100 0 L 100 50" stroke="#94a3b8" stroke-width="4" fill="none" />
+        <path d="M 100 150 L 100 200" stroke="#94a3b8" stroke-width="4" fill="none" />
+        <path d="M 10 100 L 60 100" stroke="#94a3b8" stroke-width="4" fill="none" />
+        
+        <path id="electronFlow" d="M 100 0 L 100 50 M 100 150 L 100 200" stroke="#eab308" stroke-width="4" fill="none" stroke-dasharray="8,8" opacity="0" style="animation: dash 0.5s linear infinite;" />
+
+        <circle cx="100" cy="100" r="45" stroke="#1e293b" stroke-width="4" fill="white" />
+
+        <line x1="70" y1="75" x2="70" y2="125" stroke="#1e293b" stroke-width="6" /> <line x1="60" y1="100" x2="70" y2="100" stroke="#1e293b" stroke-width="4" /> <line x1="70" y1="90" x2="100" y2="50" stroke="#1e293b" stroke-width="4" /> <line x1="70" y1="110" x2="100" y2="150" stroke="#1e293b" stroke-width="4" /> <polygon points="100,150 88,140 95,133" fill="#1e293b" />
+
+        <text x="110" y="40" font-size="14" font-family="sans-serif" font-weight="bold" fill="#334155">Collettore</text>
+        <text x="110" y="170" font-size="14" font-family="sans-serif" font-weight="bold" fill="#334155">Emettitore</text>
+        <text x="10" y="90" font-size="14" font-family="sans-serif" font-weight="bold" fill="#334155">Base</text>
+      </svg>
+
+      <p id="circuitStatus" style="font-weight: bold; color: #ef4444; margin-top: 10px; font-size: 16px;">Stato Logico: 0 (Aperto)</p>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  @keyframes flowDown {
+    0% { transform: translateY(-50%); }
+    100% { transform: translateY(0); }
+  }
+  @keyframes dash {
+    to { stroke-dashoffset: -16; }
+  }
+</style>
+
+<script>
+  const mainSwitch = document.getElementById('mainSwitch');
+  const waterFlow = document.getElementById('waterFlow');
+  const valveBlocker = document.getElementById('valveBlocker');
+  const hydroStatus = document.getElementById('hydroStatus');
+  const electronFlow = document.getElementById('electronFlow');
+  const lightbulb = document.getElementById('lightbulb');
+  const circuitStatus = document.getElementById('circuitStatus');
+  
+  let isOn = false;
+
+  mainSwitch.addEventListener('click', () => {
+    isOn = !isOn;
+    
+    if (isOn) {
+      mainSwitch.textContent = "BASE: ACCESA (5 Volt)";
+      mainSwitch.style.background = "#22c55e";
+      mainSwitch.style.boxShadow = "0 4px 12px rgba(34,197,94,0.3)";
+      
+      waterFlow.style.height = "50%";
+      valveBlocker.style.transform = "translateX(35px)";
+      hydroStatus.textContent = "Acqua in scorrimento!";
+      hydroStatus.style.color = "#3b82f6";
+      
+      electronFlow.style.opacity = "1";
+      lightbulb.style.filter = "grayscale(0%) drop-shadow(0 0 20px #eab308)";
+      circuitStatus.textContent = "Stato Logico: 1 (Chiuso)";
+      circuitStatus.style.color = "#22c55e";
+    } else {
+      mainSwitch.textContent = "BASE: SPENTA (0 Volt)";
+      mainSwitch.style.background = "#ef4444";
+      mainSwitch.style.boxShadow = "0 4px 12px rgba(239,68,68,0.3)";
+      
+      waterFlow.style.height = "0%";
+      valveBlocker.style.transform = "translateX(0px)";
+      hydroStatus.textContent = "Acqua bloccata";
+      hydroStatus.style.color = "#ef4444";
+      
+      electronFlow.style.opacity = "0";
+      lightbulb.style.filter = "grayscale(100%)";
+      circuitStatus.textContent = "Stato Logico: 0 (Aperto)";
+      circuitStatus.style.color = "#ef4444";
+    }
+  });
+</script>
