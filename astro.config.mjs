@@ -18,10 +18,10 @@ export default defineConfig({
             sidebar: [
                 // --- PRIMA CATEGORIA ---
                 {
-                    label: 'Prima',                     
+                    label: 'Architettura & OS',                     
                     collapsed: true,                        
                     items: [
-                        { label: 'Introduzione', link: '/Intro/' },
+                        { label: "Radici e Turing", link: '/lezione1/' },
                         // { label: 'Le VLAN e il Tagging', link: '/vlan/' },
                         // { label: 'Il routing', link: '/routing/' },
                     ]
