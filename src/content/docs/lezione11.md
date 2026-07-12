@@ -84,12 +84,12 @@ Il modello di Von Neumann standardizza la costruzione di un computer dividendolo
     *   *Bus degli Indirizzi (Address Bus):* Trasporta l'indirizzo esatto della cella di memoria in cui si trova il dato da prendere o dove bisogna salvarlo (equivale al "numero dello scaffale" in cui il cameriere deve cercare). È **unidirezionale**: parte sempre dalla CPU verso la Memoria o le periferiche (è sempre il cuoco a dire dove cercare).
     *   *Bus di Controllo (Control Bus):* Trasporta gli ordini, i permessi e i segnali di temporizzazione. Dice alla Memoria *cosa* fare in quel momento preciso, ad esempio "Leggi" (prendi un dato) oppure "Scrivi" (salva un dato). Coordina l'intero traffico per evitare incidenti tra i dati in transito.
 
----
-
 <figure>
   <img src="/info_reti_prima/immagini/neumann.jpg" alt="neumann" width="50%" />
   <figcaption><em>Figura 5: Architettura di Von Neumann</em></figcaption>
 </figure>
+
+---
 
 ### Sintesi
 
