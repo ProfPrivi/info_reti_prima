@@ -153,6 +153,6 @@ In una frazione di millesimo di secondo, la corrente elettrica attraversa questa
 *   **Rete Logica:** Un complesso sistema elettronico formato da un insieme di porte logiche interconnesse tra loro tramite piste conduttrici. L'uscita di una rete dipende dalla combinazione dei segnali in ingresso e dal modo in cui le porte sono cablate.
 *   **XOR (eXclusive OR):** Operatore logico (e relativa porta hardware) che esegue una disgiunzione esclusiva: restituisce Vero (1) solo quando gli ingressi hanno valori opposti.
 
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #1a60db; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
   🖨️ Stampa / Salva in PDF
 </button>

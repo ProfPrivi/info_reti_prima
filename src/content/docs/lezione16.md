@@ -87,6 +87,6 @@ Questo avvicendamento avviene migliaia di volte al secondo. È così sbalorditiv
 *   **Processo:** Un programma in fase di esecuzione. È un'entità dinamica, caricata all'interno della memoria centrale (RAM) e gestita attivamente dal sistema operativo.
 *   **Scheduler:** Il modulo "pianificatore" del sistema operativo. Stabilisce rigorosamente l'ordine, le priorità e i tempi infinitesimali con cui i diversi processi attivi in RAM possono accedere alla CPU (creando il Multitasking).
 
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #1a60db; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
   🖨️ Stampa / Salva in PDF
 </button>
