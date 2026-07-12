@@ -119,3 +119,7 @@ Il modello di Von Neumann standardizza la costruzione di un computer dividendolo
 *   **Bus di Controllo (Control Bus):** Insieme di linee che trasportano i segnali di comando (es. lettura, scrittura) e sincronizzazione tra le varie componenti.
 *   **Hardware:** L'insieme delle componenti fisiche, elettroniche e materiali di un computer.
 *   **Software:** L'insieme delle istruzioni, delle regole e dei programmi che indicano all'hardware quali operazioni eseguire.
+
+<button onclick="window.print()" style="padding: 10px 15px; background-color: #1a60db; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+  🖨️ Stampa / Salva in PDF
+</button>

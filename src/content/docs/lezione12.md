@@ -93,3 +93,7 @@ Se scriviamo in Python, la CPU continua a non capirci nulla. Serve un software "
 * **Livello Logico:** Rappresentazione astratta (0 o 1) di una specifica gamma di tensione elettrica all'interno di un circuito digitale.
 * **Linguaggio di Alto Livello:** Linguaggio di programmazione con forte astrazione dai dettagli del computer, che impiega una sintassi simile al linguaggio umano.
 * **Compilatore / Interprete:** Programmi fondamentali che agiscono da "traduttori", convertendo il codice sorgente scritto dall'uomo in codice macchina eseguibile.
+
+<button onclick="window.print()" style="padding: 10px 15px; background-color: #1a60db; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
+  🖨️ Stampa / Salva in PDF
+</button>
