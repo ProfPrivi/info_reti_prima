@@ -1,0 +1,200 @@
+---
+title: 1.4 Rappresentazione dell'Informazione e Conversioni
+description: Rappresentazione dell'Informazione e Conversioni
+--- 
+
+### Introduzione
+
+Nelle lezioni precedenti abbiamo scoperto il "perché" il computer utilizza esclusivamente i valori 0 e 1: è una necessità fisica legata agli interruttori e ai livelli di tensione elettrica (acceso/spento). Ora, però, sorge una domanda fondamentale: **come facciamo a rappresentare tutta la complessità del nostro mondo usando solo due simboli?** 
+
+Come può un computer memorizzare il numero 25, una lettera dell'alfabeto, l'emoji di un razzo spaziale o una fotografia a milioni di colori, se il suo unico vocabolario è composto da 0 e 1? In questa lezione scopriremo la scienza della **codifica**: le convenzioni matematiche e logiche che ci permettono di trasformare l'intero universo in lunghissime sequenze di bit.
+
+---
+
+### Sviluppo
+
+#### 1. Bit, Byte e il Sistema Posizionale
+Prima di tradurre il mondo, dobbiamo definire le unità di misura del nostro "linguaggio macchina":
+*   **Bit (Binary Digit):** È l'atomo dell'informazione, la più piccola unità gestibile. Vale 0 oppure 1. Un singolo bit da solo serve a poco.
+*   **Byte:** È un raggruppamento standard di esattamente **8 bit**. Con 8 bit, calcolando tutte le combinazioni possibili (2 elevato alla 8), possiamo rappresentare esattamente 256 informazioni diverse (da 0 a 255). Il Byte è l'unità di misura base della memoria (da cui derivano Kilobyte, Megabyte, Gigabyte).
+
+Noi esseri umani utilizziamo il **Sistema Decimale (Base 10)** perché, storicamente, abbiamo iniziato a contare con le dieci dita delle mani. È un sistema *posizionale*: il valore di una cifra cambia a seconda della sua posizione (unità, decine, centinaia, ovvero le potenze di 10).
+Il computer utilizza il **Sistema Binario (Base 2)**. Anch'esso è posizionale, ma usa solo due cifre (0 e 1) e le posizioni valgono le potenze di 2: 1, 2, 4, 8, 16, 32, 64, 128, ecc.
+
+#### 2. Conversioni tra Basi (2, 10 e 16)
+
+**A. Da Decimale a Binario (Come legge il computer)**
+Per insegnare al computer un nostro numero decimale, dobbiamo tradurlo in binario usando il **metodo delle divisioni successive**. Si divide il numero per 2 e si annota il resto, finché il risultato della divisione non arriva a 0.
+Esempio: Convertiamo il numero 13 in binario.
+
+*   13 / 2 = 6 **(resto 1)** ← *Ultima cifra a destra (LSB)*
+*   6 / 2 = 3 **(resto 0)**
+*   3 / 2 = 1 **(resto 1)**
+*   1 / 2 = 0 **(resto 1)** ← *Prima cifra a sinistra (MSB)*
+
+Leggendo i resti dal basso verso l'alto, otteniamo il numero binario: **1101**.
+
+**B. Da Binario a Decimale (Come leggiamo noi)**
+Per capire un numero binario, sommiamo i "pesi" (le potenze di 2) ovunque sia presente un 1, ignorando gli 0.
+Esempio: Convertiamo 1011 in decimale.
+Assegniamo le potenze partendo da destra (1, 2, 4, 8):
+
+*   (1 * 8) + (0 * 4) + (1 * 2) + (1 * 1) = 8 + 0 + 2 + 1 = **11**
+
+**C. Il Sistema Esadecimale (Base 16)**
+I programmatori umani fanno molta fatica a leggere stringhe chilometriche come `1101111110100010`. Per comprimere visivamente questi dati senza perderne la natura logica, si usa il sistema Esadecimale. Poiché 16 è uguale a 2 elevato alla 4, **un singolo carattere esadecimale rappresenta esattamente 4 bit**. 
+Usa 16 simboli: da 0 a 9 e poi le lettere da A a F (dove A=10, B=11, C=12, D=13, E=14, F=15).
+
+*   **Trucco della conversione:** Dividiamo `10110110` a metà in `1011` e `0110`. 
+    * `1011` in decimale vale 11, che in esadecimale è **B**.
+    * `0110` in decimale vale **6**.
+    * La stringa si legge semplicemente come **B6**. Molto più comodo!
+
+#### 3. La Rappresentazione del Testo (I Caratteri)
+Il processore sa solo fare calcoli matematici. Come facciamo a salvare una parola come "CIAO"? Abbiamo dovuto inventare un "vocabolario numerico", un accordo in cui a ogni lettera corrisponde uno specifico numero. Questa convenzione si è evoluta in tre fasi storiche:
+
+*   **1. Codice ASCII (7 bit):** Negli anni '60, i pionieri dell'informatica in America crearono l'American Standard Code for Information Interchange. Usando 7 bit, forniva 128 combinazioni. Erano sufficienti per l'alfabeto inglese (senza accenti), i numeri, la punteggiatura e i comandi per le telescriventi (come "vai a capo"). In ASCII, la lettera maiuscola "A" equivale al decimale 65 (in binario `1000001`).
+*   **2. ASCII Esteso (8 bit):** Quando i computer arrivarono in Europa, c'era un problema: mancavano le lettere accentate (è, à, ù) e simboli locali come la £. Aggiungendo un ottavo bit (arrivando a un Byte intero), si passò a 256 combinazioni. Tuttavia, i russi usavano quei nuovi spazi per il cirillico, i greci per l'alfabeto greco. Un documento salvato a Roma risultava illeggibile se aperto a Mosca.
+*   **3. Unicode e UTF-8 (Fino a 32 bit):** L'arrivo di Internet rese inaccettabile la frammentazione. Nel 1991 nacque Unicode, uno standard globale monumentale. Usando fino a 4 Byte per carattere, Unicode può rappresentare oltre 4 miliardi di combinazioni. Contiene tutti gli alfabeti del mondo (inclusi Kanji giapponesi, geroglifici egizi) e, ovviamente, tutte le **Emoji**. Quando mandate l'emoji della pizza, state inviando il codice Unicode `U+1F355`, che ogni telefono del mondo sa tradurre in pixel.
+
+#### 4. La Rappresentazione delle Immagini: Bitmap vs Vettoriale
+Anche fotografie e disegni devono essere digitalizzati (tradotti in bit). Esistono due grandi filosofie per farlo:
+
+**A. Le Immagini Bitmap (o Raster)**
+Immaginate una fittissima zanzariera. Ogni singolo quadratino della rete è chiamato **Pixel** (Picture Element). Il computer memorizza la foto partendo dal primo pixel in alto a sinistra e salvandone il colore esatto, poi passa al secondo, e così via per milioni di pixel. 
+Il colore di un pixel è gestito dal sistema **RGB** (Red, Green, Blue). A ogni colore primario viene assegnato 1 Byte (valori da 0 a 255). Mescolando questi valori (256 * 256 * 256 = 16.777.216), un singolo pixel può assumere quasi 17 milioni di sfumature diverse.
+*   **Il Difetto:** Se ingrandite troppo l'immagine (zoom), i pixel si allargano e iniziano a vedersi i singoli quadratini. L'immagine "sgrana" (Aliasing). I file possono diventare molto pesanti.
+
+**B. Le Immagini Vettoriali**
+In questo metodo, il computer non salva alcun quadretto. Salva invece **equazioni geometriche matematiche** su un piano cartesiano. 
+Invece di avere mille pixel neri per disegnare un cerchio, il file contiene una formula logica: *"Disegna una circonferenza di raggio R con centro nel punto X,Y e riempila di rosso"*.
+*   **Il Vantaggio:** Essendo pura matematica, potete ingrandire un'immagine vettoriale fino alle dimensioni di un grattacielo: il computer ricalcolerà la curva all'infinito e l'immagine sarà sempre perfetta e nitidissima, occupando pochissimo spazio in memoria.
+
+**Tabella di Confronto Rapida**
+
+| Caratteristica | Metodo Bitmap (Raster) | Metodo Vettoriale |
+| :--- | :--- | :--- |
+| **Come è composta** | Mappatura di singoli Pixel | Formule geometriche e vettori |
+| **Effetto dello Zoom** | Perdita di qualità (Sgranatura) | Qualità infinita (Perfetta) |
+| **Uso ideale** | Fotografie, dipinti digitali | Loghi, font testuali, schemi tecnici |
+| **Formati comuni** | JPEG, PNG, GIF, BMP | SVG, EPS, AI, PDF vettoriali |
+
+---
+
+### Esercizi Interattivi
+*Usa un foglio di carta per fare i calcoli, poi clicca sulla riga per scoprire il risultato e la spiegazione.*
+
+#### 1. Da Binario a Decimale (Base 2 ➔ Base 10)
+
+<details>
+  <summary><strong>Esercizio 1.1:</strong> Quanto vale in decimale il numero binario <code>1010</code>?</summary>
+  <br />
+  <strong>Risultato: 10</strong>
+  <br /><em>Spiegazione:</em> Applicando le potenze di 2 da destra (1, 2, 4, 8): (1 x 8) + (0 x 4) + (1 x 2) + (0 x 1) = 8 + 2 = 10.
+</details>
+
+<details>
+  <summary><strong>Esercizio 1.2:</strong> Quanto vale in decimale il numero binario <code>10011</code>?</summary>
+  <br />
+  <strong>Risultato: 19</strong>
+  <br /><em>Spiegazione:</em> Le potenze da destra sono 1, 2, 4, 8, 16. Quindi: (1 x 16) + (0 x 8) + (0 x 4) + (1 x 2) + (1 x 1) = 16 + 2 + 1 = 19.
+</details>
+
+#### 2. Da Decimale a Binario (Base 10 ➔ Base 2)
+
+<details>
+  <summary><strong>Esercizio 2.1:</strong> Traduci il numero decimale <code>14</code> in binario.</summary>
+  <br />
+  <strong>Risultato: 1110</strong>
+  <br /><em>Spiegazione:</em> Divisioni successive per 2: 14 / 2 = 7 (Resto 0); 7 / 2 = 3 (Resto 1); 3 / 2 = 1 (Resto 1); 1 / 2 = 0 (Resto 1). Leggendo i resti dal basso verso l'alto: 1110.
+</details>
+
+<details>
+  <summary><strong>Esercizio 2.2:</strong> Traduci il numero decimale <code>25</code> in binario.</summary>
+  <br />
+  <strong>Risultato: 11001</strong>
+  <br /><em>Spiegazione:</em> 25 / 2 = 12 (Resto 1); 12 / 2 = 6 (Resto 0); 6 / 2 = 3 (Resto 0); 3 / 2 = 1 (Resto 1); 1 / 2 = 0 (Resto 1). Letti dal basso: 11001.
+</details>
+
+#### 3. Da Binario a Esadecimale (Base 2 ➔ Base 16)
+
+<details>
+  <summary><strong>Esercizio 3.1:</strong> Converti il numero binario <code>11010101</code> in Esadecimale.</summary>
+  <br />
+  <strong>Risultato: D5</strong>
+  <br /><em>Spiegazione:</em> Dividiamo in gruppi di quattro bit: <code>1101</code> e <code>0101</code>. Il primo gruppo (1101) vale 13, ovvero la lettera <strong>D</strong>. Il secondo (0101) vale <strong>5</strong>. Unendoli otteniamo D5.
+</details>
+
+<details>
+  <summary><strong>Esercizio 3.2:</strong> Converti il numero binario <code>101011</code> in Esadecimale.</summary>
+  <br />
+  <strong>Risultato: 2B</strong>
+  <br /><em>Spiegazione:</em> Dato che i bit sono sei, aggiungiamo due zeri a sinistra per fare gruppi da 4: <code>0010</code> e <code>1011</code>. Il primo gruppo vale <strong>2</strong>. Il secondo vale 11, ovvero <strong>B</strong>. Risultato: 2B.
+</details>
+
+#### 4. Da Esadecimale a Binario (Base 16 ➔ Base 2)
+
+<details>
+  <summary><strong>Esercizio 4.1:</strong> Converti il valore esadecimale <code>A3</code> in Binario.</summary>
+  <br />
+  <strong>Risultato: 10100011</strong>
+  <br /><em>Spiegazione:</em> Si traduce ogni singola cifra in 4 bit esatti. <strong>A</strong> (10) diventa <code>1010</code>. <strong>3</strong> diventa <code>0011</code>. Unendoli si ottiene 10100011.
+</details>
+
+<details>
+  <summary><strong>Esercizio 4.2:</strong> Converti il valore esadecimale <code>1F</code> in Binario.</summary>
+  <br />
+  <strong>Risultato: 00011111 (o semplicemente 11111)</strong>
+  <br /><em>Spiegazione:</em> <strong>1</strong> diventa <code>0001</code>. <strong>F</strong> (15) diventa <code>1111</code>. Risultato: 00011111.
+</details>
+
+#### 5. Da Decimale a Esadecimale (Base 10 ➔ Base 16)
+
+<details>
+  <summary><strong>Esercizio 5.1:</strong> Converti il decimale <code>45</code> in Esadecimale.</summary>
+  <br />
+  <strong>Risultato: 2D</strong>
+  <br /><em>Spiegazione:</em> Si divide per 16. 45 / 16 = 2 con il resto di 13. Il resto 13 corrisponde alla lettera <strong>D</strong>. L'ultimo quoziente è <strong>2</strong>. Letti al contrario: 2D.
+</details>
+
+<details>
+  <summary><strong>Esercizio 5.2:</strong> Converti il decimale <code>255</code> in Esadecimale.</summary>
+  <br />
+  <strong>Risultato: FF</strong>
+  <br /><em>Spiegazione:</em> 255 / 16 = 15 con il resto di 15. Il quoziente 15 è <strong>F</strong>, e il resto 15 è anch'esso <strong>F</strong>. Risultato: FF (il massimo valore di un Byte).
+</details>
+
+#### 6. Da Esadecimale a Decimale (Base 16 ➔ Base 10)
+
+<details>
+  <summary><strong>Esercizio 6.1:</strong> Quanto vale in decimale la stringa esadecimale <code>2A</code>?</summary>
+  <br />
+  <strong>Risultato: 42</strong>
+  <br /><em>Spiegazione:</em> Si moltiplica ogni cifra per le potenze di 16 (da destra a sinistra). <strong>A</strong> (10) moltiplicato per 1 = 10. <strong>2</strong> moltiplicato per 16 = 32. Sommiamo: 32 + 10 = 42.
+</details>
+
+<details>
+  <summary><strong>Esercizio 6.2:</strong> Quanto vale in decimale la stringa esadecimale <code>C4</code>?</summary>
+  <br />
+  <strong>Risultato: 196</strong>
+  <br /><em>Spiegazione:</em> <strong>4</strong> moltiplicato per 1 = 4. La lettera <strong>C</strong> (12) moltiplicata per 16 = 192. Sommiamo: 192 + 4 = 196.
+</details>
+
+---
+
+### Sintesi
+
+*   **La base di tutto:** Il computer lavora in Base 2 (binario) per questioni fisiche legate all'hardware. Le conversioni matematiche permettono di passare dalla Base 10 umana alla Base 2.
+*   **Base 16 (Esadecimale):** Viene usata dai programmatori per "comprimere" la lettura del binario. Ogni cifra esadecimale riassume magicamente 4 bit esatti.
+*   **Testo (ASCII e Unicode):** Si è partiti assegnando numeri a 128 caratteri inglesi (ASCII a 7 bit), per poi arrivare a creare un catalogo mondiale di oltre 140.000 caratteri (Unicode), in grado di contenere tutte le lingue umane e i simboli visivi (emoji).
+*   **Immagini (Raster e Vettoriale):** Le immagini Bitmap scompongono la realtà in una griglia di punti colorati (Pixel) fondati sulla sintesi RGB. Le immagini Vettoriali descrivono le forme tramite equazioni matematiche per garantire la scalabilità all'infinito senza perdita di qualità.
+
+---
+
+### Glossario
+
+*   **Pixel (Picture Element):** Il più piccolo punto luminoso, indipendente e colorabile, che compone un'immagine raster o uno schermo digitale.
+*   **Modello RGB:** Acronimo di Red, Green, Blue (Rosso, Verde, Blu). Sistema additivo per la codifica dei colori sui display luminosi, in cui ogni canale colore occupa 1 Byte.
+*   **Codice ASCII:** American Standard Code for Information Interchange. Storico protocollo a 7 bit che mappa 128 caratteri di base in valori numerici binari.
+*   **Unicode:** Standard informatico internazionale volto alla codifica universale dei caratteri usati per la scrittura di testi, indipendente dalla lingua, dalla piattaforma e dal programma.
+*   **Aliasing (Sgranatura):** Difetto visivo tipico delle immagini Bitmap che si manifesta come una "seghettatura" a blocchi quadrati quando l'immagine viene ingrandita oltre la sua risoluzione nativa.

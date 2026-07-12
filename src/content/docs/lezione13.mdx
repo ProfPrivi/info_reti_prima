@@ -55,6 +55,32 @@ Il trucco è tutto nella **Base**.
 
 Essendo realizzati scolpendo al microscopio dei minuscoli cristalli di silicio, i transistor possono essere rimpiccioliti a dismisura. Oggi, nel processore del vostro smartphone non ci sono 18.000 ingombranti valvole come nell'ENIAC, ma ci sono **miliardi di transistor invisibili a occhio nudo**, capaci di accendersi e spegnersi miliardi di volte al secondo senza mai generare troppo calore e senza mai rompersi. È questo il vero segreto della potenza della tecnologia moderna.
 
+#### 4. Il Mondo Reale: Analogico vs Digitale
+Tutto ciò che abbiamo visto finora (0, 1, interruttori) appartiene al mondo **Digitale** (dal termine inglese *digit*, cifra/numero). Un sistema digitale lavora a scatti, a gradini, usando valori discreti e finiti. 
+
+Tuttavia, il mondo in cui viviamo è **Analogico**. Un segnale analogico (come la luce, la temperatura o il suono della nostra voce) è continuo, varia in modo fluido nel tempo e può assumere infiniti valori. 
+*   **La Metafora:** Pensate di dover scendere di un piano. Il mondo analogico è uno **scivolo** (si passa per tutti gli infiniti punti di altezza in modo fluido e continuo). Il mondo digitale è una **rampa di scale** (o siete sul gradino 1 o sul gradino 2, non potete fermarvi a mezz'aria).
+*   **L'Esempio visivo:** Un orologio a lancette è analogico (la lancetta scivola coprendo ogni frazione di spazio). Un orologio a numeri che scattano (10:00, 10:01) è digitale.
+
+#### 5. La Digitalizzazione (Campionamento e Linee di Livello)
+Come fa il computer a registrare il suono continuo della vostra voce (analogico) e a salvarlo nel suo hard disk fatto di transistor (digitale)? Deve usare un dispositivo chiamato **ADC** (Analog-to-Digital Converter), che esegue due passaggi fondamentali:
+
+1.  **Campionamento (Asse del Tempo):** Il computer non può registrare tutti gli infiniti istanti di tempo di un suono. Quindi, scatta delle "fotografie" al segnale a intervalli di tempo regolari e rapidissimi. Ogni fotografia è un *campione* (sample).
+2.  **Quantizzazione (Linee di Livello):** Il valore dell'onda sonora "fotografato" potrebbe essere, ad esempio, 4,37549 Volt (con infiniti decimali). Il computer sovrappone al segnale una griglia rigida di **linee di livello** prefissate (i gradini della scala). Il valore analogico viene brutalmente **arrotondato** alla linea di livello più vicina (ad esempio, 4,37549 diventa semplicemente 4). Ora è un numero intero preciso, pronto per essere convertito in codice binario!
+
+#### 6. Il Teorema di Nyquist-Shannon
+Se per convertire il suono scattiamo "fotografie" nel tempo, quante dobbiamo scattarne per non perdere l'informazione? Se ne scattiamo troppe, esauriamo subito la memoria. Se ne scattiamo poche, quando uniremo i puntini otterremo un'onda completamente diversa da quella originale (un difetto distorsivo chiamato *Aliasing*).
+
+Negli anni '20, lo scienziato Harry Nyquist formulò una regola d'oro, il **Teorema del Campionamento**:
+Per poter ricostruire perfettamente un segnale analogico senza distorsioni, la frequenza di campionamento (f<sub>c</sub>) deve essere almeno il doppio della frequenza massima (f<sub>max</sub>) contenuta nel segnale stesso. 
+
+In formula: **f<sub>c</sub> ≥ 2 · f<sub>max</sub>**
+
+**L'esempio perfetto (I CD Audio):** 
+L'orecchio umano riesce a sentire suoni fino a una frequenza massima di **20.000 Hz**. 
+Per registrare un CD musicale perfetto, applicando il Teorema di Nyquist, gli ingegneri del suono devono campionare la musica almeno al doppio di quella frequenza (20.000 moltiplicato per 2 = 40.000). 
+Per questo motivo lo standard mondiale dei CD Audio prevede di registrare la musica scattando esattamente **44.100 campioni al secondo** (44.1 kHz).
+
 ---
 
 <Transistor />
@@ -65,7 +91,9 @@ Essendo realizzati scolpendo al microscopio dei minuscoli cristalli di silicio, 
 * **I Relè:** I primi interruttori dei computer erano elettromeccanici. Muovevano pezzi di metallo reali, risultando lenti, rumorosi e soggetti a usura (da qui nasce il termine "Bug" a causa di un insetto incastrato).
 * **Le Valvole Termoioniche:** Molto più veloci dei relè perché spostavano elettroni nel vuoto, ma enormi, affamate di energia e caldissime (si bruciavano come vecchie lampadine).
 * **Il Transistor:** L'invenzione a "stato solido" in Silicio che ha permesso l'informatica moderna. Si comporta come un rubinetto elettronico in cui una piccolissima corrente (nella Base) apre o chiude un flusso più grande (tra Collettore ed Emettitore). 
-
+* **Analogico vs Digitale:** Il mondo analogico è continuo e infinito (come uno scivolo). Il mondo digitale è discreto e fatto a salti (come le scale).
+* **ADC (Convertitore):** Trasforma la realtà analogica in digitale. Il *Campionamento* fotografa il segnale a intervalli di tempo regolari, mentre la *Quantizzazione* arrotonda i valori continui alle linee di livello binarie prefissate.
+* **Teorema di Nyquist:** Stabilisce che per convertire correttamente un'onda analogica senza distorcerla, la frequenza di campionamento deve essere sempre almeno il doppio della frequenza massima del segnale originale.
 ---
 
 ### Glossario
@@ -76,3 +104,8 @@ Essendo realizzati scolpendo al microscopio dei minuscoli cristalli di silicio, 
 * **Valvola Termoionica:** Antico componente elettronico in vetro che controlla il flusso di elettroni nel vuoto; veloce ma ingombrante e molto fragile.
 * **Transistor:** Componente elettronico a stato solido a base di Silicio. Funge da interruttore rapidissimo ed è il "mattoncino" fondamentale di tutti i computer odierni.
 * **Bug:** Termine inglese (insetto) usato universalmente per indicare un errore o un malfunzionamento in un sistema informatico, nato da un guasto meccanico causato da una vera falena.
+* **Segnale Analogico:** Grandezza fisica che varia in modo continuo nel tempo, potendo assumere un numero infinito di valori.
+* **Segnale Digitale:** Grandezza che può assumere solo un numero limitato e finito di valori discreti.
+* **ADC (Analog-to-Digital Converter):** Circuito elettronico che converte un segnale analogico continuo in una serie di valori numerici digitali.
+* **Campionamento (Sampling):** Processo di misurazione e prelievo di campioni da un segnale continuo a intervalli di tempo regolari.
+* **Quantizzazione:** Processo di arrotondamento del valore campionato alla linea di livello discreta più vicina.

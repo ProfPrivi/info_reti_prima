@@ -81,39 +81,43 @@
   const lightbulb = document.getElementById('lightbulb');
   const circuitStatus = document.getElementById('circuitStatus');
   
-  let isOn = false;
+  if (!mainSwitch || !waterFlow || !valveBlocker || !hydroStatus || !electronFlow || !lightbulb || !circuitStatus) {
+    console.warn('Transistor simulator elements not found.');
+  } else {
+    let isOn = false;
 
-  mainSwitch.addEventListener('click', () => {
-    isOn = !isOn;
-    
-    if (isOn) {
-      mainSwitch.textContent = "BASE: ACCESA (5 Volt)";
-      mainSwitch.style.background = "#22c55e";
-      mainSwitch.style.boxShadow = "0 4px 12px rgba(34,197,94,0.3)";
+    mainSwitch.addEventListener('click', () => {
+      isOn = !isOn;
       
-      waterFlow.style.height = "50%";
-      valveBlocker.style.transform = "translateX(35px)";
-      hydroStatus.textContent = "Acqua in scorrimento!";
-      hydroStatus.style.color = "#3b82f6";
-      
-      electronFlow.style.opacity = "1";
-      lightbulb.style.filter = "grayscale(0%) drop-shadow(0 0 20px #eab308)";
-      circuitStatus.textContent = "Stato Logico: 1 (Chiuso)";
-      circuitStatus.style.color = "#22c55e";
-    } else {
-      mainSwitch.textContent = "BASE: SPENTA (0 Volt)";
-      mainSwitch.style.background = "#ef4444";
-      mainSwitch.style.boxShadow = "0 4px 12px rgba(239,68,68,0.3)";
-      
-      waterFlow.style.height = "0%";
-      valveBlocker.style.transform = "translateX(0px)";
-      hydroStatus.textContent = "Acqua bloccata";
-      hydroStatus.style.color = "#ef4444";
-      
-      electronFlow.style.opacity = "0";
-      lightbulb.style.filter = "grayscale(100%)";
-      circuitStatus.textContent = "Stato Logico: 0 (Aperto)";
-      circuitStatus.style.color = "#ef4444";
-    }
-  });
+      if (isOn) {
+        mainSwitch.textContent = "BASE: ACCESA (5 Volt)";
+        mainSwitch.style.background = "#22c55e";
+        mainSwitch.style.boxShadow = "0 4px 12px rgba(34,197,94,0.3)";
+        
+        waterFlow.style.height = "50%";
+        valveBlocker.style.transform = "translateX(35px)";
+        hydroStatus.textContent = "Acqua in scorrimento!";
+        hydroStatus.style.color = "#3b82f6";
+        
+        electronFlow.style.opacity = "1";
+        lightbulb.style.filter = "grayscale(0%) drop-shadow(0 0 20px #eab308)";
+        circuitStatus.textContent = "Stato Logico: 1 (Chiuso)";
+        circuitStatus.style.color = "#22c55e";
+      } else {
+        mainSwitch.textContent = "BASE: SPENTA (0 Volt)";
+        mainSwitch.style.background = "#ef4444";
+        mainSwitch.style.boxShadow = "0 4px 12px rgba(239,68,68,0.3)";
+        
+        waterFlow.style.height = "0%";
+        valveBlocker.style.transform = "translateX(0px)";
+        hydroStatus.textContent = "Acqua bloccata";
+        hydroStatus.style.color = "#ef4444";
+        
+        electronFlow.style.opacity = "0";
+        lightbulb.style.filter = "grayscale(100%)";
+        circuitStatus.textContent = "Stato Logico: 0 (Aperto)";
+        circuitStatus.style.color = "#ef4444";
+      }
+    });
+  }
 </script>

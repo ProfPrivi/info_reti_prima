@@ -24,6 +24,9 @@ export default defineConfig({
                         { label: "1.1 Radici e Turing", link: '/lezione11/' },
                         { label: '1.2 Comunicazione e Linguaggi', link: '/lezione12/' },
                         { label: "1.3 Binario ed Evoluzione dell'Hardware", link: '/lezione13/' },
+                        { label: "1.4 Rappresentazione dell'Informazione e Conversioni", link: '/lezione14/' },
+                        { label: "1.5 Logica Booleana, Porte e Reti Logiche", link: '/lezione15/' },
+                        { label: "1.6 Sistemi Operativi e File System", link: '/lezione16/' },
                     ]
                 }, // <-- Virgola importantissima che separa le categorie!
 
