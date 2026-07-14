@@ -24,20 +24,31 @@ Agli albori dell'informatica (negli anni '40 e '50), i Sistemi Operativi semplic
 
 Il Sistema Operativo è nato proprio per mettere fine a questa sofferenza. È il Software primario, il primo e più importante programma che si avvia magicamente quando premiamo il tasto di accensione. Il suo scopo storico è stato quello di "democratizzare" il computer: nascondere la complessità dei cavi e dei codici binari, permettendo a chiunque di usare la macchina.
 
-#### 2. L'Arte Magica dell'Astrazione
+#### 2. Il Risveglio della Macchina: Firmware, BIOS e Bootstrap
+Abbiamo detto che il Sistema Operativo si avvia quando premiamo il tasto di accensione. Ma come fa la macchina a sapere cosa fare nei primissimi istanti in cui riceve corrente, se la memoria RAM è completamente vuota e il Sistema Operativo è "addormentato" sul disco fisso? 
+
+Qui entra in gioco il **Firmware**, un particolare tipo di software "scolpito" permanentemente in un chip sulla scheda madre. Nel mondo dei PC, questo firmware è storicamente chiamato **BIOS** (Basic Input-Output System) o, nei computer più moderni, **UEFI**.
+Il processo di accensione si chiama **Bootstrap** (letteralmente "tirarsi su per i lacci degli stivali", per indicare un sistema che si avvia da solo). Funziona in questi passaggi rigorosi:
+1.  **L'Accensione:** Premendo il tasto, la corrente arriva alla CPU. Essendo cieca e senza istruzioni, la CPU va a leggere il chip del BIOS.
+2.  **Il POST (Power-On Self-Test):** Il BIOS esegue un rapido e fondamentale controllo medico dell'hardware: verifica che la RAM, la tastiera e le periferiche di base siano collegate e funzionanti. (Se qualcosa è rotto, sentite i famosi "beep" di allarme del computer).
+3.  **Il Caricamento (Boot):** Superato il controllo, il BIOS cerca sul disco fisso il caricatore del Sistema Operativo (Bootloader). Una volta trovato, prende il nucleo del Sistema Operativo e lo copia finalmente nella memoria RAM. 
+Da questo momento in poi, il BIOS si fa da parte e cede il comando assoluto del computer al Sistema Operativo.
+
+#### 3. L'Arte Magica dell'Astrazione
 La vera superpotenza del Sistema Operativo si chiama **Astrazione**. In informatica, astrarre significa prendere un problema spaventosamente complesso, nasconderne tutti i dettagli difficili sotto il tappeto, e mostrare all'utente solo un'idea semplice, intuitiva e rassicurante.
 
 Facciamo un esempio pratico. Quando voi salvate la fotografia delle vostre vacanze sul "Desktop" del vostro PC, per l'hardware del computer quella foto e quel Desktop non esistono affatto. Fisicamente, ci sono solo milioni di microscopiche cariche magnetiche sparse in disordine su un disco di metallo che gira a seimila giri al minuto. Senza l'astrazione, per riaprire quella foto dovreste dire al computer: *"Vai a leggere i bit dal cilindro 4, traccia 12, settore 8 del disco magnetico"*. Impossibile!
 Invece, il Sistema Operativo astrae questa realtà fisica: crea un'illusione psicologica per l'utente, disegnando sullo schermo l'icona colorata di un "Fascicolo" o di una "Cartella". L'utente clicca sulla cartella e il Sistema Operativo si fa carico di tutto il lavoro sporco di recuperare le cariche magnetiche. L'astrazione rende la tecnologia a misura d'uomo.
 
-#### 3. L'Anatomia a "Cipolla" del Sistema Operativo
+#### 4. L'Anatomia a "Cipolla" del Sistema Operativo
 Per capire come funziona questo traduttore, possiamo immaginare il Sistema Operativo come una grossa cipolla formata da tre strati concentrici. Per arrivare al cuore fisico della macchina (l'Hardware), un comando dato dall'utente deve attraversare questi tre livelli di traduzione:
 
 *   **A. Il Kernel (Il Nocciolo - Lo strato più profondo):** È il nucleo segreto e blindato del Sistema Operativo. È l'unico software che ha il permesso assoluto di "parlare" direttamente con l'Hardware fisico (interagendo con la CPU, la RAM e le periferiche tramite dei mini-programmi chiamati Driver). È un'area di massima sicurezza: nessun utente o programma normale (come un videogioco) può toccare l'Hardware in modo diretto. Se un programma vuole usare la scheda video o salvare un dato, deve fare una "richiesta formale" al Kernel. Se il Kernel si blocca per un errore fatale, l'intero computer crolla (è il famoso e temuto "Schermo Blu della Morte").
-*   **B. Il File System (Lo strato intermedio):** Appena sopra il Kernel, troviamo il File System: il grande bibliotecario del computer. Abbiamo detto che il disco fisso è solo un immenso oceano disordinato di 0 e 1. Il File System è la parte del sistema operativo che mappa questo oceano, organizzando i dati per dargli un senso logico. Senza di lui, non esisterebbe il concetto stesso di "File" (il documento) e di "Directory" (la cartella). Crea un vero e proprio albero logico navigabile, garantendo che i vostri documenti scolastici non si mescolino per sbaglio con le foto delle vacanze.
+*   **B. Il File System (Lo strato intermedio) e le Estensioni:** Appena sopra il Kernel, troviamo il File System: il grande bibliotecario del computer. Abbiamo detto che il disco fisso è solo un immenso oceano disordinato di 0 e 1. Il File System è la parte del sistema operativo che mappa questo oceano, organizzando i dati per dargli un senso logico. Senza di lui, non esisterebbe il concetto stesso di "File" (il documento) e di "Directory" (la cartella). Crea un vero e proprio albero logico navigabile, garantendo che i vostri documenti scolastici non si mescolino per sbaglio con le foto delle vacanze.
+    *   **Le Estensioni dei File:** Per organizzare questa immensa biblioteca, il File System utilizza un trucco ingegnoso chiamato *estensione*. È un'etichetta posta alla fine del nome del file, separata da un punto (ad esempio `.txt`, `.jpg`, `.mp3`, `.exe`). Poiché per il disco fisso tutti i file sono solo sequenze di zeri e uni, l'estensione suggerisce al Sistema Operativo quale linguaggio utilizzare per "tradurre" i dati e, di conseguenza, quale programma aprire quando l'utente fa doppio clic. Se cambiate forzatamente l'estensione di una foto `.jpg` in `.mp3`, il file non si aprirà più, perché costringerete il sistema operativo a usare un riproduttore musicale per tentare di "ascoltare" i pixel di un'immagine!
 *   **C. L'Interfaccia Utente o Shell (La buccia - Lo strato esterno):** È lo strato superficiale, quello che guarda verso di noi e che noi possiamo toccare e vedere. È il cruscotto della nostra macchina. Quando l'utente vuole compiere un'azione, dà il comando all'interfaccia. L'interfaccia traduce la richiesta e la passa al File System, che a sua volta la passa al Kernel, che infine fa scattare fisicamente gli interruttori nell'Hardware.
 
-#### 4. GUI contro CLI: Due mondi a confronto
+#### 5. GUI contro CLI: Due mondi a confronto
 La "buccia" della cipolla (l'Interfaccia Utente) non è sempre uguale. A seconda di chi usa il computer, esistono due tipologie di interfacce fondamentali. Entrambe sono valide e convivono nei computer moderni, ma sono nate per scopi molto diversi:
 
 **La GUI (Graphical User Interface - Interfaccia Grafica)**
@@ -50,7 +61,7 @@ La "buccia" della cipolla (l'Interfaccia Utente) non è sempre uguale. A seconda
 *   *Pregi:* È leggerissima e fulminea. Ricollegandoci all'esempio precedente: per rinominare 10.000 file, a un programmatore basta scrivere una singola riga di testo sulla CLI, premere Invio, e il computer farà tutto da solo in un decimo di secondo, automatizzando il lavoro noioso.
 *   *Difetti:* È estremamente difficile da imparare. Non c'è nulla da esplorare visivamente: devi conoscere a memoria il "vocabolario" e la sintassi esatta dei comandi per farti capire dalla macchina, altrimenti il computer non farà nulla. È il regno incontrastato di programmatori, esperti di sicurezza e amministratori di enormi server su Internet.
 
-#### 5. Il Traffico nella RAM: Processi e Concorrenza
+#### 6. Il Traffico nella RAM: Processi e Concorrenza
 Il Sistema Operativo non si limita a tradurre comandi, deve anche fare da spietato "vigile urbano" per le risorse del computer, prima fra tutte la memoria RAM e il processore.
 
 Per capire questo ruolo, dobbiamo distinguere tra un **Programma** e un **Processo**.
@@ -67,8 +78,10 @@ Questo avvicendamento avviene migliaia di volte al secondo. È così sbalorditiv
 ### Sintesi
 
 *   **Il Ponte HW/SW:** Il Sistema Operativo è il software di base essenziale che traduce le intenzioni umane (astratte) in comandi per l'hardware (fisico). Ha democratizzato l'informatica eliminando la necessità di usare linguaggi macchinosi o schede perforate.
+*   **Fase di Bootstrap:** All'accensione, la macchina sfrutta il BIOS/UEFI (un firmware) per controllare l'hardware (POST) e per "svegliare" il Sistema Operativo dal disco, caricandolo all'interno della RAM.
 *   **La Magia dell'Astrazione:** È il meccanismo logico con cui la disordinata e complessa realtà fisica dell'hardware (magneti, impulsi, settori) viene nascosta e mascherata dietro concetti facili e familiari (come file, finestre e cartelle).
 *   **Il Modello a Cipolla:** L'architettura del sistema operativo prevede tre strati protettivi. Si parte dall'esterno con l'Interfaccia Utente (la buccia), si passa al File System che gestisce l'organizzazione logica dei documenti, per arrivare infine al Kernel (il nocciolo), l'unico autorizzato a dialogare fisicamente con l'elettronica.
+*   **Gestione dei File:** Il File System organizza i dati in file e cartelle, utilizzando le **estensioni** per identificare il tipo di contenuto e associarlo all'applicazione corretta.
 *   **GUI vs CLI:** L'interfaccia utente ha due volti. La GUI (Interfaccia Grafica) usa il mouse ed è facile e visiva, perfetta per tutti. La CLI (Interfaccia a Riga di Comando) usa solo il testo, è complessa da imparare ma offre a programmatori ed esperti una velocità e una capacità di automazione ineguagliabili.
 *   **Gestione dei Processi e Scheduler:** Un programma fermo sul disco si trasforma in un "Processo" vivo appena viene caricato in RAM. Poiché in RAM ci sono decine di processi che competono per l'attenzione della CPU, il modulo Scheduler orchestra il traffico. Assegna a ogni processo una micro-frazione di secondo per usare il processore, creando così l'illusione di poter fare mille cose contemporaneamente (Multitasking).
 
@@ -78,10 +91,14 @@ Questo avvicendamento avviene migliaia di volte al secondo. È così sbalorditiv
 
 *   **Hardware (HW):** La componente fisica, tangibile e materiale di un sistema informatico (circuiti, schede, monitor, memorie fisiche, cavi).
 *   **Software (SW):** La componente logica, intangibile e matematica del computer (l'insieme dei programmi, delle istruzioni, dei dati e dei sistemi operativi).
+*   **Firmware:** Un software a basso livello memorizzato in modo permanente su un chip hardware, progettato per comunicare direttamente con i componenti elettronici.
+*   **BIOS / UEFI:** Interfaccia firmware standard preinstallata sulla scheda madre, essenziale per inizializzare l'hardware durante l'avvio del computer.
+*   **Bootstrap (Boot):** Il processo automatico di accensione e avvio del computer, in cui il firmware verifica l'hardware e carica il sistema operativo nella memoria centrale (RAM).
 *   **Sistema Operativo (OS):** Il software fondamentale e di base. Gestisce e coordina tutte le risorse hardware del computer e fornisce l'ambiente protetto per l'esecuzione di qualsiasi altro programma utente.
 *   **Astrazione:** Principio informatico fondamentale che consiste nel nascondere i dettagli tecnici e complessi di livello inferiore, fornendo all'utente una rappresentazione semplificata, sicura e maneggevole delle risorse (es. mostrare una "cartella" invece di mostrare gli indirizzi di memoria magnetici).
 *   **Kernel (Nucleo):** Lo strato più profondo e protetto del sistema operativo. È responsabile dell'interazione diretta e sicura con l'hardware (CPU, RAM, periferiche).
 *   **File System:** Il sottosistema dell'OS incaricato di strutturare, memorizzare, ritrovare e organizzare logicamente i dati all'interno delle memorie di massa, creando il concetto stesso di "File" e "Cartella".
+*   **Estensione File:** Un suffisso alfanumerico alla fine del nome del file (separato da un punto) essenziale per permettere al sistema operativo di identificare il formato logico del dato e la sua applicazione predefinita.
 *   **GUI (Graphical User Interface):** Interfaccia basata su elementi grafici visivi (finestre, icone, menu) con cui l'utente interagisce tramite un dispositivo di puntamento (mouse o touch).
 *   **CLI (Command Line Interface):** Interfaccia testuale in cui l'utente interagisce con la macchina digitando istruzioni precise (comandi) attraverso una tastiera.
 *   **Processo:** Un programma in fase di esecuzione. È un'entità dinamica, caricata all'interno della memoria centrale (RAM) e gestita attivamente dal sistema operativo.
