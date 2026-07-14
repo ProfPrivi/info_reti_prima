@@ -28,6 +28,7 @@ export default defineConfig({
                         { label: "1.4 Rappresentazione dell'Informazione e Conversioni", link: '/lezione14/' },
                         { label: "1.5 Logica Booleana, Porte e Reti Logiche", link: '/lezione15/' },
                         { label: "1.6 Sistemi Operativi e File System", link: '/lezione16/' },
+                        { label: "1 Attività Laboratoriale", link: '/lab1/' },
                     ]
                 }, // <-- Virgola importantissima che separa le categorie!
                 // --- SECONDA CATEGORIA ---
