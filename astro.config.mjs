@@ -38,6 +38,9 @@ export default defineConfig({
                     collapsed: true,                        
                     items: [
                         { label: "2.1 Dal Problema all'Algoritmo ", link: '/lezione21/' },
+                        { label: "2.2 Pseudocodice e Diagrammi di Flusso", link: '/lezione22/' },
+                        { label: "2.3 Le strutture iterative con Flowgorithm", link: '/lezione23/' },
+                        
                     ]
                 },
                 {
