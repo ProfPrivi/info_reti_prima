@@ -1,6 +1,6 @@
 ---
-title: 2.3 L'Istruzione di Iterazione (Il Ciclo) con Flowgorithm
-description: Esercizi di laboratorio per la traduzione di problemi in algoritmi tramite Flowgorithm.
+title: 2 Ripasso Generale (Moduli 2.1 - 2.3)
+description: Test di autovalutazione
 ---
 
 ## Modulo 2.3: Laboratorio di Problem Solving con Flowgorithm
