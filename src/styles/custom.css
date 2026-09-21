@@ -1,30 +1,52 @@
-:root {
-  /* --- Colore Principale (Azzurro/Ciano) --- */
-  --sl-hue: 20; 
-  --sl-color-accent-low: hsl(var(--sl-hue), 80%, 20%);
-  --sl-color-accent: hsl(var(--sl-hue), 90%, 50%);
-  --sl-color-accent-high: hsl(var(--sl-hue), 80%, 80%);
-  --sl-color-text-accent: hsl(var(--sl-hue), 100%, 70%);
+/* =========================================
+   TEMA SCURO (Default)
+   ========================================= */
+:root,
+:root[data-theme='dark'] {
+    /* Accenti scambiati per massimo contrasto sul buio */
+    --sl-color-accent: #c2e7ff !important;
+    --sl-color-accent-high: #ffffff !important;
+    --sl-color-accent-low: #0f5682 !important;
 
-  /* --- SFONDI TEMA SCURO (Dark Mode) --- */
-  /* Sfondo della pagina centrale (Blu notte molto scuro) */
-  --sl-color-bg: #4b4338; 
-  /* Sfondo del menu laterale e barra in alto (Blu notte leggermente più chiaro) */
-  --sl-color-bg-nav: #38231b; 
-  --sl-color-bg-sidebar: #4b4338;    /* 3. Sfondo della barra A SINISTRA */
+    /* Sfondi vicini al nero, ma intinti nel tuo blu scuro (#0f5682) */
+    --sl-color-bg: #08141f !important;
+    --sl-color-bg-nav: #050d14 !important;
+    --sl-color-bg-sidebar: #050d14 !important;
 }
 
+/* =========================================
+   TEMA CHIARO
+   ========================================= */
 :root[data-theme='light'] {
-  /* --- Colore Principale Tema Chiaro --- */
-  --sl-color-accent-low: hsl(var(--sl-hue), 80%, 80%);
-  --sl-color-accent: hsl(var(--sl-hue), 90%, 40%);
-  --sl-color-accent-high: hsl(var(--sl-hue), 80%, 20%);
-  --sl-color-text-accent: hsl(var(--sl-hue), 90%, 30%);
+    /* Accenti scambiati per massima leggibilità sul chiaro */
+    --sl-color-accent: #0f5682 !important;
+    --sl-color-accent-high: #062336 !important;
+    --sl-color-accent-low: #c2e7ff !important;
 
-  /* --- SFONDI TEMA CHIARO (Light Mode) --- */
-  /* Sfondo della pagina centrale (Bianco puro o leggermente ghiaccio) */
-  --sl-color-bg: #d4d1c0; 
-  /* Sfondo del menu laterale (Grigio-azzurrino chiarissimo) */
-  --sl-color-bg-nav: #a99799; 
-    --sl-color-bg-sidebar: #d4d1c0;    /* 3. Sfondo della barra A SINISTRA */
+    /* Sfondi vicini al bianco, ma intinti nel tuo azzurro (#c2e7ff) */
+    --sl-color-bg: #f8fbfe !important;
+    --sl-color-bg-nav: #f0f6fa !important;
+    --sl-color-bg-sidebar: #f0f6fa !important;
+}
+
+/* =========================================
+   FORZATURA STRUTTURALE (Fix per Tema Nova)
+   ========================================= */
+#starlight__sidebar,
+#starlight__sidebar .sidebar-content,
+#starlight__sidebar .nova-scroll-container {
+    background-color: var(--sl-color-bg-sidebar) !important;
+}
+
+header.header,
+.header.nova-header {
+    background-color: var(--sl-color-bg-nav) !important;
+}
+
+/* =========================================
+   FIX PROGRESS BAR
+   ========================================= */
+#scroll-progress {
+    background-color: var(--sl-color-accent) !important;
+    box-shadow: 0 0 10px var(--sl-color-accent) !important;
 }
