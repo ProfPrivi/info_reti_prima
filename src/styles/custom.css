@@ -50,3 +50,19 @@ header.header,
     background-color: var(--sl-color-accent) !important;
     box-shadow: 0 0 10px var(--sl-color-accent) !important;
 }
+
+/* 1. Rompiamo la gabbia del testo: allarghiamo lo spazio centrale disponibile */
+:root {
+  --sl-content-width: 65rem !important; /* Alzalo a 75rem se vuoi il testo larghissimo */
+}
+
+/* 2. Stringiamo la barra laterale in tutti i modi possibili (solo su PC) */
+@media (min-width: 72rem) {
+  .right-sidebar-container,
+  aside.right-sidebar {
+    width: 180px !important;
+    min-width: 180px !important;
+    max-width: 180px !important;
+    flex-basis: 180px !important;
+  }
+}
