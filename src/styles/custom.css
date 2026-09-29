@@ -66,3 +66,31 @@ header.header,
     flex-basis: 180px !important;
   }
 }
+
+/* --- MODALITÀ SCHERMO INTERO --- */
+body.schermo-intero .sidebar-pane,
+body.schermo-intero .right-sidebar-panel,
+body.schermo-intero .right-sidebar-container,
+body.schermo-intero aside.right-sidebar {
+  display: none !important;
+}
+
+body.schermo-intero {
+  --sl-sidebar-width: 0px !important;
+  --sl-content-width: 100% !important; 
+}
+
+body.schermo-intero .main-frame {
+  padding-inline-start: 0 !important;
+  margin-left: 0 !important;
+}
+
+body.schermo-intero .main-pane {
+  grid-template-columns: 1fr !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+body.schermo-intero .sl-container {
+  max-width: 95% !important;
+}

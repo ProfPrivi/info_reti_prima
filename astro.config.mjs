@@ -15,6 +15,11 @@ export default defineConfig({
             customCss: [
                 './src/styles/custom.css',
             ],
+            // 2. Inietta entrambi i componenti personalizzati
+            components: {
+                ThemeSelect: './src/components/MenuToggle.astro',
+                SiteTitle: './src/components/ScrollProgress.astro',
+            },
             sidebar: [
                 // --- PRIMA CATEGORIA ---
                 {

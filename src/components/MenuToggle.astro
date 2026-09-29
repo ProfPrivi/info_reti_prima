@@ -1,0 +1,39 @@
+---
+import Default from '@astrojs/starlight/components/ThemeSelect.astro';
+import type { Props } from '@astrojs/starlight/props';
+---
+<div style="display: flex; align-items: center; gap: 0.5rem;">
+  <button 
+    onclick="cambiaZoom(-0.1)" 
+    style="padding: 5px 10px; background-color: transparent; color: inherit; border: 1px solid var(--sl-color-gray-4); border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold;"
+    title="Riduci testo"
+  >
+    A-
+  </button>
+  <button 
+    onclick="cambiaZoom(0.1)" 
+    style="padding: 5px 10px; background-color: transparent; color: inherit; border: 1px solid var(--sl-color-gray-4); border-radius: 6px; cursor: pointer; font-size: 0.9rem; font-weight: bold;"
+    title="Ingrandisci testo"
+  >
+    A+
+  </button>
+  <button 
+    onclick="document.body.classList.toggle('schermo-intero')" 
+    style="padding: 5px 10px; background-color: transparent; color: inherit; border: 1px solid var(--sl-color-gray-4); border-radius: 6px; cursor: pointer; font-size: 0.9rem;"
+    title="Attiva/Disattiva Schermo Intero"
+  >
+    ↔️ Schermo Intero
+  </button>
+  <Default {...Astro.props} />
+</div>
+
+<script is:inline>
+  let livelloZoom = 1;
+  function cambiaZoom(modifica) {
+    livelloZoom += modifica;
+    if (livelloZoom < 0.7) livelloZoom = 0.7;
+    if (livelloZoom > 2.5) livelloZoom = 2.5;
+    const areaCentrale = document.querySelector('main');
+    if (areaCentrale) areaCentrale.style.zoom = livelloZoom;
+  }
+</script>
