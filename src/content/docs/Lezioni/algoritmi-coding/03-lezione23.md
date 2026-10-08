@@ -3,8 +3,6 @@ title: 2.3 L'Istruzione di Iterazione (Il Ciclo) con Flowgorithm
 description: Esercizi di laboratorio per la traduzione di problemi in algoritmi tramite Flowgorithm.
 ---
 
-## Modulo 2.3: Laboratorio di Problem Solving con Flowgorithm
-
 ### Introduzione
 
 Nei moduli precedenti abbiamo appreso la teoria alla base del *coding visivo*: abbiamo esplorato l'alfabeto delle forme dei diagrammi di flusso, imparato a gestire la memoria tramite le variabili e, soprattutto, abbiamo insegnato al computer a prendere decisioni (Selezione) e a compiere azioni ripetitive (Iterazione). 

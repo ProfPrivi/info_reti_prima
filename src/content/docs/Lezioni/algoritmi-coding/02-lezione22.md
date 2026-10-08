@@ -3,8 +3,6 @@ title: 2.2 Il Coding Visivo con Flowgorithm
 description: Diagrammi di flusso, blocchi logici, variabili e l'esecuzione passo-passo.
 ---
 
-## Modulo 2.2: Il Coding Visivo con Flowgorithm e le Istruzioni di Selezione
-
 ### Introduzione
 
 Nel modulo precedente abbiamo scoperto cos'è un algoritmo: un ragionamento logico, preciso e senza ambiguità per risolvere un problema. Ma una volta che abbiamo l'algoritmo chiaro in testa, come facciamo a spiegarlo al computer? Non possiamo usare il linguaggio umano di tutti i giorni, perché è troppo vago e pieno di sottintesi, ma allo stesso tempo non siamo ancora pronti per scrivere complessi codici di programmazione testuali (come in Python, C++ o Java). Ci serve un "linguaggio ponte", esattamente come un architetto non inizia a posare i mattoni senza prima aver disegnato la piantina della casa.

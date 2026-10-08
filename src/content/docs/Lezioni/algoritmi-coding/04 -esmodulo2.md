@@ -1,9 +1,7 @@
 ---
-title: 2 Ripasso Generale (Moduli 2.1 - 2.3)
+title: 2.4 Esercizi metà modulo
 description: Test di autovalutazione
 ---
-
-## Modulo 2.3: Laboratorio di Problem Solving con Flowgorithm
 
 ### Introduzione
 

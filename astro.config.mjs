@@ -23,17 +23,23 @@ export default defineConfig({
             sidebar: [
                 // --- PRIMA CATEGORIA ---
                 {
-                    label: '1.⚙️ Architettura & OS',
+                    label: '⚙️ Architettura & OS',
                     autogenerate: { directory: 'Lezioni/architettura-os' },                     
                     collapsed: true,                        
                     
                 }, // <-- Virgola importantissima che separa le categorie!
                 // --- SECONDA CATEGORIA ---
                 {
-                    label: '2.🧩 Algoritmi & Coding',   
+                    label: '🧩 Algoritmi & Coding',   
                     autogenerate: { directory: 'Lezioni/algoritmi-coding' },                  
                     collapsed: true,                        
                     /*Qui vengono generate automaticamente le voci di menu per le lezioni di algoritmi e coding, basate sulla struttura delle cartelle e dei file presenti nella directory specificata.*/
+                },
+                {
+                    label: '🐍 Programmazione in Python',   
+                    autogenerate: { directory: 'Lezioni/python' },                  
+                    collapsed: true,                        
+                    /*Qui vengono generate automaticamente le voci di menu per le lezioni di python, basate sulla struttura delle cartelle e dei file presenti nella directory specificata.*/
                 },
                 {
                     label: 'Educazione Civica',
