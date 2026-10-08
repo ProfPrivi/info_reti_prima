@@ -42,10 +42,10 @@ export default defineConfig({
                     /*Qui vengono generate automaticamente le voci di menu per le lezioni di python, basate sulla struttura delle cartelle e dei file presenti nella directory specificata.*/
                 },
                 {
-                    label: 'Educazione Civica',
+                    label: '🤖 Educazione Civica',
                     collapsed: true,
                     items: [
-                        // { label: 'Confini reali e confini virtuali', link: '/civica/' }
+                        { label: 'Uso consapevole della AI', link: '/civica/' }
                     ]
                 } // <-- Niente virgola qui, perché è l'ultima categoria
             ],
