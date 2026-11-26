@@ -167,146 +167,30 @@ Per orientarsi nella progettazione di un algoritmo, la tabella seguente sintetiz
 
 ---
 
-### Esempi Pratici e Script Completi Guidati
+:::tip[Script completi di laboratorio]
+Gli script completi su tuple, set e dizionari (`logistica_spedizioni.py`, `controllo_accessi.py`, `registro_dizionari.py`) sono disponibili nella sezione [**Lab 3 - Script Python (Modulo 3.6)**](/info_reti_prima/lezioni/laboratorio/04-lab-python-script/#modulo-36--tuple-set-e-dizionari).
+:::
 
-#### Esempio 1: Tracciamento Logistico con Tuple e Unpacking
-*Obiettivo:* Un centro di smistamento merci riceve una serie di spedizioni identificate ciascuna da un codice pacco, dal peso in kg e dalle coordinate di destinazione espresse come tupla annidata. Il programma deve scorrere le spedizioni, spacchettare i dati e calcolare il peso medio trasportato.
+:::caution[Errore tipico in verifica]
+Due trappole classiche di sintassi: `{}` crea un **dizionario vuoto** (per un insieme vuoto serve `set()`), e `(42)` è un normale numero intero (per una tupla di un solo elemento serve la virgola finale `(42,)`!).
+:::
 
-```python
-# =======================================================
-# Script: logistica_spedizioni.py
-# Scopo: Dimostrazione di tuple, record fissi e unpacking
-# =======================================================
+### Mettiti alla prova (Domande Flash)
 
-print("=== GESTORE SPEDIZIONI LOGISTICHE ===")
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Perché un <code>set</code> verifica l'appartenenza (<code>x in s</code>) molto più velocemente di una <code>list</code>?</summary>
+  <p>Perché il <code>set</code> utilizza una <strong>tabella hash</strong> che calcola istantaneamente la posizione del dato (tempo costante), mentre la lista deve scorrere gli elementi uno a uno (tempo lineare).</p>
+</details>
 
-# Lista di record immutabili (tuple)
-spedizioni = [
-    ("PKG-101", 12.5, (45.464, 9.190)),
-    ("PKG-102", 4.2, (41.902, 12.496)),
-    ("PKG-103", 28.0, (40.851, 14.268)),
-    ("PKG-104", 8.3, (45.070, 7.686))
-]
+<details>
+  <summary><strong>2. Vero o Falso:</strong> Una lista può essere usata come chiave di un dizionario Python.</summary>
+  <p><strong>Falso.</strong> Le chiavi di un dizionario devono essere <strong>immutabili</strong> (es. stringhe, numeri o tuple) per avere un valore hash fisso.</p>
+</details>
 
-peso_totale = 0.0
-
-print(f"Riepilogo delle {len(spedizioni)} spedizioni in partenza:\n")
-
-# Scansione con unpacking strutturato a doppio livello
-for codice, peso, coordinate in spedizioni:
-    latitudine, longitudine = coordinate
-    peso_totale += peso
-    print(f"Pacco: {codice:<8} | Peso: {peso:>4.1f} kg | Destinazione: Lat {latitudine:.3f}, Lon {longitudine:.3f}")
-
-peso_medio = peso_totale / len(spedizioni)
-
-print("-" * 55)
-print(f"Carico complessivo: {peso_totale:.2f} kg")
-print(f"Peso medio per spedizione: {peso_medio:.2f} kg")
-```
-
-#### Esempio 2: Bonifica Dati e Controllo Accessi con Insiemi
-*Obiettivo:* Un sistema di sicurezza registra i badge di ingresso scansionati durante la giornata lavorativa. A causa di letture multiple ai tornelli, molti badge compaiono decine di volte. Lo script deve eliminare i duplicati, confrontare l'elenco dei presenti con la lista degli impiegati autorizzati e segnalare eventuali accessi anomali o dipendenti assenti.
-
-```python
-# =======================================================
-# Script: controllo_accessi.py
-# Scopo: Deduplicazione e operazioni insiemistiche con set
-# =======================================================
-
-print("=== SISTEMA DI MONITORAGGIO PRESENZE ===")
-
-# Letture grezze del sensore ottico (lista con molti duplicati)
-letture_tornelli = [
-    "USR-01", "USR-03", "USR-01", "USR-04", 
-    "USR-02", "USR-01", "USR-05", "USR-99"
-]
-
-# Elenco ufficiale dei dipendenti autorizzati per il reparto
-dipendenti_autorizzati = {"USR-01", "USR-02", "USR-03", "USR-04", "USR-05", "USR-06"}
-
-# Bonifica immediata dei duplicati tramite conversione in set
-presenti_unici = set(letture_tornelli)
-
-print(f"Totale timbrature registrate: {len(letture_tornelli)}")
-print(f"Persone uniche entrate: {len(presenti_unici)} -> {presenti_unici}\n")
-
-# 1. Individuazione di accessi non autorizzati (Presenti - Autorizzati)
-intrusi = presenti_unici - dipendenti_autorizzati
-if len(intrusi) > 0:
-    print(f"[ALLARME SICUREZZA] Badge non riconosciuti: {intrusi}")
-else:
-    print("[SICUREZZA] Tutti i presenti risultano regolarmente autorizzati.")
-
-# 2. Individuazione dei dipendenti assenti (Autorizzati - Presenti)
-assenti = dipendenti_autorizzati - presenti_unici
-print(f"Dipendenti autorizzati oggi assenti: {assenti}")
-
-# 3. Dipendenti regolarmente al lavoro (Intersezione)
-regolari = presenti_unici & dipendenti_autorizzati
-print(f"Personale regolarmente in sede ({len(regolari)}): {regolari}")
-```
-
-#### Esempio 3: Anagrafica Studenti e Medie con Dizionari Annidati
-*Obiettivo:* Realizzare un archivio scolastico dove ogni studente è identificato univocamente dalla propria matricola. Per ogni matricola è memorizzato un dizionario con nome, classe e lista dei voti. Il programma consente di cercare uno studente in modo protetto, calcolare la sua media e stampare l'intero prospetto della classe.
-
-```python
-# =======================================================
-# Script: registro_dizionari.py
-# Scopo: Dizionari annidati, metodo get() e manipolazione
-# =======================================================
-
-print("=== ARCHIVIO DIGITALE ISTITUTO SCOLASTICO ===")
-
-# Struttura dati complessa: dizionario con dizionari e liste interne
-archivio_studenti = {
-    "MAT-101": {
-        "nome": "Chiara Bianchi",
-        "classe": "3A Informatica",
-        "voti": [8.0, 7.5, 9.0]
-    },
-    "MAT-102": {
-        "nome": "Marco Verdi",
-        "classe": "3A Informatica",
-        "voti": [6.0, 5.5, 6.5]
-    },
-    "MAT-103": {
-        "nome": "Sara Neri",
-        "classe": "3B Telecomunicazioni",
-        "voti": [7.0, 8.0, 8.5]
-    }
-}
-
-# Aggiunta dinamica di un nuovo studente all'archivio
-archivio_studenti["MAT-104"] = {
-    "nome": "Davide Rossi",
-    "classe": "3A Informatica",
-    "voti": [6.5, 7.0, 7.5]
-}
-
-# Ricerca sicura tramite codice matricola
-matricola_cercata = input("Digita la matricola da interrogare (es. MAT-102): ")
-studente_trovato = archivio_studenti.get(matricola_cercata, None)
-
-if studente_trovato is not None:
-    voti = studente_trovato["voti"]
-    media = sum(voti) / len(voti)
-    print("\n--- SCHEDA STUDENTE INDIVIDUATA ---")
-    print(f"Nominativo: {studente_trovato['nome']}")
-    print(f"Sezione:    {studente_trovato['classe']}")
-    print(f"Voti prove: {voti}")
-    print(f"Media calcolata: {media:.2f}")
-else:
-    print(f"\nAttenzione: Nessuno studente censito con la matricola '{matricola_cercata}'.")
-
-# Stampa riassuntiva di fine anno per l'intero istituto
-print("\n" + "=" * 50)
-print(f"{'MATRICOLA':<12}{'NOMINATIVO':<20}{'CLASSE':<15}")
-print("=" * 50)
-for matricola, info in archivio_studenti.items():
-    print(f"{matricola:<12}{info['nome']:<20}{info['classe']:<15}")
-print("=" * 50)
-```
+<details>
+  <summary><strong>3. Domanda rapida:</strong> Come si evita un <code>KeyError</code> cercando una chiave potenzialmente assente in un dizionario?</summary>
+  <p>Usando il metodo <code>dizionario.get(chiave, valore_default)</code> invece delle parentesi quadre <code>dizionario[chiave]</code>.</p>
+</details>
 
 ---
 
@@ -331,7 +215,3 @@ print("=" * 50)
 *   **Coppia Chiave-Valore (Key-Value Pair):** Relazione biunivoca elementare alla base delle mappe e dei dizionari, in cui la chiave agisce da indirizzo semantico per raggiungere il dato memorizzato.
 *   **Metodo Get:** Funzione della classe `dict` che consente il recupero del valore associato a una chiave specifica, evitando il sollevamento dell'eccezione `KeyError` qualora la chiave risulti assente e restituendo un valore di riserva predefinito.
 *   **KeyError:** Eccezione bloccante a tempo di esecuzione generata dall'interprete Python quando un'istruzione tenta di accedere a un dizionario utilizzando una chiave non presente nella struttura.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

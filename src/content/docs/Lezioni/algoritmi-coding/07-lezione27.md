@@ -112,6 +112,33 @@ Questi errori si chiamano **Errori di Sintassi** (*Syntax Error*). Non devono sc
 
 ---
 
+:::tip[Idea chiave]
+Passare da Flowgorithm a Python non significa ricominciare da capo: la **logica algoritmica** (variabili, bivi, cicli, array, funzioni) rimane identica al 100%, cambia solo la **sintassi** con cui la scriviamo.
+:::
+
+:::caution[Errore tipico in verifica]
+Attenzione al `range(1, N + 1)` in Python rispetto al ciclo `Per` di Flowgorithm: in Python l'estremo finale è **escluso**, quindi per includere `N` si scrive `N + 1`!
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Che differenza c'è tra <em>Sintassi</em> e <em>Semantica</em> di un programma?</summary>
+  <p>La <strong>sintassi</strong> riguarda la correttezza grammaticale del codice (parentesi, due punti, indentazione); la <strong>semantica</strong> riguarda il significato logico e la correttezza del calcolo svolto.</p>
+</details>
+
+<details>
+  <summary><strong>2. Domanda rapida:</strong> Perché in Python <code>input()</code> da solo non basta per leggere un numero su cui fare calcoli?</summary>
+  <p>Perché <code>input()</code> restituisce sempre una stringa di testo; occorre convertire il valore tramite <strong>casting</strong> esplicito (<code>int()</code> o <code>float()</code>).</p>
+</details>
+
+<details>
+  <summary><strong>3. Vero o Falso:</strong> In Python l'indentazione è facoltativa e serve solo a rendere il testo più bello.</summary>
+  <p><strong>Falso.</strong> È un obbligo sintattico rigoroso che delimita quali istruzioni appartengono a un blocco <code>if</code>, <code>for</code>, <code>while</code> o <code>def</code>.</p>
+</details>
+
+---
+
 ### Sintesi
 
 *   **Identità della Logica:** La programmazione testuale non cancella nulla di quanto appreso con il coding visivo: sequenze, variabili, rami condizionali, iterazioni e sottoprogrammi rimangono identici nella loro architettura logica.
@@ -130,7 +157,3 @@ Questi errori si chiamano **Errori di Sintassi** (*Syntax Error*). Non devono sc
 *   **Syntax Error (Errore di Sintassi):** Anomalia bloccante riscontrata dall'interprete o dal compilatore quando il codice sorgente viola una regola grammaticale del linguaggio, impedendo l'avvio del programma.
 *   **Source Code Viewer:** Strumento integrato negli ambienti di coding visivo (come Flowgorithm) che compie una traduzione automatica in tempo reale del diagramma a blocchi nel codice sorgente di un linguaggio testuale reale.
 *   **Casting (Conversione di Tipo):** Operazione informatica con cui si converte esplicitamente un dato da un tipo all'altro (ad esempio, convertendo il testo numerico letto con `input()` nel valore intero elaborabile con `int()`).
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

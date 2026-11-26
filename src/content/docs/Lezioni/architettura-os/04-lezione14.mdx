@@ -3,6 +3,8 @@ title: 1.4 Rappresentazione dell'Informazione e Conversioni
 description: Rappresentazione dell'Informazione e Conversioni
 --- 
 
+import SimulatoreBinario from '/src/components/SimulatoreBinario.astro';
+
 ### Introduzione
 
 Nelle lezioni precedenti abbiamo scoperto il "perché" il computer utilizza esclusivamente i valori 0 e 1: è una necessità fisica legata agli interruttori e ai livelli di tensione elettrica (acceso/spento). Ora, però, sorge una domanda fondamentale: **come facciamo a rappresentare tutta la complessità del nostro mondo usando solo due simboli?** 
@@ -49,6 +51,12 @@ Usa 16 simboli: da 0 a 9 e poi le lettere da A a F (dove A=10, B=11, C=12, D=13,
     * `1011` in decimale vale 11, che in esadecimale è **B**.
     * `0110` in decimale vale **6**.
     * La stringa si legge semplicemente come **B6**. Molto più comodo!
+
+<SimulatoreBinario />
+
+:::caution[Errore tipico in verifica]
+Nelle conversioni da Decimale a Binario con le divisioni successive, i resti vanno letti **dal basso verso l'alto** (l'ultimo resto ottenuto è la cifra più significativa a sinistra, MSB).
+:::
 
 #### 3. La Rappresentazione del Testo (I Caratteri)
 Il processore sa solo fare calcoli matematici. Come facciamo a salvare una parola come "CIAO"? Abbiamo dovuto inventare un "vocabolario numerico", un accordo in cui a ogni lettera corrisponde uno specifico numero. Questa convenzione si è evoluta in tre fasi storiche:
@@ -198,7 +206,3 @@ Invece di avere mille pixel neri per disegnare un cerchio, il file contiene una 
 *   **Codice ASCII:** American Standard Code for Information Interchange. Storico protocollo a 7 bit che mappa 128 caratteri di base in valori numerici binari.
 *   **Unicode:** Standard informatico internazionale volto alla codifica universale dei caratteri usati per la scrittura di testi, indipendente dalla lingua, dalla piattaforma e dal programma.
 *   **Aliasing (Sgranatura):** Difetto visivo tipico delle immagini Bitmap che si manifesta come una "seghettatura" a blocchi quadrati quando l'immagine viene ingrandita oltre la sua risoluzione nativa.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

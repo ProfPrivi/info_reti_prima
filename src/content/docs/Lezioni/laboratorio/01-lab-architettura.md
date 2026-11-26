@@ -1,6 +1,6 @@
 ---
-title: 1 Attività Laboratoriale
-description: Attività Laboratoriale
+title: Lab 1 - Architettura, Logica e OS
+description: Sei missioni pratiche di laboratorio su CLI, processi, porte logiche, campionamento audio, pixel RGB ed estensioni file.
 ---
 
 ### Introduzione

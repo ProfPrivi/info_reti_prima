@@ -1,0 +1,184 @@
+---
+interface Props {
+  id?: string;
+}
+const { id = 'sim-ipv4-' + Math.random().toString(36).slice(2, 7) } = Astro.props;
+---
+<div id={id} class="ip-card no-print">
+  <div class="ip-header">
+    <h4>Ispettore Interattivo: Indirizzo IPv4 in Decimale e Binario (32 bit)</h4>
+    <p>Modifica i quattro ottetti (0 – 255) o scegli un preset per vedere la codifica a 32 bit e il tipo di indirizzo.</p>
+  </div>
+
+  <div class="ip-presets">
+    <button type="button" class="ip-pbtn" data-ip="192,168,1,1">Router Casa (192.168.1.1)</button>
+    <button type="button" class="ip-pbtn" data-ip="10,0,0,15">Rete Scuola (10.0.0.15)</button>
+    <button type="button" class="ip-pbtn" data-ip="8,8,8,8">DNS Google (8.8.8.8)</button>
+    <button type="button" class="ip-pbtn" data-ip="127,0,0,1">Loopback (127.0.0.1)</button>
+  </div>
+
+  <div class="octets-grid">
+    {[0, 1, 2, 3].map((idx) => (
+      <div class="octet-box">
+        <span class="oct-lbl">Ottetto {idx + 1}</span>
+        <input type="number" min="0" max="255" value={idx === 0 ? 192 : idx === 1 ? 168 : 1} class="oct-num" data-oct={idx} />
+        <input type="range" min="0" max="255" value={idx === 0 ? 192 : idx === 1 ? 168 : 1} class="oct-rng" data-rng={idx} />
+        <code class="oct-bin" data-bin={idx}>11000000</code>
+      </div>
+    ))}
+  </div>
+
+  <div class="ip-summary">
+    <div class="ip-dec" data-ip-dec>192.168.1.1</div>
+    <div class="ip-badge" data-ip-type>IP Privato (LAN — RFC 1918)</div>
+  </div>
+</div>
+
+<style>
+  .ip-card {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    padding: 20px;
+    margin: 1.5rem auto;
+    max-width: 840px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  .ip-header { text-align: center; margin-bottom: 14px; }
+  .ip-header h4 { margin: 0 0 6px 0; font-size: 1.15rem; color: #0f172a; }
+  .ip-header p { margin: 0; font-size: 0.9rem; color: #475569; }
+  .ip-presets {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .ip-pbtn {
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #94a3b8;
+    background: #ffffff;
+    color: #0f172a;
+    font-weight: 600;
+    font-size: 0.84rem;
+    cursor: pointer;
+  }
+  .ip-pbtn:hover { background: #e2e8f0; }
+  .octets-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  @media (max-width: 640px) {
+    .octets-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .octet-box {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .oct-lbl { font-size: 0.78rem; font-weight: 700; color: #64748b; }
+  .oct-num {
+    width: 78px;
+    padding: 6px;
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: 800;
+    border: 2px solid #0f5682;
+    border-radius: 8px;
+    color: #0f172a;
+    background: #f8fafc;
+  }
+  .oct-rng { width: 100%; accent-color: #0f5682; }
+  .oct-bin {
+    font-size: 0.92rem;
+    font-weight: 700;
+    background: #eff6ff;
+    color: #1d4ed8;
+    padding: 4px 8px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+  }
+  .ip-summary {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: #0f5682;
+    color: #ffffff;
+    padding: 12px 18px;
+    border-radius: 10px;
+  }
+  .ip-dec { font-size: 1.35rem; font-weight: 800; font-family: ui-monospace, monospace; }
+  .ip-badge {
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #0f5682;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+</style>
+
+<script is:inline define:vars={{ id }}>
+  (() => {
+    const root = document.getElementById(id);
+    if (!root) return;
+    const nums = [0, 1, 2, 3].map((i) => root.querySelector(`[data-oct="${i}"]`));
+    const rngs = [0, 1, 2, 3].map((i) => root.querySelector(`[data-rng="${i}"]`));
+    const bins = [0, 1, 2, 3].map((i) => root.querySelector(`[data-bin="${i}"]`));
+    const elDec = root.querySelector('[data-ip-dec]');
+    const elType = root.querySelector('[data-ip-type]');
+
+    function classify(o) {
+      if (o[0] === 127) return 'Indirizzo di Loopback (test interno sul proprio PC)';
+      if (o[0] === 10) return 'IP Privato (LAN grande — Classe A, RFC 1918)';
+      if (o[0] === 172 && o[1] >= 16 && o[1] <= 31) return 'IP Privato (LAN media — Classe B, RFC 1918)';
+      if (o[0] === 192 && o[1] === 168) return 'IP Privato (LAN domestica/scolastica — RFC 1918)';
+      if (o[0] === 169 && o[1] === 254) return 'Indirizzo APIPA (assegnato in assenza di DHCP)';
+      if (o[0] >= 224) return 'Indirizzo Riservato / Multicast';
+      return 'IP Pubblico (instradabile su Internet globale)';
+    }
+
+    function update(vals) {
+      const clean = vals.map((v) => Math.max(0, Math.min(255, Math.round(Number(v) || 0))));
+      clean.forEach((v, i) => {
+        nums[i].value = String(v);
+        rngs[i].value = String(v);
+        bins[i].textContent = v.toString(2).padStart(8, '0');
+      });
+      elDec.textContent = clean.join('.');
+      elType.textContent = classify(clean);
+    }
+
+    nums.forEach((el, i) => {
+      el.addEventListener('input', () => {
+        const vals = nums.map((x) => x.value);
+        update(vals);
+      });
+    });
+    rngs.forEach((el, i) => {
+      el.addEventListener('input', () => {
+        const vals = rngs.map((x) => x.value);
+        update(vals);
+      });
+    });
+    root.querySelectorAll('[data-ip]').forEach((b) => {
+      b.addEventListener('click', () => {
+        update(b.getAttribute('data-ip').split(','));
+      });
+    });
+
+    update([192, 168, 1, 1]);
+  })();
+</script>

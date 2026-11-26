@@ -100,6 +100,33 @@ Chiedere al processore di accedere alla cella 10 significa pretendere di leggere
 
 ---
 
+:::tip[Idea chiave]
+Un vettore di dimensione `N` usa sempre gli indici da **`0` a `N - 1`** (*Zero-Based Indexing*): il ciclo `Per` con `i` da `0` a `N - 1` permette di attraversare qualsiasi collezione con pochissimi blocchi.
+:::
+
+:::caution[Errore tipico in verifica]
+Scrivere `vettore[N]` su un array dichiarato di dimensione `N` causa l'errore critico **Index Out of Bounds**: l'ultima cella valida è sempre `vettore[N - 1]`.
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Se dichiaro un array <code>voti</code> di dimensione 6 in Flowgorithm, qual è l'indice del primo elemento e qual è quello dell'ultimo?</summary>
+  <p>Il primo elemento è <code>voti[0]</code> e l'ultimo è <code>voti[5]</code>.</p>
+</details>
+
+<details>
+  <summary><strong>2. Vero o Falso:</strong> Un array in Flowgorithm può contenere sia numeri interi sia stringhe di testo contemporaneamente.</summary>
+  <p><strong>Falso.</strong> Gli array strutturati impongono il vincolo di <strong>omogeneità</strong>: tutte le celle devono avere lo stesso tipo di dato.</p>
+</details>
+
+<details>
+  <summary><strong>3. Domanda rapida:</strong> Nell'algoritmo di ricerca del massimo in un vettore, perché si inizializza <code>massimo = numeri[0]</code> anziché <code>massimo = 0</code>?</summary>
+  <p>Perché se tutti i numeri nel vettore fossero negativi (es. temperature invernali <code>-5, -2, -8</code>), inizializzare a <code>0</code> farebbe risultare erroneamente <code>0</code> come massimo anche se non è presente nei dati!</p>
+</details>
+
+---
+
 ### Sintesi
 
 *   **Dalle Variabili Scalari alle Strutture Dati:** Le variabili tradizionali contengono un solo valore alla volta; i vettori (array) permettono di aggregare sotto un unico identificatore un gruppo di informazioni affini, superando la proliferazione caotica di variabili singole.
@@ -120,7 +147,3 @@ Chiedere al processore di accedere alla cella 10 significa pretendere di leggere
 *   **Scansione (o Traversamento):** Operazione algoritmica che consiste nel visitare sistematicamente, una dopo l'altra e mediante una struttura iterativa, tutte le celle di un vettore.
 *   **Index Out of Bounds:** Condizione di errore fatale che si manifesta quando un'istruzione tenta di accedere a una cella dell'array utilizzando un valore di indice esterno all'intervallo valido di dichiarazione.
 *   **Dimensione (Size):** Il numero complessivo di elementi che un vettore è strutturato per contenere, fissato in fase di allocazione della memoria.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

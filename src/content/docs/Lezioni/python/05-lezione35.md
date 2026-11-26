@@ -169,150 +169,30 @@ for posizione, nome in enumerate(studenti, start=1):
 
 ---
 
-### Esempi Pratici e Script Completi Guidati
+:::tip[Script completi di laboratorio]
+Gli script completi sulle liste (`registro_dinamico.py`, `separazione_temperature.py`, `sportello_clienti.py`) sono disponibili nella sezione [**Lab 3 - Script Python (Modulo 3.5)**](/info_reti_prima/lezioni/laboratorio/04-lab-python-script/#modulo-35--liste-monodimensionali).
+:::
 
-#### Esempio 1: Acquisizione Dinamica, Calcolo Statistico e Ricerca del Massimo
-*Obiettivo:* Progettare un algoritmo che consenta a un docente di inserire da tastiera un numero imprecisato di valutazioni numeriche (usando un valore sentinella negativo per arrestare l'inserimento). Il programma memorizza i voti in una lista dinamica, ne calcola la media aritmetica, individua il voto più alto senza usare funzioni predefinite e conta quante prove hanno raggiunto la sufficienza (voto maggiore o uguale a 6.0).
+:::caution[Errore tipico in verifica]
+Attenzione alla copia delle liste: scrivere `b = a` **non crea una copia**, ma collega due etichette alla stessa identica lista in RAM! Modificare `b` altererà anche `a`. Per copiare davvero una lista si usa `b = a.copy()` oppure lo slicing `b = a[:]`.
+:::
 
-```python
-# =======================================================
-# Script: registro_dinamico.py
-# Scopo: Acquisizione indefinita, append e scansione liste
-# =======================================================
+### Mettiti alla prova (Domande Flash)
 
-print("=== GESTIONE DINAMICA DEL REGISTRO DEI VOTI ===")
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Data <code>L = [10, 20, 30, 40, 50]</code>, cosa restituiscono <code>L[-1]</code> e <code>L[1:4]</code>?</summary>
+  <p><code>L[-1]</code> restituisce <code>50</code> (l'ultimo elemento); <code>L[1:4]</code> restituisce <code>[20, 30, 40]</code> (indice 4 escluso).</p>
+</details>
 
-valutazioni = []
+<details>
+  <summary><strong>2. Domanda rapida:</strong> Che differenza c'è tra <code>.remove(valore)</code> e <code>.pop(indice)</code>?</summary>
+  <p><code>.remove()</code> cerca ed elimina la prima occorrenza di un <strong>valore</strong> senza restituirlo; <code>.pop()</code> elimina l'elemento in una certa <strong>posizione</strong> e ne restituisce il valore.</p>
+</details>
 
-# Fase 1: Caricamento dinamico dei dati con valore sentinella
-while True:
-    voto_input = float(input("Inserisci una valutazione (voto negativo per terminare): "))
-    if voto_input < 0:
-        break  # Uscita controllata dal ciclo
-    
-    # Validazione didattica del dato ammesso
-    if 1.0 <= voto_input <= 10.0:
-        valutazioni.append(voto_input)
-        print(f"-> Voto {voto_input:.1f} registrato correttamente.")
-    else:
-        print("Valore non valido: i voti devono essere compresi tra 1 e 10.")
-
-# Fase 2: Controllo presenza dati ed elaborazione algoritmica
-if len(valutazioni) == 0:
-    print("\nNessuna valutazione registrata. Chiusura del programma.")
-else:
-    print("\n" + "=" * 45)
-    print(f"Totale prove acquisite nel registro: {len(valutazioni)}")
-    print(f"Elenco voti registrati: {valutazioni}")
-
-    # Calcolo della sommatoria e della media tramite scansione per elemento
-    somma_totale = 0.0
-    conteggio_sufficienti = 0
-    voto_massimo = valutazioni[0]  # Algoritmo del podio visto nel Modulo 2.5
-
-    for v in valutazioni:
-        somma_totale += v
-        
-        # Conteggio delle sufficienze
-        if v >= 6.0:
-            conteggio_sufficienti += 1
-            
-        # Aggiornamento manuale del valore massimo
-        if v > voto_massimo:
-            voto_massimo = v
-
-    media_classe = somma_totale / len(valutazioni)
-
-    # Visualizzazione del prospetto statistico
-    print("-" * 45)
-    print(f"Media aritmetica complessiva: {media_classe:.2f}")
-    print(f"Voto piu' alto registrato:     {voto_massimo:.1f}")
-    print(f"Numero di verifiche sufficienti: {conteggio_sufficienti} su {len(valutazioni)}")
-    print("=" * 45)
-```
-
-#### Esempio 2: Filtraggio e Separazione di Dati con Liste Multiple
-*Obiettivo:* Un sensore industriale registra una serie di misurazioni termiche giornaliere (positive e negative). Scrivere uno script che analizzi la lista di rilevazioni grezze, scarti le letture anomale identificate dal codice di errore convenzionale `-999.0` e separi i valori validi in due liste distinte: una contenente le temperature sopra lo zero termico (positive) e una con quelle sotto lo zero (negative o nulle).
-
-```python
-# =======================================================
-# Script: separazione_temperature.py
-# Scopo: Filtraggio dati, rimozione valori e creazione liste
-# =======================================================
-
-print("=== ELABORAZIONE DATI TELEMETRICI AMBIENTALI ===")
-
-# Rilevazioni grezze del sensore (alcune contengono errori tecnici -999.0)
-letture_grezze = [12.4, -3.2, -999.0, 5.0, -1.8, 18.2, -999.0, 0.5, -4.1]
-
-temperature_positive = []
-temperature_negative = []
-errori_rilevati = 0
-
-print("Letture acquisite dal sensore:", letture_grezze)
-
-# Scansione sequenziale per filtraggio e categorizzazione
-for valore in letture_grezze:
-    if valore == -999.0:
-        # Codice di errore del sensore
-        errori_rilevati += 1
-    elif valore > 0.0:
-        temperature_positive.append(valore)
-    else:
-        temperature_negative.append(valore)
-
-# Ordinamento sul posto dei campioni validi
-temperature_positive.sort()
-temperature_negative.sort(reverse=True)
-
-# Visualizzazione dei risultati separati
-print("\n--- RISULTATO DEL FILTRAGGIO ---")
-print(f"Anomalie scartate con successo: {errori_rilevati}")
-print(f"Temperature sopra lo zero ({len(temperature_positive)} campioni): {temperature_positive}")
-print(f"Temperature sotto lo zero ({len(temperature_negative)} campioni): {temperature_negative}")
-```
-
-#### Esempio 3: Gestione di una Coda Operativa con Slicing e Rimozione Controllata
-*Obiettivo:* Realizzare un simulatore di gestione delle prenotazioni di uno sportello di assistenza tecnica. Il programma memorizza una lista di clienti in attesa, consente di servire il primo cliente della fila (estrazione con `.pop(0)`), accetta l'inserimento prioritario di un cliente urgente in seconda posizione (`.insert(1, ...)`), visualizza i prossimi tre clienti che saranno serviti sfruttando lo slicing e permette la cancellazione su richiesta di una prenotazione tramite l'operatore di appartenenza `in` e il metodo `.remove()`.
-
-```python
-# =======================================================
-# Script: sportello_clienti.py
-# Scopo: Dimostrazione integrata di pop, insert, remove e slicing
-# =======================================================
-
-coda_sportello = ["Bianchi", "Rossi", "Verdi", "Neri", "Gialli", "Ferrari"]
-
-print("=== SPORTELLO SERVIZI AL CITTADINO ===")
-print("Stato iniziale della fila:", coda_sportello)
-
-# 1. Chiamata del primo utente in attesa (politica FIFO)
-utente_servito = coda_sportello.pop(0)
-print(f"\n[CHIAMATA] Il signor {utente_servito} si accomodi allo sportello 1.")
-print("Fila aggiornata:", coda_sportello)
-
-# 2. Inserimento prioritario: un cliente con urgenza scavalca la fila e va al 2° posto
-cliente_urgente = "Esposito (Prioritario)"
-coda_sportello.insert(1, cliente_urgente)
-print(f"\n[INSERIMENTO] Aggiunto {cliente_urgente} in posizione 2.")
-print("Fila aggiornata:", coda_sportello)
-
-# 3. Anteprima dei prossimi 3 utenti in attesa tramite Slicing
-prossimi = coda_sportello[:3]
-print("\n[PROSSIMI IN CODA] Monitor di sala - Prossimi chiamati:", prossimi)
-
-# 4. Un utente decide di rinunciare all'attesa e cancellare il proprio turno
-cliente_rinunciatario = "Neri"
-if cliente_rinunciatario in coda_sportello:
-    coda_sportello.remove(cliente_rinunciatario)
-    print(f"\n[DISDETTA] Il signor {cliente_rinunciatario} ha lasciato la fila.")
-else:
-    print(f"\nIl signor {cliente_rinunciatario} non risulta presente in coda.")
-
-print("\nSituazione definitiva della sala d'attesa:")
-for posto, cliente in enumerate(coda_sportello, start=1):
-    print(f"  Posizione {posto}: {cliente}")
-```
+<details>
+  <summary><strong>3. Domanda rapida:</strong> Quando conviene usare <code>enumerate(lista)</code> invece di <code>for x in lista</code>?</summary>
+  <p>Quando durante la scansione servono contemporaneamente sia il <strong>valore</strong> dell'elemento sia il suo <strong>indice</strong> posizionale.</p>
+</details>
 
 ---
 
@@ -338,7 +218,3 @@ for posto, cliente in enumerate(coda_sportello, start=1):
 *   **Metodo Append:** Procedura interna della classe `list` che inserisce un nuovo elemento in coda alla collezione, incrementandone la lunghezza di un'unità.
 *   **Metodo Pop:** Operazione che rimuove un elemento da una posizione specifica della lista (o dall'estremità finale per default) e ne restituisce il valore contestualmente all'istruzione chiamante.
 *   **Enumerate:** Funzione generatrice di Python che trasforma un oggetto iterabile in una serie sequenziale di coppie ordinate, fornendo contestualmente l'indice posizionale progressivo e il rispettivo valore.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

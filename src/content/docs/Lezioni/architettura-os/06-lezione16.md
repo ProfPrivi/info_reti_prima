@@ -48,6 +48,28 @@ Per capire come funziona questo traduttore, possiamo immaginare il Sistema Opera
     *   **Le Estensioni dei File:** Per organizzare questa immensa biblioteca, il File System utilizza un trucco ingegnoso chiamato *estensione*. È un'etichetta posta alla fine del nome del file, separata da un punto (ad esempio `.txt`, `.jpg`, `.mp3`, `.exe`). Poiché per il disco fisso tutti i file sono solo sequenze di zeri e uni, l'estensione suggerisce al Sistema Operativo quale linguaggio utilizzare per "tradurre" i dati e, di conseguenza, quale programma aprire quando l'utente fa doppio clic. Se cambiate forzatamente l'estensione di una foto `.jpg` in `.mp3`, il file non si aprirà più, perché costringerete il sistema operativo a usare un riproduttore musicale per tentare di "ascoltare" i pixel di un'immagine!
 *   **C. L'Interfaccia Utente o Shell (La buccia - Lo strato esterno):** È lo strato superficiale, quello che guarda verso di noi e che noi possiamo toccare e vedere. È il cruscotto della nostra macchina. Quando l'utente vuole compiere un'azione, dà il comando all'interfaccia. L'interfaccia traduce la richiesta e la passa al File System, che a sua volta la passa al Kernel, che infine fa scattare fisicamente gli interruttori nell'Hardware.
 
+<figure class="schema-svg">
+  <svg viewBox="0 0 640 270" width="600" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Architettura a cipolla del Sistema Operativo">
+    <ellipse cx="320" cy="135" rx="290" ry="120" fill="#dbeafe" stroke="#2563eb" stroke-width="2.5"/>
+    <ellipse cx="320" cy="145" rx="225" ry="92" fill="#bfdbfe" stroke="#1d4ed8" stroke-width="2.5"/>
+    <ellipse cx="320" cy="156" rx="158" ry="64" fill="#93c5fd" stroke="#1e40af" stroke-width="2.5"/>
+    <ellipse cx="320" cy="168" rx="92" ry="36" fill="#0f5682" stroke="#062336" stroke-width="2.5"/>
+    <text x="320" y="38" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="800" fill="#1e3a8a">SHELL / INTERFACCIA UTENTE (GUI o CLI)</text>
+    <text x="320" y="74" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#1e3a8a">FILE SYSTEM (File, Cartelle, Estensioni)</text>
+    <text x="320" y="114" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#0f172a">KERNEL (Gestione CPU, RAM, Driver)</text>
+    <text x="320" y="173" text-anchor="middle" font-family="system-ui,sans-serif" font-size="15" font-weight="800" fill="#ffffff">HARDWARE</text>
+  </svg>
+  <figcaption>Modello a strati concentrici ("a cipolla") del Sistema Operativo: ogni livello nasconde la complessità di quello sottostante.</figcaption>
+</figure>
+
+:::tip[Idea chiave]
+Il Sistema Operativo trasforma una macchina fisica complessa in un ambiente sicuro e intuitivo grazie all'**Astrazione**: nessun programma normale tocca direttamente l'hardware senza passare dal **Kernel**.
+:::
+
+:::caution[Errore tipico in verifica]
+Non confondere **Programma** e **Processo**: il programma è statico e fermo sul disco; il processo è dinamico, vivo in memoria RAM e gestito dallo Scheduler della CPU.
+:::
+
 #### 5. GUI contro CLI: Due mondi a confronto
 La "buccia" della cipolla (l'Interfaccia Utente) non è sempre uguale. A seconda di chi usa il computer, esistono due tipologie di interfacce fondamentali. Entrambe sono valide e convivono nei computer moderni, ma sono nate per scopi molto diversi:
 
@@ -72,6 +94,25 @@ Ora, il problema è che dentro la RAM del vostro PC ci sono decine o centinaia d
 
 Poiché un singolo nucleo della CPU può fisicamente fare una sola operazione alla volta, entrerebbe in crisi. Qui interviene una parte geniale del Sistema Operativo chiamata **Scheduler** (il pianificatore). Lo Scheduler fa letteralmente il vigile: mette in fila tutti i processi e decide chi ha la priorità assoluta. Manda il processo del browser nella CPU per una frazione infinitesimale di secondo, poi lo "congela" bruscamente e manda avanti il processo di Spotify, poi l'antivirus, e poi ricomincia il giro.
 Questo avvicendamento avviene migliaia di volte al secondo. È così sbalorditivamente veloce che a noi umani, lenti per natura, sembra che il computer stia eseguendo tutto simultaneamente. Questa formidabile illusione creata dal Sistema Operativo si chiama **Multitasking**. Quando lo Scheduler si confonde o un processo "rifiuta" di farsi mettere in pausa, il computer inizia a scattare o si blocca completamente (il famoso *freeze* del sistema).
+
+---
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Perché all'accensione serve il BIOS/UEFI se esiste già il Sistema Operativo sul disco?</summary>
+  <p>Perché all'accensione la RAM è completamente vuota: serve un firmware permanente sulla scheda madre (BIOS/UEFI) per verificare l'hardware (POST) e caricare il Sistema Operativo dal disco alla RAM (Bootstrap).</p>
+</details>
+
+<details>
+  <summary><strong>2. Vero o Falso:</strong> Rinominando un file <code>foto.jpg</code> in <code>foto.mp3</code> si trasforma l'immagine in un file audio.</summary>
+  <p><strong>Falso.</strong> L'estensione è solo un'etichetta per il Sistema Operativo: i bit interni restano quelli di una fotografia e il lettore musicale darà errore.</p>
+</details>
+
+<details>
+  <summary><strong>3. Domanda rapida:</strong> Chi decide quale processo può usare la CPU in un determinato istante?</summary>
+  <p>Lo <strong>Scheduler</strong> del Sistema Operativo, alternando rapidamente i processi per creare l'illusione del Multitasking.</p>
+</details>
 
 ---
 
@@ -103,7 +144,3 @@ Questo avvicendamento avviene migliaia di volte al secondo. È così sbalorditiv
 *   **CLI (Command Line Interface):** Interfaccia testuale in cui l'utente interagisce con la macchina digitando istruzioni precise (comandi) attraverso una tastiera.
 *   **Processo:** Un programma in fase di esecuzione. È un'entità dinamica, caricata all'interno della memoria centrale (RAM) e gestita attivamente dal sistema operativo.
 *   **Scheduler:** Il modulo "pianificatore" del sistema operativo. Stabilisce rigorosamente l'ordine, le priorità e i tempi infinitesimali con cui i diversi processi attivi in RAM possono accedere alla CPU (creando il Multitasking).
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

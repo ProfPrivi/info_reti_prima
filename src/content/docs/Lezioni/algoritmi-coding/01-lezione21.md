@@ -57,13 +57,40 @@ Non basta fare un elenco numerato per avere un algoritmo. Per essere considerato
 
 ---
 
+:::tip[Idea chiave]
+Un **algoritmo** non è codice Python o C++: è il **ragionamento logico** privo di ambiguità che risolve un'intera classe di problemi, prima ancora della sua traduzione in un linguaggio di programmazione.
+:::
+
+:::caution[Errore tipico in verifica]
+Non confondere **Non ambiguità** con **Determinismo**: la *non ambiguità* riguarda la chiarezza delle singole istruzioni ("aggiungi 5 g", non "un pizzico"); il *determinismo* garantisce che a parità di input l'algoritmo produca sempre lo stesso identico output.
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Quale delle 4 proprietà dell'algoritmo viene violata da un ciclo infinito?</summary>
+  <p>La <strong>Finitezza</strong>, perché l'algoritmo non termina in un tempo finito.</p>
+</details>
+
+<details>
+  <summary><strong>2. Vero o Falso:</strong> Un algoritmo che calcola esclusivamente <code>5 + 3</code> rispetta la proprietà di Generalità.</summary>
+  <p><strong>Falso.</strong> Risolve solo un singolo caso fisso invece di un'intera classe di problemi (<code>A + B</code>).</p>
+</details>
+
+<details>
+  <summary><strong>3. Domanda rapida:</strong> Perché la mappa della metropolitana è un perfetto esempio di Astrazione?</summary>
+  <p>Perché elimina i dettagli geografici superflui (curve, distanze reali) mantenendo solo le informazioni essenziali per decidere dove salire, cambiare e scendere.</p>
+</details>
+
+---
+
 ### Sintesi
 
 *   **Pensiero Computazionale:** È l'abilità mentale di analizzare un problema e scomporlo per formulare una soluzione in un modo così strutturato e logico da poter essere eseguita in automatico da un calcolatore.
 *   **Astrazione e Modello:** È il processo mentale vitale con cui si eliminano i dettagli marginali della realtà (es. i colori, le forme inutili) per isolare solo i dati fondamentali necessari a risolvere il problema, creando così un "Modello" astratto (come la mappa della metropolitana).
 *   **Il limite dell'Esecutore:** Le istruzioni umane si basano sull'intuito e sull'esperienza e sono spesso ambigue. Il computer è un esecutore rigidissimo: non avendo intuito, necessita di comandi assoluti e millimetrici.
 *   **Definizione di Algoritmo:** Derivato dal matematico persiano Al-Khwarizmi, è una sequenza logica, ordinata e inequivocabile di passi elementari che porta alla risoluzione di un problema specifico. È il pensiero logico prima ancora del codice scritto.
-*   **Le 4 Proprietà dell'Algoritmo:** Per funzionare e non far "crushare" la macchina, un algoritmo deve possedere: Finitezza (deve avere una fine), Non ambiguità (comandi impossibili da fraintendere), Determinismo (stessi input portano sempre allo stesso identico output) e Generalità (deve valere per un'intera categoria di problemi).
+*   **Le 4 Proprietà dell'Algoritmo:** Per funzionare e non far andare in crash la macchina, un algoritmo deve possedere: Finitezza (deve avere una fine), Non ambiguità (comandi impossibili da fraintendere), Determinismo (stessi input portano sempre allo stesso identico output) e Generalità (deve valere per un'intera categoria di problemi).
 
 ---
 
@@ -76,7 +103,3 @@ Non basta fare un elenco numerato per avere un algoritmo. Per essere considerato
 *   **Variabile:** Un "contenitore" logico all'interno della memoria del computer, appositamente progettato per ospitare i dati iniziali (gli ingredienti) e i risultati temporanei necessari allo svolgimento dell'algoritmo.
 *   **Algoritmo:** Procedimento logico, sequenziale e rigoroso, costituito da istruzioni non ambigue, il cui svolgimento garantisce la risoluzione di una classe generale di problemi in un tempo limitato.
 *   **Determinismo:** Proprietà matematica fondamentale per cui un sistema (o un algoritmo), se posto nelle stesse identiche condizioni iniziali, si comporterà sempre nello stesso modo, restituendo sempre il medesimo risultato in modo totalmente prevedibile.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

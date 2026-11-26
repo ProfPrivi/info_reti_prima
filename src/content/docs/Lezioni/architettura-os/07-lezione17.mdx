@@ -1,0 +1,135 @@
+---
+title: 1.7 Il Ciclo della CPU e la Gerarchia delle Memorie
+description: Il ciclo macchina Fetch-Decode-Execute, il clock di sistema, la piramide delle memorie (registri, cache, RAM, ROM, HDD/SSD) e il collo di bottiglia di Von Neumann.
+---
+
+import SimulatoreCPU from '/src/components/SimulatoreCPU.astro';
+
+### Introduzione
+
+Nella lezione `1.1` abbiamo conosciuto l'Architettura di Von Neumann: un processore (CPU), una memoria centrale (RAM), i dispositivi di Input/Output e i tre Bus che li collegano. Nella lezione `1.6` abbiamo poi visto come il Sistema Operativo carichi i programmi dal disco alla RAM trasformandoli in processi attivi.
+
+Ma cosa accade, istante per istante, all'interno del silicio quando la CPU esegue realmente un programma? E perché un computer moderno non possiede una sola memoria gigantesca e velocissima, ma è invece pieno di memorie diverse (Registri, Cache, RAM, SSD, ROM)?
+
+In questa lezione entreremo nel ritmo cardiaco del calcolatore: studieremo il **Ciclo Macchina (Fetch – Decode – Execute)** scandito dal **Clock**, scopriremo la **Gerarchia delle Memorie** e capiremo perché le prestazioni di un computer dipendono dall'equilibrio tra velocità, costo e capacità dei suoi componenti.
+
+---
+
+### Sviluppo dell'Argomento
+
+#### 1. Il Battito Cardiaco del Computer: Il Clock
+All'interno di una CPU non c'è nulla che avvenga "a caso": miliardi di transistor devono commutare in perfetta sincronia per non mescolare segnali elettrici in ritardo con quelli in anticipo. A imporre il ritmo provvede un minuscolo cristallo di quarzo chiamato **Clock** (orologio di sistema), che genera un impulso elettrico regolare (un'onda quadra `0 - 1 - 0 - 1`).
+
+*   La **Frequenza di Clock** indica quanti impulsi (cicli) vengono generati in un solo secondo e si misura in **Hertz (Hz)**.
+*   Un processore da **3 GHz** (3 Gigahertz) emette **3 miliardi di battiti al secondo**: a ogni battito (o gruppo di battiti), la CPU avanza di un passo elementare nell'esecuzione delle istruzioni.
+
+*Attenzione a un luogo comune:* la frequenza di clock da sola non determina interamente la velocità di un computer. Contano anche il numero di **Core** (nuclei fisici indipendenti dentro lo stesso chip, capaci di eseguire più istruzioni in parallelo), l'architettura interna della CPU e la velocità delle memorie che le forniscono i dati.
+
+#### 2. I Registri Speciali e il Ciclo Fetch – Decode – Execute
+Per comprendere come la CPU esegue un programma memorizzato in RAM, dobbiamo conoscere tre registri fondamentali presenti dentro il processore:
+*   **PC (*Program Counter* — Contatore di Programma):** Contiene sempre l'**indirizzo di memoria** della *prossima* istruzione da prelevare dalla RAM. È il "segnalibro" della CPU.
+*   **IR (*Instruction Register* — Registro Istruzioni):** Ospita l'istruzione binaria che la CPU sta decodificando in quell'istante.
+*   **Registri Dati / Accumulatore:** Piccolissime celle ultra-veloci dove l'ALU appoggia gli operandi e i risultati intermedi dei calcoli.
+
+Ogni singola istruzione di qualsiasi programma viene eseguita ripetendo all'infinito un ciclo in tre fasi, chiamato **Ciclo Macchina** (o ciclo **Fetch – Decode – Execute**):
+
+1.  **FETCH (Prelievo):** La Control Unit (CU) legge l'indirizzo contenuto nel *Program Counter*, lo invia sul Bus degli Indirizzi e richiede alla RAM l'istruzione corrispondente. L'istruzione viaggia sul Bus dei Dati e viene depositata nell'*Instruction Register*. Subito dopo, il *Program Counter* viene incrementato per puntare già all'istruzione successiva.
+2.  **DECODE (Decodifica):** La Control Unit interpreta il codice binario nell'*Instruction Register* (separando il codice operativo *OpCode* dagli operandi) e capisce quale operazione è richiesta (es. una somma, un confronto o una lettura in memoria).
+3.  **EXECUTE (Esecuzione):** La CU attiva i circuiti necessari (ad esempio l'ALU per un calcolo matematico, oppure i bus per scrivere un risultato in RAM). Al termine, il ciclo ricomincia istantaneamente dalla fase di Fetch per l'istruzione seguente.
+
+<SimulatoreCPU />
+
+#### 3. Il Collo di Bottiglia di Von Neumann
+Questo meccanismo svela un limite strutturale famoso in informatica: il **Collo di Bottiglia di Von Neumann** (*Von Neumann Bottleneck*).
+La CPU è enormemente più veloce della memoria RAM e dei bus che la collegano. Mentre un processore moderno può compiere miliardi di operazioni al secondo, attendere che un dato arrivi dalla RAM attraverso il bus di sistema è, in proporzione, come un cuoco stellato capace di tagliare verdure alla velocità della luce costretto ad aspettare dieci minuti che un cameriere vada in cantina a prendergli una cipolla.
+
+Per non lasciare la CPU inattiva ad aspettare i dati, gli ingegneri non usano una sola memoria, ma costruiscono una **Gerarchia delle Memorie**.
+
+#### 4. La Piramide (Gerarchia) delle Memorie
+In elettronica esiste una legge economica e fisica ineludibile: **più una memoria è veloce, più è costosa per singolo byte e più è fisicamente piccola**. Per conciliare alte prestazioni e grande capacità di archiviazione, il computer organizza le memorie come una piramide: al vertice poche celle velocissime, alla base enormi archivi più lenti.
+
+```text
+                /\
+               /  \        1. Registri CPU (pochissimi Byte, istantanei, volatili)
+              /----\
+             /      \      2. Memoria Cache L1 / L2 / L3 (KB - MB, rapidissima, volatile)
+            /--------\
+           /          \    3. Memoria Centrale - RAM (GB, veloce, volatile)
+          /------------\
+         /              \  4. Memorie di Massa - SSD / HDD (GB - TB, lente, permanenti)
+        /----------------\
+```
+
+Analizziamo ciascun livello e il suo ruolo:
+
+*   **Registri della CPU:** Integrati direttamente nei circuiti del processore. Hanno tempi di accesso istantanei (frazioni di nanosecondo), ma contengono solo pochi byte. Sono **volatili** (allo spegnimento si svuotano).
+*   **Memoria Cache (L1, L2, L3):** È una piccola memoria statica (SRAM) ultra-veloce posta vicinissima o dentro la CPU. Conserva una copia dei dati e delle istruzioni usati più di recente (sfruttando il *principio di località*: se la CPU ha appena usato un dato, è molto probabile che le serva di nuovo a breve). Evita continui viaggi lenti verso la RAM.
+*   **RAM (*Random Access Memory* — Memoria Centrale):** È il "banco di lavoro" del sistema operativo e dei programmi in esecuzione. Si chiama ad *accesso casuale* (o diretto) perché il tempo per raggiungere qualsiasi cella è sempre lo stesso, indipendentemente dalla posizione. È **volatile**: senza corrente elettrica perde istantaneamente tutto il suo contenuto.
+*   **ROM (*Read-Only Memory*) e Memoria Flash di sistema:** A differenza della RAM, è una memoria **non volatile** (permanente). Ospita il firmware di avvio (BIOS/UEFI visto nella lezione `1.6`), indispensabile per risvegliare il computer quando la RAM è ancora vuota.
+*   **Memorie di Massa (Storage):** Conservano in modo **permanente** (non volatile) il sistema operativo, i programmi e i file dell'utente anche a computer spento. Le due tecnologie principali sono:
+    *   **HDD (*Hard Disk Drive*):** Basati su dischi magnetici rotanti e una testina meccanica mobile. Offrono grande capacità a basso costo, ma sono relativamente lenti, rumorosi e sensibili agli urti.
+    *   **SSD (*Solid State Drive*):** Basati su chip di memoria Flash a stato solido (senza parti meccaniche in movimento). Sono silenziosi, resistenti agli urti e molto più veloci degli HDD nel caricare il sistema operativo e i programmi.
+
+##### Tabella Comparativa delle Memorie
+
+| Livello di Memoria | Volatilità | Velocità | Capacità Tipica | Costo per GB |
+| :--- | :--- | :--- | :--- | :--- |
+| **Registri CPU** | Volatile | Massima (istantanea) | Pochi Byte / KB | Altissimo |
+| **Cache (L1/L2/L3)** | Volatile | Molto alta | Da KB a decine di MB | Molto alto |
+| **RAM** | Volatile | Alta | 8 GB – 64 GB | Medio |
+| **SSD (Stato Solido)** | Non volatile (Permanente) | Media / Buona | 256 GB – 4 TB | Medio-basso |
+| **HDD (Magnetico)** | Non volatile (Permanente) | Bassa | 1 TB – 20 TB | Molto basso |
+
+---
+
+:::tip[Idea chiave]
+Più una memoria è vicina alla CPU, più è **veloce**, **costosa per GB** e **piccola** (Registri → Cache → RAM → SSD/HDD).
+:::
+
+:::caution[Errore tipico in verifica]
+Non confondere la **RAM** con la **memoria di massa (SSD/HDD)**: avere "1 TB di memoria" sul telefono o PC si riferisce allo spazio di archiviazione permanente, mentre la RAM (es. 8–16 GB) è la memoria volatile di lavoro per i programmi aperti.
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Quale registro contiene sempre l'indirizzo della <em>prossima</em> istruzione da prelevare in RAM?</summary>
+  <p>Il <strong>Program Counter (PC)</strong>.</p>
+</details>
+
+<details>
+  <summary><strong>2. Vero o Falso:</strong> La Memoria Cache conserva i file anche quando il computer viene spento.</summary>
+  <p><strong>Falso.</strong> Come Registri e RAM, anche la Cache è una memoria <strong>volatile</strong>.</p>
+</details>
+
+<details>
+  <summary><strong>3. Domanda rapida:</strong> Perché un PC con SSD si avvia molto più velocemente di uno con HDD?</summary>
+  <p>Perché l'SSD utilizza chip di memoria Flash a stato solido ad accesso istantaneo, senza dover attendere la rotazione di piatti magnetici e il movimento fisico di una testina meccanica.</p>
+</details>
+
+---
+
+### Sintesi
+
+*   **Clock e Frequenza:** Il clock sincronizza tutte le operazioni della CPU tramite impulsi regolari misurati in Hertz (GHz nei processori moderni).
+*   **Ciclo Fetch – Decode – Execute:** La CPU esegue ogni programma ripetendo tre fasi: preleva l'istruzione puntata dal *Program Counter* (Fetch), la interpreta nell'*Instruction Register* (Decode) e la esegue tramite l'ALU o i bus (Execute).
+*   **Collo di Bottiglia di Von Neumann:** La differenza di velocità tra CPU e RAM rallenta il sistema; per attenuare questo limite si ricorre a memorie intermedie ad altissima velocità.
+*   **Gerarchia delle Memorie:** Salendo verso la CPU aumentano velocità e costo unitario, mentre diminuisce la capacità (HDD/SSD → RAM → Cache → Registri).
+*   **Volatile vs Non Volatile:** Registri, Cache e RAM perdono i dati allo spegnimento; ROM, SSD e HDD conservano l'informazione in modo permanente.
+
+---
+
+### Glossario
+
+*   **Clock (Orologio di Sistema):** Segnale elettrico periodico che sincronizza tutte le commutazioni e le fasi operative della CPU.
+*   **Frequenza di Clock (Hz / GHz):** Numero di cicli generati dal clock in un secondo (1 GHz = 1 miliardo di cicli al secondo).
+*   **Core:** Singola unità di elaborazione completa presente all'interno di un microprocessore moderno (un processore *multi-core* integra più core sullo stesso chip).
+*   **Program Counter (PC):** Registro speciale della CPU che memorizza l'indirizzo in RAM della prossima istruzione da eseguire.
+*   **Instruction Register (IR):** Registro interno della CPU che conserva temporaneamente l'istruzione appena prelevata per consentirne la decodifica.
+*   **Ciclo Fetch – Decode – Execute:** Sequenza ciclica fondamentale con cui la CPU preleva, decodifica ed esegue ogni istruzione del codice macchina.
+*   **Collo di Bottiglia di Von Neumann:** Limitazione prestazionale dovuta al fatto che dati e istruzioni condividono lo stesso canale di collegamento verso una memoria molto più lenta della CPU.
+*   **Memoria Cache:** Memoria tampone ultra-veloce e di ridotte dimensioni interposta tra CPU e RAM per ridurre i tempi di attesa sui dati usati più di frequente.
+*   **Memoria Volatile:** Memoria elettronica (come RAM, Cache e Registri) che necessita di alimentazione elettrica continua per mantenere i dati, svuotandosi allo spegnimento.
+*   **ROM (Read-Only Memory):** Memoria non volatile di sola lettura (o riscrivibile solo con procedure speciali) contenente istruzioni permanenti di avvio come il firmware BIOS/UEFI.
+*   **SSD (Solid State Drive):** Dispositivo di archiviazione di massa a stato solido basato su memorie Flash, privo di parti meccaniche mobili.
+*   **HDD (Hard Disk Drive):** Dispositivo di archiviazione di massa elettromeccanico basato su piatti magnetici rotanti e testine di lettura/scrittura.

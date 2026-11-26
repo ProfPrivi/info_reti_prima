@@ -179,117 +179,30 @@ Le strutture annidate sono preziose per implementare la **validazione dei dati d
 
 ---
 
-### Esempi Pratici e Script Completi Guidati
+:::tip[Script completi di laboratorio]
+Gli script completi di questo modulo (`biglietteria_cinema.py`, `anno_bisestile.py`, `calcolatrice_sicura.py`) sono disponibili nella sezione [**Lab 3 - Script Python (Modulo 3.3)**](/info_reti_prima/lezioni/laboratorio/04-lab-python-script/#modulo-33--strutture-decisionali-e-operatori-logici).
+:::
 
-#### Esempio 1: Calcolo Tariffario del Cinema con Scaglioni Multipli
-*Obiettivo:* Progettare un algoritmo di biglietteria che acquisisca l'età dello spettatore e verifichi se possiede uno status di studente, calcolando il costo del biglietto secondo le seguenti regole:
-*   Bambini sotto gli 8 anni: Ingresso Gratuito (0,00 €).
-*   Ragazzi dagli 8 ai 17 anni: Tariffa Ridotta (5,00 €).
-*   Adulti (18-64 anni): Tariffa Piena (8,50 €), con riduzione a 6,00 € in caso di studenti universitari.
-*   Senior (dai 65 anni in su): Tariffa Over 65 (4,00 €).
+:::caution[Errore tipico in verifica]
+Non confondere **`=`** (assegnazione: salva un valore in una variabile) con **`==`** (confronto di uguaglianza: restituisce `True` o `False`). Scrivere `if x = 5:` genera un `SyntaxError` immediato.
+:::
 
-```python
-# =======================================================
-# Script: biglietteria_cinema.py
-# Scopo: Dimostrazione pratica di if - elif - else annidati
-# =======================================================
+### Mettiti alla prova (Domande Flash)
 
-print("=== SISTEMA DI BIGLIETTERIA MULTISALA ===")
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Qual è la differenza tra una catena <code>if / elif / else</code> e tre <code>if</code> separati uno sotto l'altro?</summary>
+  <p>Nella catena <code>if / elif / else</code> i rami sono <strong>mutualmente esclusivi</strong> (appena una condizione è Vera, le altre vengono saltate); con tre <code>if</code> separati Python li controlla tutti indipendentemente.</p>
+</details>
 
-# Acquisizione dell'età con casting esplicito a numero intero
-eta = int(input("Inserisci l'eta' dello spettatore: "))
+<details>
+  <summary><strong>2. Domanda rapida:</strong> Perché in <code>if d != 0 and (100 / d) &gt; 2:</code> il programma non va in crash quando <code>d = 0</code>?</summary>
+  <p>Per la <strong>valutazione a corto circuito</strong> (<em>Short-Circuit</em>): poiché <code>d != 0</code> è subito <code>False</code>, Python non valuta affatto la divisione a destra dell'<code>and</code>.</p>
+</details>
 
-# Fase di validazione preliminare contro input assurdi
-if eta < 0 or eta > 125:
-    print("Errore: Il valore di eta' inserito non e' plausibile.")
-else:
-    # Catena di bivi mutualmente esclusivi
-    if eta < 8:
-        prezzo = 0.0
-        categoria = "Bambino (Omaggio)"
-    elif eta < 18:
-        prezzo = 5.0
-        categoria = "Junior (Ridotto)"
-    elif eta >= 65:
-        prezzo = 4.0
-        categoria = "Senior (Over 65)"
-    else:
-        # Gestione della tariffa adulti con sotto-selezione condizionale
-        risposta_studente = input("Sei uno studente universitario con tesserino? (s/n): ")
-        if risposta_studente == "s" or risposta_studente == "S":
-            prezzo = 6.0
-            categoria = "Universitario (Sconto Studio)"
-        else:
-            prezzo = 8.5
-            categoria = "Adulto (Intero)"
-
-    # Visualizzazione pulita del riepilogo cassa
-    print("-----------------------------------------")
-    print("Categoria assegnata:", categoria)
-    print("Importo da saldare: ", prezzo, "Euro")
-    print("-----------------------------------------")
-```
-
-#### Esempio 2: Verifica dell'Anno Bisestile con Logica Booleana
-*Obiettivo:* Realizzare un algoritmo che determini se un anno inserito dall'utente è bisestile. 
-*Regola astronomica gregoriana:* Un anno è bisestile se è divisibile per 4, **ma non** per 100, **a meno che** non sia contemporaneamente divisibile per 400 (gli anni secolari 1600 e 2000 erano bisestili; 1700, 1800 e 1900 non lo erano).
-
-```python
-# =======================================================
-# Script: anno_bisestile.py
-# Scopo: Applicazione congiunta di and, or e operatore modulo %
-# =======================================================
-
-print("=== VERIFICA ANNO BISESTILE ===")
-
-anno = int(input("Inserisci l'anno da verificare (es. 2024): "))
-
-# Condizione logica avanzata formulata in un'unica espressione booleana
-# La regola è: (divisibile per 4 AND NON per 100) OPPURE (divisibile per 400)
-e_bisestile = (anno % 4 == 0 and anno % 100 != 0) or (anno % 400 == 0)
-
-if e_bisestile:
-    print("L'anno", anno, "E' bisestile: il mese di febbraio conta 29 giorni.")
-else:
-    print("L'anno", anno, "NON e' bisestile: l'anno dura 365 giorni regolari.")
-```
-
-#### Esempio 3: Calcolatrice Aritmetica con Protezione Errori a Runtime
-*Obiettivo:* Acquisire due operandi numerici e il simbolo dell'operazione desiderata (`+`, `-`, `*`, `/`). Il programma deve identificare l'operatore corretto, intercettare la divisione per zero prima che causi un crash e segnalare eventuali comandi non riconosciuti.
-
-```python
-# =======================================================
-# Script: calcolatrice_sicura.py
-# Scopo: Selezioni annidate e programmazione difensiva
-# =======================================================
-
-print("=== CALCOLATRICE ARITMETICA PROTETTA ===")
-
-primo_numero = float(input("Inserisci il primo numero: "))
-operatore = input("Scegli l'operazione da eseguire (+, -, *, /): ")
-secondo_numero = float(input("Inserisci il secondo numero: "))
-
-# Riconoscimento del simbolo operatore
-if operatore == "+":
-    risultato = primo_numero + secondo_numero
-    print("Risultato:", primo_numero, "+", secondo_numero, "=", risultato)
-elif operatore == "-":
-    risultato = primo_numero - secondo_numero
-    print("Risultato:", primo_numero, "-", secondo_numero, "=", risultato)
-elif operatore == "*":
-    risultato = primo_numero * secondo_numero
-    print("Risultato:", primo_numero, "*", secondo_numero, "=", risultato)
-elif operatore == "/":
-    # Protezione condizionale preventiva contro il crash per divisione per zero
-    if secondo_numero == 0:
-        print("Errore Matematico: Impossibile dividere una quantita' per zero!")
-    else:
-        risultato = primo_numero / secondo_numero
-        print("Risultato:", primo_numero, "/", secondo_numero, "=", risultato)
-else:
-    # Gestione dell'anomalia di digitazione
-    print("Errore: Il simbolo '", operatore, "' non e' riconosciuto come operatore valido.")
-```
+<details>
+  <summary><strong>3. Vero o Falso:</strong> In Python si può scrivere <code>if 18 &lt;= eta &lt;= 65:</code> senza usare <code>and</code>.</summary>
+  <p><strong>Vero.</strong> Python supporta nativamente il concatenamento degli operatori di confronto.</p>
+</details>
 
 ---
 
@@ -312,7 +225,3 @@ else:
 *   **Elif:** Parola chiave riservata del linguaggio Python che contrae la locuzione *else if*, consentendo di concatenare controlli alternativi ed escludenti senza dover incrementare la profondità di indentazione.
 *   **Valutazione a Corto Circuito (Short-Circuit Evaluation):** Strategia ottimizzata degli interpreti per cui un'espressione logica composta viene valutata solo finché non è noto il risultato finale, tralasciando i termini successivi superflui ed evitando potenziali errori a runtime.
 *   **Validazione dei Dati (Input Sanitization):** Procedura di ispezione condizionale applicata ai dati forniti dall'utente prima dell'avvio delle elaborazioni di calcolo, finalizzata a verificarne la correttezza formale e la plausibilità logica.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

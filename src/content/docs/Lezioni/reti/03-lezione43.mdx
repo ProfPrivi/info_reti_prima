@@ -1,0 +1,127 @@
+---
+title: "4.3 Indirizzamento in Rete: MAC, IPv4, IPv6 e DNS"
+description: Differenza tra indirizzo fisico (MAC) e indirizzo logico (IP), struttura di IPv4 e IPv6, IP pubblici e privati (NAT), funzionamento del DNS e concetto di porta logica.
+---
+
+import SimulatoreIPv4 from '/src/components/SimulatoreIPv4.astro';
+
+### Introduzione
+
+Nella lezione precedente abbiamo visto che Internet spedisce milioni di piccoli pacchetti ("cartoline") attraverso switch e router di tutto il mondo. Ma affinché una cartolina arrivi davvero sulla scrivania giusta tra miliardi di computer e smartphone connessi, ogni dispositivo deve avere un **indirizzo inequivocabile**.
+
+Sorprendentemente, ogni dispositivo collegato in rete possiede **due** indirizzi diversi che collaborano tra loro: un **indirizzo fisico (MAC)** e un **indirizzo logico (IP)**. In questa lezione scopriremo perché servono entrambi, vedremo come gli indirizzi di rete applicano direttamente il sistema binario ed esadecimale studiato nella lezione `1.4`, capiremo come il **DNS** traduce i nomi leggibili in numeri e cosa rappresentano le **porte logiche**.
+
+---
+
+### Sviluppo dell'Argomento
+
+#### 1. Indirizzo Fisico (MAC) vs Indirizzo Logico (IP)
+Per capire subito perché servano due indirizzi diversi, usiamo una metafora quotidiana:
+*   Il **Codice Fiscale** (o il numero di telaio di un'auto) vi identifica in modo permanente ovunque andiate: non cambia mai, anche se traslocate in un'altra città. In rete questo è l'**Indirizzo MAC**.
+*   L'**Indirizzo di Residenza** (Via, Città, CAP) indica *dove vi trovate adesso* per ricevere la posta: se cambiate casa o città, cambia il vostro indirizzo postale. In rete questo è l'**Indirizzo IP**.
+
+##### A. L'Indirizzo MAC (*Media Access Control*)
+È l'indirizzo **fisico** scolpito permanentemente dal produttore dentro ogni singola scheda di rete (NIC, Ethernet o Wi-Fi).
+*   È lungo esattamente **48 bit** (`6 Byte`).
+*   Per renderlo leggibile agli umani (esattamente come visto nella lezione `1.4`), viene scritto in **notazione esadecimale** come sei coppie di cifre separate da due punti o trattini, ad esempio:
+    `A4:5E:60:C1:8B:2F`
+*   I primi 3 byte identificano il produttore hardware (es. Intel, Apple, Samsung); gli ultimi 3 identificano univocamente quella singola scheda.
+*   **Dove viene usato?** Esclusivamente all'interno della **rete locale (LAN)**: è l'indirizzo letto dallo **Switch** per sapere su quale cavo fisico consegnare i dati.
+
+##### B. L'Indirizzo IP (*Internet Protocol*)
+È l'indirizzo **logico** assegnato a un dispositivo quando si collega a una rete. Serve ai **Router** per capire in quale parte del mondo si trova la rete di destinazione e instradare i pacchetti attraverso Internet. Se portate il vostro smartphone da casa a scuola, il suo indirizzo MAC resta identico, ma il suo indirizzo IP cambia perché è entrato in una nuova rete!
+
+#### 2. Anatomia di un Indirizzo IPv4 (e il Ritorno del Binario!)
+La versione storica e ancora diffusissima del protocollo IP è **IPv4** (*Internet Protocol version 4*).
+*   Un indirizzo IPv4 è composto da **32 bit** (`4 Byte`), suddivisi in **quattro gruppi da 8 bit** chiamati **ottetti**.
+*   Per comodità umana, ogni ottetto viene convertito in base decimale e separato da un punto (*notazione decimale puntata*), ad esempio:
+    `192.168.1.25`
+*   **Regola matematica fondamentale (ponte con la lezione `1.4`):** Poiché ciascuno dei 4 numeri rappresenta esattamente `8 bit` (`1 Byte`), ogni numero di un indirizzo IPv4 può assumere **solo valori compresi tra `0` e `255`** (`2^8 = 256` combinazioni). Un indirizzo come `192.300.1.5` è matematicamente impossibile e non valido!
+
+Ogni indirizzo IPv4 è idealmente diviso in due parti (come CAP + Numero Civico):
+*   **Network ID (Parte Rete):** Identifica la rete di appartenenza (es. la rete della scuola).
+*   **Host ID (Parte Dispositivo):** Identifica il singolo computer dentro quella rete.
+
+<SimulatoreIPv4 />
+
+#### 3. IP Pubblici, IP Privati, NAT e la Nascita di IPv6
+Con 32 bit, IPv4 mette a disposizione `2^32` combinazioni totali: circa **4,3 miliardi** di indirizzi. Negli anni '80 sembravano infiniti; oggi, con oltre 8 miliardi di persone e decine di miliardi di smartphone, computer e oggetti IoT, **gli indirizzi IPv4 si sono esauriti**.
+
+L'ingegneria delle reti ha affrontato il problema in due modi complementari:
+
+1.  **Indirizzi Privati e NAT (soluzione di convivenza):**
+    *   **IP Pubblico:** È l'indirizzo univoco su tutta Internet, assegnato dall'ISP al nostro router domestico o scolastico (non possono esistere due router su Internet con lo stesso IP pubblico).
+    *   **IP Privato:** È un indirizzo riservato esclusivamente alle reti locali interne (es. le famiglie `192.168.x.x` o `10.x.x.x`). Tutti i PC della vostra aula e i dispositivi di milioni di case nel mondo possono usare contemporaneamente gli stessi indirizzi privati (es. `192.168.1.10`) senza andare in conflitto, perché non sono visibili direttamente su Internet.
+    *   **NAT (*Network Address Translation*):** È il meccanismo del router che "traduce" gli indirizzi privati interni nell'unico IP pubblico quando usciamo verso Internet (come il centralino di un'azienda che fa uscire cento interni telefonici usando un solo numero pubblico).
+2.  **IPv6 (la soluzione definitiva):**
+    *   Passa da `32 bit` a **`128 bit`**, scritti in **esadecimale** in otto blocchi separati da due punti (es. `2001:0db8:85a3:0000:0000:8a2e:0370:7334`).
+    *   Offre `2^128` indirizzi (circa `3,4 × 10^38`): un numero così astronomico da poter assegnare miliardi di indirizzi unici a ogni singolo granello di sabbia sulla Terra.
+
+#### 4. Il DNS: La Rubrica Telefonica di Internet
+I router comprendono solo indirizzi IP numerici come `142.250.180.14`, ma gli esseri umani fanno fatica a ricordare stringhe di numeri: noi preferiamo scrivere nomi mnemonici come `www.wikipedia.org` o `www.istitutogreppi.edu.it`.
+
+A colmare questo divario provvede il **DNS (*Domain Name System*)**, un immenso database gerarchico e distribuito in tutto il mondo che funziona esattamente come la **rubrica dello smartphone**:
+1.  Quando digitate `www.esempio.it` nel browser, il vostro computer non sa ancora a quale IP spedire i pacchetti.
+2.  Invia una breve interrogazione (*DNS Query*) a un **Server DNS**.
+3.  Il server DNS cerca il nome di dominio nella gerarchia mondiale (partendo dal dominio di primo livello come `.it`, `.edu`, `.org`, `.com`) e restituisce l'indirizzo IP numerico corrispondente.
+4.  Solo a quel punto il computer apre la connessione diretta verso quell'IP!
+
+*(Nota: in una rete locale, per evitare di configurare a mano l'indirizzo IP su ogni PC o smartphone, interviene il servizio **DHCP**, che assegna automaticamente un IP libero a ogni dispositivo appena si connette).*
+
+#### 5. L'Ultimo Dettaglio: Le Porte Logiche
+Supponiamo che un pacchetto sia arrivato correttamente all'indirizzo IP del vostro computer. Ma sul vostro PC ci sono decine di programmi connessi contemporaneamente: il browser web, Spotify, l'app di posta, un gioco online. A quale processo deve consegnare quei dati il Sistema Operativo?
+
+Per distinguere i singoli servizi software dentro lo stesso computer si usa un numero intero chiamato **Porta Logica** (da `0` a `65535`).
+*   **Indirizzo IP** = l'indirizzo stradale del palazzo.
+*   **Porta Logica** = il numero dell'interno/appartamento sul citofono.
+
+Alcune porte famose (*Well-Known Ports*) sono standardizzate a livello mondiale: ad esempio la porta **`80`** identifica il traffico Web classico (`HTTP`), la porta **`443`** identifica il traffico Web sicuro (`HTTPS`) e la porta **`53`** è usata dal `DNS`.
+
+---
+
+:::tip[Idea chiave]
+Tre livelli per raggiungere il servizio giusto: **MAC** (la scheda fisica nella LAN), **IP** (l'indirizzo del computer nella rete) e **Porta Logica** (l'applicazione specifica aperta su quel computer, es. `443` per HTTPS).
+:::
+
+:::caution[Errore tipico in verifica]
+Un indirizzo come `192.168.280.1` **non esiste**: ogni ottetto IPv4 vale 8 bit, quindi può assumere solo valori da `0` a `255`.
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Se porti il tuo smartphone da casa a scuola, cambia l'indirizzo MAC o cambia l'indirizzo IP?</summary>
+  <p>Cambia l'<strong>indirizzo IP</strong> (perché entri in una rete diversa), mentre l'<strong>indirizzo MAC</strong> rimane identico perché è scolpito nella scheda di rete.</p>
+</details>
+
+<details>
+  <summary><strong>2. Domanda rapida:</strong> Come fanno 500 case diverse a usare tutte lo stesso indirizzo <code>192.168.1.10</code> senza conflitti su Internet?</summary>
+  <p>Perché è un <strong>IP Privato</strong> valido solo dentro ciascuna LAN; il router di ogni casa usa il <strong>NAT</strong> per uscire su Internet con il proprio IP Pubblico univoco.</p>
+</details>
+
+<details>
+  <summary><strong>3. Domanda rapida:</strong> A cosa serve il DNS quando digiti <code>www.wikipedia.org</code> nel browser?</summary>
+  <p>Traduce il nome di dominio leggibile dall'uomo nell'indirizzo IP numerico necessario ai router per raggiungere il server di Wikipedia.</p>
+</details>
+
+---
+
+### Sintesi
+
+*   **MAC vs IP:** Il **MAC** (48 bit, esadecimale) è l'indirizzo fisico immutabile della scheda di rete, usato dallo Switch dentro la LAN; l'**IP** è l'indirizzo logico legato alla rete di appartenenza, usato dai Router su Internet.
+*   **IPv4 e IPv6:** IPv4 usa `32 bit` (4 ottetti da `0` a `255`); per rimediare al suo esaurimento si combinano **IP privati + NAT** nelle LAN e si migra progressivamente verso **IPv6** (`128 bit` in esadecimale).
+*   **DNS e DHCP:** Il **DNS** traduce i nomi di dominio leggibili in indirizzi IP numerici; il **DHCP** assegna automaticamente gli indirizzi IP ai dispositivi che entrano in una rete locale.
+*   **Porte Logiche:** Associandosi all'IP, identificano il singolo servizio o applicazione software destinatario dei pacchetti all'interno di un host (es. `80` HTTP, `443` HTTPS).
+
+---
+
+### Glossario
+
+*   **Indirizzo MAC (*Media Access Control*):** Identificatore fisico univoco a 48 bit (6 coppie esadecimali) assegnato in fabbrica a ogni scheda di rete, utilizzato per la comunicazione nella LAN.
+*   **Indirizzo IP (*Internet Protocol*):** Identificatore numerico logico assegnato a un nodo per consentirne la localizzazione e l'instradamento dei pacchetti tra reti diverse.
+*   **IPv4 / IPv6:** Le due versioni principali del protocollo di indirizzamento Internet: IPv4 a 32 bit (4 ottetti decimali `0–255`, circa 4,3 miliardi di indirizzi) e IPv6 a 128 bit (esadecimale, spazio praticamente inesauribile).
+*   **IP Pubblico / IP Privato:** L'IP pubblico è univoco globalmente su Internet; l'IP privato è riutilizzabile liberamente all'interno delle singole reti locali (es. `192.168.x.x`).
+*   **NAT (*Network Address Translation*):** Funzione del router che permette a molti dispositivi con IP privati di condividere un unico IP pubblico per navigare su Internet.
+*   **DNS (*Domain Name System*):** Sistema gerarchico distribuito che traduce i nomi di dominio leggibili dall'uomo nei corrispondenti indirizzi IP numerici.
+*   **DHCP (*Dynamic Host Configuration Protocol*):** Protocollo di rete che assegna automaticamente un indirizzo IP (e altri parametri di rete) ai dispositivi che si connettono a una LAN.
+*   **Porta Logica:** Numero intero (`0–65535`) che identifica uno specifico processo o servizio di rete attivo all'interno di un computer (es. porta `443` per HTTPS).

@@ -202,6 +202,33 @@ Comprendere se un errore nasce prima dell'avvio (errore di sintassi) o durante i
 
 ---
 
+:::tip[Idea chiave]
+Python utilizza un modello **a due stadi**: compila prima il sorgente `.py` in **bytecode** portabile e lo fa poi eseguire istruzione per istruzione dalla **Python Virtual Machine (PVM)**.
+:::
+
+:::caution[Errore tipico in verifica]
+Un **`SyntaxError`** blocca il programma *prima ancora che parta* (nemmeno le prime righe `print` vengono eseguite), mentre un **`RuntimeError`** compare solo quando la PVM raggiunge la riga difettosa durante l'esecuzione.
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Che cosa contiene un file <code>.pyc</code> dentro la cartella <code>__pycache__</code>?</summary>
+  <p>Il <strong>bytecode compilato</strong> di un modulo Python, salvato per accelerare le esecuzioni successive senza rianalizzare ogni volta la sintassi.</p>
+</details>
+
+<details>
+  <summary><strong>2. Vero o Falso:</strong> Nella shell interattiva (REPL) il codice scritto viene salvato automaticamente su disco.</summary>
+  <p><strong>Falso.</strong> Il REPL serve per test immediati in memoria volatile; per conservare il programma occorre scrivere uno <strong>script</strong> (file <code>.py</code>).</p>
+</details>
+
+<details>
+  <summary><strong>3. Domanda rapida:</strong> Se nella riga 2 c'è un <code>SyntaxError</code>, la riga 1 <code>print("Ciao")</code> viene eseguita?</summary>
+  <p><strong>No.</strong> La traduzione in bytecode fallisce a monte prima che la PVM inizi l'esecuzione.</p>
+</details>
+
+---
+
 ### Sintesi
 
 *   **Il Modello a Due Stadi di Python:** Python non è un interprete puro, ma un sistema ibrido. Il codice sorgente (`.py`) viene dapprima compilato in un formato intermedio binario e compatto chiamato *Bytecode* (spesso memorizzato nei file `.pyc`), per poi essere eseguito istruzione dopo istruzione dalla *Python Virtual Machine (PVM)*.
@@ -223,7 +250,3 @@ Comprendere se un errore nasce prima dell'avvio (errore di sintassi) o durante i
 *   **Syntax Highlighting (Evidenziazione della Sintassi):** Funzionalità visiva degli editor per programmatori che applica colori e stili tipografici differenti alle diverse componenti del linguaggio (parole chiave, stringhe, commenti, numeri) facilitandone la lettura.
 *   **SyntaxError:** Errore formale che si manifesta quando il programmatore viola le regole grammaticali o ortografiche del linguaggio, impedendo la traduzione del codice in bytecode.
 *   **Runtime Error (Errore di Esecuzione):** Errore logico o operativo che si verifica durante l'elaborazione del bytecode da parte della macchina virtuale, causando l'interruzione immediata del processo.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

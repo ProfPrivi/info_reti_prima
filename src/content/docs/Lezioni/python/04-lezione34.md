@@ -155,109 +155,30 @@ Il codice contenuto nell'`else` di un ciclo viene eseguito **solo ed esclusivame
 
 ---
 
-### Esempi Pratici e Script Completi Guidati
+:::tip[Script completi di laboratorio]
+Gli script completi di questo modulo (`validazione_voto.py`, `potenze_di_due.py`, `verifica_primalita.py`) sono raccolti nella sezione [**Lab 3 - Script Python (Modulo 3.4)**](/info_reti_prima/lezioni/laboratorio/04-lab-python-script/#modulo-34--strutture-iterative).
+:::
 
-#### Esempio 1: Validazione Difensiva con Ciclo `while` e Riconoscimento Errori
-*Obiettivo:* Realizzare un modulo per l'acquisizione di una valutazione scolastica. Il programma deve rifiutare qualsiasi voto non compreso nell'intervallo didattico tra 1 e 10, reiterando la richiesta fino all'immissione di un dato corretto, e quantificare quanti tentativi errati sono stati compiuti.
+:::caution[Errore tipico in verifica]
+In `range(start, stop)` il valore **`stop` è sempre escluso**: `range(1, 5)` genera `1, 2, 3, 4` (non include `5`!). Per contare fino a `N` compreso occorre scrivere `range(1, N + 1)`.
+:::
 
-```python
-# =======================================================
-# Script: validazione_voto.py
-# Scopo: Dimostrazione del while per il controllo dell'input
-# =======================================================
+### Mettiti alla prova (Domande Flash)
 
-print("=== ACQUISIZIONE VALUTAZIONE SCOLASTICA ===")
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Quali numeri genera <code>range(10, 0, -2)</code>?</summary>
+  <p>Genera <code>10, 8, 6, 4, 2</code> (lo <code>0</code> è escluso).</p>
+</details>
 
-tentativi_errati = 0
+<details>
+  <summary><strong>2. Domanda rapida:</strong> Quando viene eseguito il blocco <code>else</code> associato a un ciclo <code>for</code> o <code>while</code>?</summary>
+  <p>Solo se il ciclo termina in modo naturale <strong>senza mai incontrare un'istruzione <code>break</code></strong>.</p>
+</details>
 
-# Prima lettura (Input di prova)
-voto = float(input("Inserisci il voto conseguito dallo studente (1 - 10): "))
-
-# Ciclo di validazione condizionale: continua finché il dato è fuori range
-while voto < 1.0 or voto > 10.0:
-    tentativi_errati += 1
-    print("Errore: Il voto immesso non e' valido!")
-    print("Attenzione: La valutazione deve essere compresa tra 1.0 e 10.0.")
-    # Nuova richiesta per consentire l'uscita dal ciclo
-    voto = float(input("Riprova a inserire il voto corretto: "))
-
-# Elaborazione a valle dell'iterazione
-print("--------------------------------------------------")
-print(f"Dato registrato con successo: {voto:.1f}")
-if tentativi_errati > 0:
-    print(f"Si sono resi necessari {tentativi_errati} tentativi di correzione.")
-else:
-    print("Dato inserito correttamente al primo tentativo.")
-print("--------------------------------------------------")
-```
-
-#### Esempio 2: Calcolo della Potenza e Tabella Riepilogativa con Ciclo `for`
-*Obiettivo:* Riprodurre in Python l'algoritmo di calcolo esponenziale studiato a livello architetturale hardware nel Capitolo 2 (calcolo di $P = 2^N$). Il programma acquisisce l'esponente massimo $N$ e visualizza a schermo la progressione geometrica di tutte le potenze di 2 da zero fino a $N$, formattando i dati in una tabella a due colonne.
-
-```python
-# =======================================================
-# Script: potenze_di_due.py
-# Scopo: Generazione di serie numeriche con for e range()
-# =======================================================
-
-print("=== PROGRESSIONE DELLE POTENZE DI 2 ===")
-
-esponente_massimo = int(input("Fino a quale esponente desideri calcolare (es. 10)? "))
-
-# Intestazione della tabella formattata
-print("\n" + "=" * 25)
-print(f"{'Esponente (N)':<15}{'Valore (2^N)':<10}")
-print("=" * 25)
-
-potenza = 1
-
-# Iterazione definita: da 0 fino a esponente_massimo compreso (+1)
-for n in range(0, esponente_massimo + 1):
-    if n == 0:
-        potenza = 1
-    else:
-        # Moltiplicazione iterativa: potenza = potenza * 2
-        potenza *= 2
-    
-    # Stampa incolonnata dei valori calcolati
-    print(f"{n:<15}{potenza:<10}")
-
-print("=" * 25)
-print("Tabella generata con successo.")
-```
-
-#### Esempio 3: Test di Primalità con Interruzione Anticipata (`break`) e Clausola `else`
-*Obiettivo:* Progettare un algoritmo efficiente per verificare se un numero intero positivo maggiore di 1 è un **numero primo** (divisibile unicamente per 1 e per se stesso). Il programma deve scandire i potenziali divisori: se ne individua uno, interrompe immediatamente il ciclo con `break`; se invece il ciclo giunge al termine senza trovare divisori, la clausola `else` certifica che il numero è primo.
-
-```python
-# =======================================================
-# Script: verifica_primalita.py
-# Scopo: Utilizzo combinato di for, range, break ed else
-# =======================================================
-
-print("=== VERIFICA DI PRIMALITA' ALGORITMICA ===")
-
-numero = int(input("Inserisci un numero intero maggiore di 1: "))
-
-if numero <= 1:
-    print("Per definizione teorica, i numeri primi sono maggiori di 1.")
-else:
-    # Testiamo tutti i possibili divisori da 2 fino alla metà del numero (+1)
-    # Nessun divisore proprio può essere maggiore della metà del numero stesso
-    limite = (numero // 2) + 1
-    
-    for divisore in range(2, limite):
-        # Operatore modulo %: se il resto è 0, abbiamo trovato un divisore esatto
-        if numero % divisore == 0:
-            print(f"Il numero {numero} NON e' primo!")
-            print(f"E' divisibile per {divisore} (infatti {divisore} * {numero // divisore} = {numero}).")
-            # Interrompiamo immediatamente: inutile testare gli altri numeri!
-            break
-    else:
-        # Questo blocco viene raggiunto solo se il for non ha mai incontrato un 'break'
-        print(f"Il numero {numero} E' UN NUMERO PRIMO!")
-        print("Non e' stato individuato alcun divisore intero nell'intervallo.")
-```
+<details>
+  <summary><strong>3. Vero o Falso:</strong> L'istruzione <code>continue</code> esce definitivamente dal ciclo.</summary>
+  <p><strong>Falso.</strong> Quella è <code>break</code>; <code>continue</code> salta solo il resto del giro corrente e passa subito all'iterazione successiva.</p>
+</details>
 
 ---
 
@@ -285,7 +206,3 @@ else:
 *   **Break:** Istruzione di salto che forza la terminazione immediata del ciclo all'interno del quale è collocata, trasferendo il controllo alla prima riga esterna al costrutto.
 *   **Continue:** Istruzione di controllo che arresta l'iterazione corrente del ciclo e reindirizza istantaneamente il flusso all'inizio dell'iterazione successiva.
 *   **Tabella di Tracciamento (Trace Table):** Metodologia diagnostica manuale consistente nel registrare in forma tabellare l'evoluzione dei valori assunti dalle variabili passo dopo passo durante ciascun giro di ciclo, al fine di verificare la correttezza logica dell'algoritmo.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

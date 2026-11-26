@@ -97,7 +97,7 @@ I linguaggi a basso livello sacrificano la semplicità di lettura per garantire 
 * **Mappatura esplicita della RAM:** È compito del programmatore indicare gli indirizzi fisici di memoria in formato esadecimale in cui leggere o scrivere i byte.
 * **Stretta dipendenza hardware:** Un listato redatto per lo storico processore Zilog Z80 non possiede alcuna compatibilità con l'architettura di un processore moderno Intel Core o ARM.
 
-```assembly
+```txt
 ; HL = Indirizzo di inizio della lista in RAM | B = Numero totale di elementi
         LD A, (HL)      ; Carica il primo valore dalla RAM nel registro accumulatore A
         DEC B           ; Decrementa il contatore degli elementi rimanenti nel registro B
@@ -141,6 +141,33 @@ Dato che il microprocessore comprende unicamente il Codice Macchina, qualsiasi s
 
 ---
 
+:::tip[Idea chiave]
+La scelta del binario (`0` e `1`) non è un capriccio matematico: è una necessità **fisica** per rendere i circuiti elettronici immuni alle fluttuazioni di tensione e al rumore elettromagnetico.
+:::
+
+:::caution[Errore tipico in verifica]
+Non confondere **Assembly** con **Codice Macchina**: il codice macchina è fatto solo di `0` e `1`, mentre l'Assembly usa sigle mnemoniche leggibili (`LD`, `ADD`, `INC`) che vanno comunque tradotte in binario da un assemblatore.
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Nel modello di Shannon-Weaver, cos'è il "Rumore"?</summary>
+  <p>Qualsiasi disturbo fisico o interferenza (es. rumore ambientale, sbalzo di tensione, disturbo elettromagnetico) che può degradare o alterare il messaggio lungo il canale.</p>
+</details>
+
+<details>
+  <summary><strong>2. Vero o Falso:</strong> Un programma scritto in Assembly Z80 funziona senza modifiche su qualsiasi processore moderno.</summary>
+  <p><strong>Falso.</strong> I linguaggi a basso livello dipendono strettamente dall'architettura fisica della specifica CPU; la portabilità è un vantaggio tipico dei linguaggi ad alto livello.</p>
+</details>
+
+<details>
+  <summary><strong>3. Domanda rapida:</strong> Qual è la differenza operativa tra un Compilatore e un Interprete?</summary>
+  <p>Il compilatore traduce tutto il sorgente in anticipo producendo un eseguibile autonomo; l'interprete legge ed esegue il programma istruzione per istruzione in tempo reale.</p>
+</details>
+
+---
+
 ### Sintesi
 
 * **Modello Comunicativo:** Qualsiasi passaggio di informazione si fonda sull'interazione di Mittente, Destinatario, Messaggio, Canale e Codice, operanti in presenza di fattori di disturbo definiti Rumore.
@@ -163,7 +190,3 @@ Dato che il microprocessore comprende unicamente il Codice Macchina, qualsiasi s
 * **Portabilità:** Caratteristica di un programma software di poter essere compilato ed eseguito su differenti architetture hardware e sistemi operativi senza rendere necessaria la riscrittura del codice.
 * **Compilatore:** Programma di traduzione che converte un intero codice sorgente in codice macchina binario eseguibile prima della sua effettiva esecuzione.
 * **Interprete:** Programma applicativo che legge, converte ed esegue in tempo reale le istruzioni del codice sorgente una per volta.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

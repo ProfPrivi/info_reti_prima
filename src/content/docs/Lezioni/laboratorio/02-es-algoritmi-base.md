@@ -1,6 +1,6 @@
 ---
-title: 2.4 Esercizi metà modulo
-description: Test di autovalutazione
+title: Lab 2.1 - Palestra Flowgorithm (Sequenza, Selezione e Cicli)
+description: 40 sfide algoritmiche graduate su sequenza, selezione e cicli in Flowgorithm.
 ---
 
 ### Introduzione

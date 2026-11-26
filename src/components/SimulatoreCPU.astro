@@ -1,0 +1,206 @@
+---
+interface Props {
+  id?: string;
+}
+const { id = 'sim-cpu-' + Math.random().toString(36).slice(2, 7) } = Astro.props;
+---
+<div id={id} class="cpu-card no-print">
+  <div class="cpu-header">
+    <h4>Simulatore Interattivo: Ciclo Fetch – Decode – Execute</h4>
+    <p>Premi <strong>Prossima Fase</strong> per vedere la CPU eseguire passo-passo il calcolo <code>5 + 3</code> e salvare il risultato in RAM.</p>
+  </div>
+
+  <div class="cpu-controls">
+    <button type="button" class="cpu-btn primary" data-next>▶ Prossima Fase</button>
+    <button type="button" class="cpu-btn" data-reset>↺ Ricomincia</button>
+    <span class="phase-pill" data-phase>Pronto</span>
+  </div>
+
+  <div class="cpu-narrative" data-desc>
+    Il programma è caricato nelle celle RAM 0, 1 e 2. Il <strong>Program Counter (PC)</strong> punta alla prima istruzione (indirizzo 0).
+  </div>
+
+  <div class="cpu-diagram">
+    <div class="box-panel cpu-panel">
+      <h5>CPU (Processore)</h5>
+      <div class="reg-row" data-reg="pc"><span>Program Counter (PC)</span><strong data-val-pc>0</strong></div>
+      <div class="reg-row" data-reg="ir"><span>Instruction Register (IR)</span><strong data-val-ir>—</strong></div>
+      <div class="reg-row" data-reg="cu"><span>Control Unit (CU)</span><strong data-val-cu>In attesa</strong></div>
+      <div class="reg-row" data-reg="alu"><span>ALU + Accumulatore</span><strong data-val-acc>0</strong></div>
+    </div>
+
+    <div class="bus-panel" data-bus>
+      <div class="bus-title">BUS DI SISTEMA</div>
+      <div class="bus-msg" data-bus-msg>Nessun traffico</div>
+    </div>
+
+    <div class="box-panel ram-panel">
+      <h5>RAM (Memoria Centrale)</h5>
+      <div class="ram-row" data-ram="0"><span>[0]</span><code>LOAD 5</code></div>
+      <div class="ram-row" data-ram="1"><span>[1]</span><code>ADD 3</code></div>
+      <div class="ram-row" data-ram="2"><span>[2]</span><code>STORE [4]</code></div>
+      <div class="ram-row" data-ram="3"><span>[3]</span><code>HALT (Fine)</code></div>
+      <div class="ram-row data-cell" data-ram="4"><span>[4] Dati</span><strong data-val-ram4>0</strong></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cpu-card {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    padding: 20px;
+    margin: 1.5rem auto;
+    max-width: 860px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  .cpu-header { text-align: center; margin-bottom: 14px; }
+  .cpu-header h4 { margin: 0 0 6px 0; font-size: 1.15rem; color: #0f172a; }
+  .cpu-header p { margin: 0; font-size: 0.9rem; color: #475569; }
+  .cpu-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .cpu-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #94a3b8;
+    background: #ffffff;
+    color: #0f172a;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .cpu-btn.primary { background: #0f5682; color: #ffffff; border-color: #0f5682; }
+  .phase-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    color: #0f172a;
+    font-weight: 800;
+    font-size: 0.85rem;
+  }
+  .cpu-narrative {
+    background: #eff6ff;
+    border-left: 4px solid #2563eb;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    margin-bottom: 16px;
+    color: #1e3a8a;
+  }
+  .cpu-diagram {
+    display: grid;
+    grid-template-columns: 1.25fr 0.7fr 1fr;
+    gap: 12px;
+    align-items: stretch;
+  }
+  @media (max-width: 720px) {
+    .cpu-diagram { grid-template-columns: 1fr; }
+  }
+  .box-panel {
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 12px;
+  }
+  .box-panel h5 { margin: 0 0 10px 0; font-size: 0.92rem; text-align: center; color: #0f5682; }
+  .reg-row, .ram-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 10px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    background: #f1f5f9;
+    font-size: 0.86rem;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+  }
+  .reg-row.hi, .ram-row.hi {
+    background: #fef08a;
+    border-color: #ca8a04;
+    font-weight: 700;
+  }
+  .ram-row.data-cell { background: #ede9fe; }
+  .bus-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #e2e8f0;
+    border-radius: 10px;
+    padding: 12px;
+    border: 2px dashed #94a3b8;
+    transition: all 0.2s ease;
+  }
+  .bus-panel.hi {
+    background: #dcfce7;
+    border-color: #16a34a;
+  }
+  .bus-title { font-size: 0.75rem; font-weight: 800; color: #475569; margin-bottom: 8px; }
+  .bus-msg { font-size: 0.85rem; font-weight: 700; color: #0f172a; }
+</style>
+
+<script is:inline define:vars={{ id }}>
+  (() => {
+    const root = document.getElementById(id);
+    if (!root) return;
+
+    const steps = [
+      { phase: 'Pronto', pc: '0', ir: '—', cu: 'In attesa', acc: '0', ram4: '0', bus: 'Nessun traffico', hiReg: ['pc'], hiRam: [], hiBus: false, desc: 'Il programma è caricato nelle celle RAM 0–3. Il Program Counter (PC) punta alla cella 0.' },
+      { phase: '1. FETCH', pc: '1', ir: 'LOAD 5', cu: 'Preleva [0]', acc: '0', ram4: '0', bus: 'Indirizzo 0 ➔ Dato: LOAD 5', hiReg: ['pc', 'ir'], hiRam: ['0'], hiBus: true, desc: 'FETCH: la CPU legge l\'istruzione all\'indirizzo 0 dalla RAM, la copia in IR e incrementa PC a 1.' },
+      { phase: '1. DECODE', pc: '1', ir: 'LOAD 5', cu: 'Decodifica LOAD', acc: '0', ram4: '0', bus: 'Nessun traffico', hiReg: ['ir', 'cu'], hiRam: [], hiBus: false, desc: 'DECODE: la Control Unit interpreta "LOAD 5": bisogna caricare il numero 5 nell\'Accumulatore.' },
+      { phase: '1. EXECUTE', pc: '1', ir: 'LOAD 5', cu: 'Carica 5 in ALU', acc: '5', ram4: '0', bus: 'Nessun traffico', hiReg: ['alu'], hiRam: [], hiBus: false, desc: 'EXECUTE: il valore 5 viene inserito nel registro Accumulatore della CPU.' },
+      { phase: '2. FETCH', pc: '2', ir: 'ADD 3', cu: 'Preleva [1]', acc: '5', ram4: '0', bus: 'Indirizzo 1 ➔ Dato: ADD 3', hiReg: ['pc', 'ir'], hiRam: ['1'], hiBus: true, desc: 'FETCH: la CPU preleva la seconda istruzione (indirizzo 1) dalla RAM e incrementa PC a 2.' },
+      { phase: '2. DECODE', pc: '2', ir: 'ADD 3', cu: 'Decodifica ADD', acc: '5', ram4: '0', bus: 'Nessun traffico', hiReg: ['ir', 'cu'], hiRam: [], hiBus: false, desc: 'DECODE: la Control Unit riconosce il comando ADD e prepara il sommatore interno dell\'ALU.' },
+      { phase: '2. EXECUTE', pc: '2', ir: 'ADD 3', cu: 'Somma 5 + 3', acc: '8', ram4: '0', bus: 'Nessun traffico', hiReg: ['alu'], hiRam: [], hiBus: false, desc: 'EXECUTE: l\'ALU esegue 5 + 3 = 8 e aggiorna l\'Accumulatore con il nuovo risultato (8).' },
+      { phase: '3. FETCH', pc: '3', ir: 'STORE [4]', cu: 'Preleva [2]', acc: '8', ram4: '0', bus: 'Indirizzo 2 ➔ Dato: STORE [4]', hiReg: ['pc', 'ir'], hiRam: ['2'], hiBus: true, desc: 'FETCH: la CPU preleva l\'istruzione STORE [4] dalla cella 2 e incrementa PC a 3.' },
+      { phase: '3. DECODE', pc: '3', ir: 'STORE [4]', cu: 'Decodifica STORE', acc: '8', ram4: '0', bus: 'Nessun traffico', hiReg: ['ir', 'cu'], hiRam: [], hiBus: false, desc: 'DECODE: la CU capisce che deve salvare il contenuto dell\'Accumulatore (8) nella cella RAM [4].' },
+      { phase: '3. EXECUTE', pc: '3', ir: 'STORE [4]', cu: 'Scrive 8 in [4]', acc: '8', ram4: '8', bus: 'Scrivi 8 ➔ RAM [4]', hiReg: ['alu'], hiRam: ['4'], hiBus: true, desc: 'EXECUTE: il valore 8 viaggia sul Bus dei Dati e viene memorizzato stabilmente nella cella RAM [4]!' },
+      { phase: 'COMPLETATO', pc: '3', ir: 'HALT', cu: 'Programma finito', acc: '8', ram4: '8', bus: 'Esecuzione terminata', hiReg: ['cu'], hiRam: ['3', '4'], hiBus: false, desc: 'L\'istruzione HALT arresta il ciclo. Il calcolo 5 + 3 = 8 è completato e salvato nella cella RAM [4].' }
+    ];
+
+    let idx = 0;
+    const elPhase = root.querySelector('[data-phase]');
+    const elDesc = root.querySelector('[data-desc]');
+    const elBus = root.querySelector('[data-bus]');
+    const elBusMsg = root.querySelector('[data-bus-msg]');
+    const btnNext = root.querySelector('[data-next]');
+    const btnReset = root.querySelector('[data-reset]');
+
+    function render() {
+      const s = steps[idx];
+      elPhase.textContent = s.phase;
+      elDesc.textContent = s.desc;
+      root.querySelector('[data-val-pc]').textContent = s.pc;
+      root.querySelector('[data-val-ir]').textContent = s.ir;
+      root.querySelector('[data-val-cu]').textContent = s.cu;
+      root.querySelector('[data-val-acc]').textContent = s.acc;
+      root.querySelector('[data-val-ram4]').textContent = s.ram4;
+      elBusMsg.textContent = s.bus;
+      elBus.classList.toggle('hi', s.hiBus);
+
+      root.querySelectorAll('[data-reg]').forEach((el) => {
+        el.classList.toggle('hi', s.hiReg.includes(el.getAttribute('data-reg')));
+      });
+      root.querySelectorAll('[data-ram]').forEach((el) => {
+        el.classList.toggle('hi', s.hiRam.includes(el.getAttribute('data-ram')));
+      });
+      btnNext.disabled = idx === steps.length - 1;
+    }
+
+    btnNext.addEventListener('click', () => {
+      if (idx < steps.length - 1) { idx++; render(); }
+    });
+    btnReset.addEventListener('click', () => { idx = 0; render(); });
+    render();
+  })();
+</script>

@@ -1,0 +1,32 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+import type { Props } from '@astrojs/starlight/props';
+---
+<div class="print-btn-wrapper no-print">
+  <button onclick="window.print()" class="print-pdf-btn" type="button">
+    🖨️ Stampa / Salva in PDF
+  </button>
+</div>
+<Default {...Astro.props} />
+
+<style>
+  .print-btn-wrapper {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  .print-pdf-btn {
+    padding: 10px 16px;
+    background-color: #dbae1a;
+    color: #0b1320;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: transform 0.15s ease, filter 0.15s ease;
+  }
+  .print-pdf-btn:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+</style>

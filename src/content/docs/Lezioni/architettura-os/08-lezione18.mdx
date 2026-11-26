@@ -1,0 +1,160 @@
+---
+title: 1.8 Aritmetica Binaria, Numeri Negativi e Overflow
+description: Addizione binaria, collegamento con le porte logiche, rappresentazione dei numeri relativi (Modulo e Segno, Complemento a 2), Overflow e multipli decimali vs binari.
+---
+
+import SimulatoreBinario from '/src/components/SimulatoreBinario.astro';
+
+### Introduzione
+
+Nella lezione `1.4` abbiamo imparato a convertire i numeri interi positivi tra base decimale, binaria ed esadecimale. Tuttavia, un calcolatore non si limita a "tradurre" numeri positivi: deve saperci **fare i conti** (sommare, sottrarre) e deve poter rappresentare anche **numeri negativi** (pensate a una temperatura invernale di `-5 °C` o a un saldo bancario in rosso).
+
+Ma come fa una macchina che possiede soltanto i simboli `0` e `1` a scrivere un segno meno (`-`), se il trattino non esiste nel suo alfabeto? E cosa accade quando il risultato di un'addizione è troppo grande per entrare nel numero fisso di bit disponibili in un registro della CPU?
+
+In questa lezione scopriremo le regole dell'**aritmetica binaria**, il meccanismo ingegnoso del **Complemento a 2**, il fenomeno dell'**Overflow** e chiariremo una volta per tutte la differenza tra **Kilobyte (`KB`)** e **Kibibyte (`KiB`)**.
+
+---
+
+### Sviluppo dell'Argomento
+
+#### 1. L'Addizione Binaria e il Ponte con le Porte Logiche
+Sommare due numeri in base 2 funziona esattamente come la somma in colonna imparata alle elementari in base 10, con una sola differenza: invece di "riportare 1" quando raggiungiamo 10, **riportiamo 1 appena raggiungiamo 2** (che in binario si scrive `10`).
+
+Le quattro regole elementari bit a bit sono:
+*   `0 + 0 = 0` *(con riporto `0`)*
+*   `0 + 1 = 1` *(con riporto `0`)*
+*   `1 + 0 = 1` *(con riporto `0`)*
+*   `1 + 1 = 0` *(con **riporto `1`** alla colonna successiva!)*
+
+*Nota:* Se a una colonna arriva anche un riporto precedente e ci troviamo a fare `1 + 1 + 1`, il risultato è `1` con **riporto `1`** (perché `3` in binario si scrive `11`).
+
+**Esempio passo-passo (`5 + 3 = 8` su 4 bit):**
+```text
+  Riporti:    1 1 1 0
+               0 1 0 1   (5 in decimale)
+             + 0 0 1 1   (3 in decimale)
+             ---------
+             = 1 0 0 0   (8 in decimale)
+```
+
+##### Il Collegamento con la Lezione 1.5 (Il Semi-Sommatore)
+Osservate attentamente la tabella dell'addizione tra due bit `A` e `B`:
+*   Il bit della **Somma** vale `1` solo quando `A` e `B` sono diversi (`0+1` oppure `1+0`) → è esattamente una porta **XOR**!
+*   Il bit del **Riporto (Carry)** vale `1` solo quando entrambi i bit sono `1` (`1+1`) → è esattamente una porta **AND**!
+
+Unendo una porta `XOR` e una porta `AND` otteniamo il **Semi-Sommatore (*Half Adder*)**, il primo circuito aritmetico reale all'interno dell'ALU di ogni processore: è così che le porte logiche della lezione `1.5` diventano capaci di fare matematica.
+
+#### 2. Come Rappresentare i Numeri Negativi?
+In memoria non esiste il simbolo `-`: abbiamo solo bit `0` e `1`. Supponiamo di lavorare con registri a **8 bit** (1 Byte). Esistono due approcci storici per codificare i numeri relativi (con segno):
+
+##### A. Modulo e Segno (l'idea intuitiva, ma imperfetta)
+Il bit più a sinistra (**MSB**, *Most Significant Bit*) viene riservato al segno:
+*   `0` = numero positivo (`+`)
+*   `1` = numero negativo (`-`)
+I restanti 7 bit indicano il valore assoluto (modulo). Esempio su 8 bit: `+5` = `00000101`, `-5` = `10000101`.
+
+*Perché i computer NON usano Modulo e Segno per gli interi?* Per due difetti gravi:
+1.  **Doppio Zero:** Esistono due rappresentazioni diverse dello zero (`00000000` = `+0` e `10000000` = `-0`), che complicano i confronti.
+2.  **Circuiti complicati:** Sommando `+5` e `-5` in colonna con le normali regole binarie non si ottiene `0`, costringendo la CPU ad avere circuiti separati per addizioni e sottrazioni.
+
+##### B. Il Complemento a 2 (lo standard universale)
+Tutti i computer moderni rappresentano gli interi negativi in **Complemento a 2 (CA2)**.
+*   I numeri **positivi** (e lo `0`) iniziano con il bit di segno `0` e si scrivono normalmente in binario.
+*   Per trovare la rappresentazione di un numero **negativo** `-N` su un numero fisso di bit (es. 8 bit), si seguono due passaggi rapidissimi:
+    1.  **Inversione (Complemento a 1):** Si scrivono i bit del numero positivo `+N` e si invertono tutti gli `0` in `1` e tutti gli `1` in `0` (operazione `NOT`).
+    2.  **Aggiunta di 1:** Si somma `1` al risultato ottenuto.
+
+**Esempio pratico: rappresentare `-5` su 8 bit in Complemento a 2**
+1.  Scriviamo `+5` su 8 bit: `00000101`
+2.  Invertiamo tutti i bit (Complemento a 1): `11111010`
+3.  Sommiamo `1`: `11111010 + 1 = 11111011` → Questo è **`-5`** in CA2!
+
+*La magia del Complemento a 2:* Provate ora a sommare `+5` e `-5` usando una normalissima addizione binaria:
+```text
+    00000101  (+5)
+  + 11111011  (-5)
+  ----------
+  (1)00000000  --> scartando il 9° bit uscente, resta esattamente 00000000 (0)!
+```
+Grazie al Complemento a 2, **lo zero è unico** (`00000000`) e la CPU non ha nemmeno bisogno di un circuito separato per la sottrazione: per calcolare `A - B`, trasforma semplicemente `B` in `-B` e usa lo stesso sommatore per fare `A + (-B)`!
+
+**Intervallo di rappresentazione su `N` bit:**
+*   Senza segno (*unsigned*): da `0` a `2^N - 1` (su 8 bit: da `0` a `255`).
+*   Con segno in CA2 (*signed*): da `-2^(N-1)` a `+2^(N-1) - 1` (su 8 bit: da **`-128`** a **`+127`**).
+
+<SimulatoreBinario />
+
+:::caution[Errore tipico in verifica]
+Su 8 bit in Complemento a 2 l'intervallo è **asimmetrico**: va da **`-128`** a **`+127`** (non `+128`!), perché lo `0` occupa una delle combinazioni con bit di segno `0`.
+:::
+
+#### 3. Il Fenomeno dell'Overflow
+A differenza della matematica su carta (dove i numeri sono infiniti), nel computer ogni registro e ogni variabile intera a dimensione fissa occupa un numero **finito** di bit (8, 16, 32 o 64 bit).
+
+Si parla di **Overflow** (traboccamento) quando il risultato di un'operazione aritmetica supera il valore massimo (o scende sotto il minimo) rappresentabile con i bit a disposizione.
+*   *Esempio su 8 bit senza segno (massimo `255`):* se sommiamo `255 + 1` (`11111111 + 00000001`), il risultato reale è `100000000` (9 bit), ma il 9° bit "cade fuori" dal registro e nella cella a 8 bit rimane **`00000000`** (`0`)!
+*   *Esempio su 8 bit in Complemento a 2 (massimo `+127`):* sommando `127 + 1` (`01111111 + 00000001`), si ottiene `10000000`, che in CA2 rappresenta **`-128`**! Un numero positivo enorme diventa improvvisamente negativo.
+
+Questo spiega perché la scelta della dimensione dei dati è cruciale nell'ingegneria del software: celebri guasti storici (come l'esplosione del razzo europeo *Ariane 5* nel 1996, o il futuro problema dell'*Anno 2038* nei sistemi a 32 bit) sono nati proprio da errori di overflow non gestiti.
+
+#### 4. Multipli Decimali (`KB`) vs Multipli Binari (`KiB`)
+Un ultimo dettaglio teorico che genera spesso confusione riguarda le unità di misura della memoria.
+Nel Sistema Internazionale (metrico decimale), il prefisso *Kilo* significa esattamente `1.000` (`10^3`). Poiché però i computer indirizzano la memoria tramite potenze di `2`, i primi informatici notarono che `2^10 = 1.024` era molto vicino a `1.000` e iniziarono a chiamare `1.024 Byte` "un Kilobyte".
+
+Per eliminare l'ambiguità (per cui un disco venduto come "1 TB" appare su Windows come circa "931 GB"), la commissione internazionale IEC ha definito due famiglie di prefissi distinte:
+
+| Sistema Decimale (SI — Base 10) | Valore in Byte | Sistema Binario (IEC — Base 2) | Valore in Byte |
+| :--- | :--- | :--- | :--- |
+| **Kilobyte (`KB`)** | `10^3` = 1.000 Byte | **Kibibyte (`KiB`)** | `2^10` = 1.024 Byte |
+| **Megabyte (`MB`)** | `10^6` = 1.000.000 Byte | **Mebibyte (`MiB`)** | `2^20` = 1.048.576 Byte |
+| **Gigabyte (`GB`)** | `10^9` = 1 miliardo di Byte | **Gibibyte (`GiB`)** | `2^30` = 1.073.741.824 Byte |
+| **Terabyte (`TB`)** | `10^12` = 1.000 miliardi di Byte | **Tebibyte (`TiB`)** | `2^40` ≈ 1,10 × 10^12 Byte |
+
+*In pratica:* I produttori di dischi rigidi e le compagnie telefoniche usano i multipli decimali (`1000`), mentre i sistemi operativi e la RAM lavorano nativamente con potenze di `2` (`1024`).
+
+---
+
+### Esercizi Carta e Penna
+*Prova a risolvere su carta prima di aprire la risposta.*
+
+<details>
+  <summary><strong>Esercizio 1:</strong> Esegui l'addizione binaria <code>0110 + 0101</code> (su 4 bit senza segno) e verifica in decimale.</summary>
+  <br />
+  <strong>Risultato: <code>1011</code> (11 in decimale)</strong><br />
+  <em>Spiegazione:</em> <code>0110</code> vale 6, <code>0101</code> vale 5. Sommando da destra: 0+1=1; 1+0=1; 1+1=0 (riporto 1); 0+0+1=1. Totale: <code>1011</code> = 8 + 2 + 1 = 11.
+</details>
+
+<details>
+  <summary><strong>Esercizio 2:</strong> Rappresenta <code>-12</code> su 8 bit in Complemento a 2.</summary>
+  <br />
+  <strong>Risultato: <code>11110100</code></strong><br />
+  <em>Spiegazione:</em> <code>+12</code> su 8 bit è <code>00001100</code>. Invertendo tutti i bit otteniamo <code>11110011</code>. Aggiungendo <code>1</code> otteniamo <code>11110100</code>.
+</details>
+
+<details>
+  <summary><strong>Esercizio 3:</strong> Su 8 bit con segno (CA2), la somma <code>100 + 50</code> genera Overflow? Perché?</summary>
+  <br />
+  <strong>Risultato: Sì, genera Overflow.</strong><br />
+  <em>Spiegazione:</em> Su 8 bit in Complemento a 2 il massimo numero positivo rappresentabile è <code>+127</code>. Poiché <code>150 > 127</code>, il risultato non entra nell'intervallo positivo e finisce per invadere il bit del segno, risultando erroneamente negativo.
+</details>
+
+---
+
+### Sintesi
+
+*   **Addizione Binaria:** Segue la stessa logica del decimale, generando un riporto ogni volta che la somma raggiunge `2` (`1 + 1 = 0` con riporto `1`). A livello hardware è realizzata combinando porte `XOR` e `AND`.
+*   **Complemento a 2:** È lo standard per i numeri interi negativi: si invertono tutti i bit del valore positivo e si somma `1`. Elimina il doppio zero e permette di trasformare le sottrazioni in semplici addizioni.
+*   **Intervallo e Overflow:** Su `N` bit in CA2 si rappresentano numeri da `-2^(N-1)` a `+2^(N-1) - 1`. Superare questi confini produce un errore di **Overflow**, con risultati completamente falsati.
+*   **Base 10 vs Base 2 nei Multipli:** `KB/MB/GB` usano potenze di `1000`, mentre `KiB/MiB/GiB` usano potenze di `1024` (`2^10`).
+
+---
+
+### Glossario
+
+*   **Riporto (Carry):** Bit in eccedenza generato dalla somma di una colonna che viene trasferito alla colonna immediatamente più significativa a sinistra.
+*   **Semi-Sommatore (*Half Adder*):** Circuito logico elementare composto da una porta `XOR` (per il bit di somma) e una porta `AND` (per il bit di riporto).
+*   **MSB (*Most Significant Bit*):** Il bit più a sinistra in una sequenza binaria; nei numeri con segno indica il segno del numero (`0` positivo, `1` negativo).
+*   **Modulo e Segno:** Codifica in cui il bit più a sinistra indica il segno e i restanti il valore assoluto; poco usata per gli interi a causa del doppio zero e della complessità aritmetica.
+*   **Complemento a 2 (CA2):** Metodo standard per rappresentare numeri interi relativi in binario, ottenuto invertendo tutti i bit del corrispondente valore positivo (Complemento a 1) e sommando `1`.
+*   **Overflow:** Condizione di errore aritmetico che si verifica quando il risultato di un calcolo eccede la capacità massima (o minima) rappresentabile dal numero fisso di bit allocati.
+*   **Kibibyte (`KiB`), Mebibyte (`MiB`), Gibibyte (`GiB`):** Unità di misura binarie definite dallo standard IEC basate su potenze di `1024` (`2^10`, `2^20`, `2^30`), distinte dai prefissi decimali `KB`, `MB`, `GB`.

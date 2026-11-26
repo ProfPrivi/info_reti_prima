@@ -94,3 +94,48 @@ body.schermo-intero .main-pane {
 body.schermo-intero .sl-container {
   max-width: 95% !important;
 }
+
+/* --- SCHEMI SVG DIDATTICI --- */
+.schema-svg {
+  margin: 1.5rem auto;
+  padding: 1rem;
+  background: var(--sl-color-bg-nav);
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 12px;
+  text-align: center;
+  overflow-x: auto;
+}
+.schema-svg svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.schema-svg figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--sl-color-gray-2);
+  font-style: italic;
+}
+
+/* --- STAMPA / SALVA IN PDF PULITA --- */
+@media print {
+  .no-print,
+  header.header,
+  .sidebar-pane,
+  .right-sidebar-container,
+  aside.right-sidebar,
+  #progress-container,
+  .pagination-links,
+  mobile-starlight-toc {
+    display: none !important;
+  }
+  .main-frame {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+}

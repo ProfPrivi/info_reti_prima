@@ -1,0 +1,251 @@
+---
+interface Props {
+  id?: string;
+}
+const { id = 'sim-gate-' + Math.random().toString(36).slice(2, 7) } = Astro.props;
+---
+<div id={id} class="gate-card no-print">
+  <div class="gate-header">
+    <h4>Simulatore Interattivo: Porte Logiche e Tabella di Verità</h4>
+    <p>Seleziona una porta logica, aziona gli interruttori A e B e osserva la lampadina e la tabella di verità.</p>
+  </div>
+
+  <div class="gate-selector">
+    {['AND', 'OR', 'NOT', 'NAND', 'NOR', 'XOR'].map((g, idx) => (
+      <button type="button" class={`gate-tab ${idx === 0 ? 'active' : ''}`} data-gate={g}>{g}</button>
+    ))}
+  </div>
+
+  <div class="gate-workspace">
+    <div class="gate-io">
+      <div class="inputs-col">
+        <button type="button" class="sw-btn" data-in="A">Ingresso A: <strong>0</strong></button>
+        <button type="button" class="sw-btn" data-in="B">Ingresso B: <strong>0</strong></button>
+      </div>
+
+      <div class="gate-symbol">
+        <span class="gate-badge" data-badge>AND</span>
+      </div>
+
+      <div class="output-col">
+        <div class="bulb" data-bulb>💡</div>
+        <div class="out-text" data-out>Uscita: 0 (Spento)</div>
+      </div>
+    </div>
+
+    <table class="truth-table">
+      <thead>
+        <tr>
+          <th>A</th>
+          <th data-col-b>B</th>
+          <th data-col-out>A AND B</th>
+        </tr>
+      </thead>
+      <tbody data-tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  .gate-card {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f8fafc;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    padding: 20px;
+    margin: 1.5rem auto;
+    max-width: 820px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  .gate-header { text-align: center; margin-bottom: 14px; }
+  .gate-header h4 { margin: 0 0 6px 0; font-size: 1.15rem; color: #0f172a; }
+  .gate-header p { margin: 0; font-size: 0.9rem; color: #475569; }
+  .gate-selector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .gate-tab {
+    padding: 7px 16px;
+    border-radius: 999px;
+    border: 1px solid #94a3b8;
+    background: #ffffff;
+    color: #0f172a;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .gate-tab.active {
+    background: #0f5682;
+    color: #ffffff;
+    border-color: #0f5682;
+  }
+  .gate-workspace {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 18px;
+    align-items: center;
+  }
+  @media (max-width: 680px) {
+    .gate-workspace { grid-template-columns: 1fr; }
+  }
+  .gate-io {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 18px 14px;
+  }
+  .inputs-col { display: flex; flex-direction: column; gap: 12px; }
+  .sw-btn {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 2px solid #cbd5e1;
+    background: #e2e8f0;
+    color: #1e293b;
+    font-size: 0.95rem;
+    cursor: pointer;
+    min-width: 132px;
+    transition: all 0.15s ease;
+  }
+  .sw-btn.on {
+    background: #16a34a;
+    border-color: #15803d;
+    color: #ffffff;
+  }
+  .sw-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+  .gate-symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .gate-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 82px;
+    height: 62px;
+    border-radius: 10px 32px 32px 10px;
+    background: #0f5682;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1.05rem;
+    box-shadow: 0 3px 10px rgba(15, 86, 130, 0.3);
+  }
+  .output-col { text-align: center; min-width: 110px; }
+  .bulb {
+    font-size: 2.6rem;
+    filter: grayscale(100%) opacity(0.45);
+    transition: all 0.2s ease;
+  }
+  .bulb.lit {
+    filter: none;
+    transform: scale(1.12);
+    text-shadow: 0 0 18px #facc15;
+  }
+  .out-text { font-weight: 700; font-size: 0.9rem; margin-top: 6px; color: #334155; }
+  .truth-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #cbd5e1;
+    margin: 0 !important;
+  }
+  .truth-table th, .truth-table td {
+    padding: 8px 10px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    color: #0f172a;
+    font-family: ui-monospace, monospace;
+  }
+  .truth-table th { background: #e2e8f0; font-weight: 700; }
+  .truth-table tr.active-row td {
+    background: #fef08a;
+    font-weight: 800;
+    color: #0f172a;
+  }
+</style>
+
+<script is:inline define:vars={{ id }}>
+  (() => {
+    const root = document.getElementById(id);
+    if (!root) return;
+    let gate = 'AND';
+    let a = 0;
+    let b = 0;
+
+    const btnA = root.querySelector('[data-in="A"]');
+    const btnB = root.querySelector('[data-in="B"]');
+    const badge = root.querySelector('[data-badge]');
+    const bulb = root.querySelector('[data-bulb]');
+    const outText = root.querySelector('[data-out]');
+    const colB = root.querySelector('[data-col-b]');
+    const colOut = root.querySelector('[data-col-out]');
+    const tbody = root.querySelector('[data-tbody]');
+    const tabs = Array.from(root.querySelectorAll('.gate-tab'));
+
+    function evalGate(g, x, y) {
+      if (g === 'AND') return x & y;
+      if (g === 'OR') return x | y;
+      if (g === 'NOT') return x ? 0 : 1;
+      if (g === 'NAND') return (x & y) ? 0 : 1;
+      if (g === 'NOR') return (x | y) ? 0 : 1;
+      if (g === 'XOR') return x ^ y;
+      return 0;
+    }
+
+    function render() {
+      const isNot = gate === 'NOT';
+      btnA.innerHTML = `Ingresso A: <strong>${a}</strong>`;
+      btnA.classList.toggle('on', a === 1);
+      btnB.innerHTML = `Ingresso B: <strong>${b}</strong>`;
+      btnB.classList.toggle('on', !isNot && b === 1);
+      btnB.disabled = isNot;
+      badge.textContent = gate;
+
+      const out = evalGate(gate, a, b);
+      bulb.classList.toggle('lit', out === 1);
+      outText.textContent = out === 1 ? 'Uscita: 1 (Acceso)' : 'Uscita: 0 (Spento)';
+      outText.style.color = out === 1 ? '#15803d' : '#b91c1c';
+
+      colB.style.display = isNot ? 'none' : '';
+      colOut.textContent = isNot ? 'NOT A' : `A ${gate} B`;
+
+      const rows = isNot
+        ? [[0, null], [1, null]]
+        : [[0, 0], [0, 1], [1, 0], [1, 1]];
+
+      tbody.innerHTML = rows.map(([rx, ry]) => {
+        const rout = evalGate(gate, rx, ry ?? 0);
+        const active = isNot ? (rx === a) : (rx === a && ry === b);
+        return `<tr class="${active ? 'active-row' : ''}">
+          <td>${rx}</td>
+          ${isNot ? '' : `<td>${ry}</td>`}
+          <td>${rout}</td>
+        </tr>`;
+      }).join('');
+    }
+
+    btnA.addEventListener('click', () => { a = a ? 0 : 1; render(); });
+    btnB.addEventListener('click', () => { b = b ? 0 : 1; render(); });
+    tabs.forEach((t) => {
+      t.addEventListener('click', () => {
+        gate = t.getAttribute('data-gate');
+        tabs.forEach((x) => x.classList.toggle('active', x === t));
+        render();
+      });
+    });
+
+    render();
+  })();
+</script>

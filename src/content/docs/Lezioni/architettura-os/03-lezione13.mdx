@@ -85,6 +85,31 @@ Per questo motivo lo standard mondiale dei CD Audio prevede di registrare la mus
 
 <Transistor />
 
+:::tip[Idea chiave]
+Digitalizzare un segnale analogico richiede sempre due passi distinti: **Campionamento** (discretizza il *tempo*) e **Quantizzazione** (discretizza l'*ampiezza* arrotondando ai livelli disponibili).
+:::
+
+:::caution[Errore tipico in verifica]
+Nel Teorema di Nyquist la frequenza di campionamento deve essere **almeno il doppio** della frequenza massima del segnale (`fc >= 2 * fmax`), non uguale! Sotto quella soglia compare la distorsione detta *Aliasing*.
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Quale componente del transistor corrisponde alla "manopola del rubinetto"?</summary>
+  <p>La <strong>Base</strong>: una piccolissima corrente sulla Base apre o chiude il flusso principale tra Collettore ed Emettitore.</p>
+</details>
+
+<details>
+  <summary><strong>2. Domanda rapida:</strong> Perché i CD Audio campionano il suono a 44.100 Hz?</summary>
+  <p>Perché l'orecchio umano sente fino a circa 20.000 Hz e, per il Teorema di Nyquist, serve campionare almeno al doppio (40.000 Hz) per evitare distorsioni.</p>
+</details>
+
+<details>
+  <summary><strong>3. Vero o Falso:</strong> Un orologio digitale che scatta di minuto in minuto rappresenta un segnale analogico.</summary>
+  <p><strong>Falso.</strong> Procede per valori discreti a scatti: è un perfetto esempio di sistema <strong>digitale</strong>.</p>
+</details>
+
 ### Sintesi
 
 * **Il Binario contro il rumore:** Usare solo due stati fisici (Acceso/Spento) garantisce l'assoluta affidabilità. Nessuna interferenza elettrica può trasformare un segnale chiaramente acceso in uno spento.
@@ -109,7 +134,3 @@ Per questo motivo lo standard mondiale dei CD Audio prevede di registrare la mus
 * **ADC (Analog-to-Digital Converter):** Circuito elettronico che converte un segnale analogico continuo in una serie di valori numerici digitali.
 * **Campionamento (Sampling):** Processo di misurazione e prelievo di campioni da un segnale continuo a intervalli di tempo regolari.
 * **Quantizzazione:** Processo di arrotondamento del valore campionato alla linea di livello discreta più vicina.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

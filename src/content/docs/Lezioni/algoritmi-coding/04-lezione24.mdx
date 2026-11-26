@@ -1,0 +1,131 @@
+---
+title: 2.4 Il Teorema di Böhm-Jacopini e l'Efficienza degli Algoritmi
+description: La programmazione strutturata, il Teorema di Böhm-Jacopini, la distinzione tra correttezza ed efficienza e il confronto tra ricerca lineare e ricerca binaria.
+---
+
+import SimulatoreRicerca from '/src/components/SimulatoreRicerca.astro';
+
+### Introduzione
+
+Nelle lezioni `2.2` e `2.3` abbiamo conosciuto tre strutture di controllo fondamentali: la **Sequenza**, la **Selezione** (il rombo) e l'**Iterazione** (i cicli). A uno studente attento potrebbe sorgere una domanda del tutto legittima: *"Ma siamo sicuri che bastino davvero solo questi tre mattoncini per costruire qualsiasi programma al mondo — dal navigatore satellitare a un videogioco 3D, fino a un'intelligenza artificiale? Non serviranno altri tipi di blocchi più complessi?"*
+
+E subito dopo nasce una seconda grande domanda teorica: se due studenti scrivono due algoritmi diversi che risolvono entrambi correttamente lo stesso problema, **sono ugualmente buoni**, oppure uno dei due può essere radicalmente migliore dell'altro?
+
+In questa lezione risponderemo a entrambe le domande esplorando due pilastri della teoria degli algoritmi: il **Teorema di Böhm-Jacopini**, che ha fondato la programmazione strutturata moderna, e il concetto di **Efficienza Algoritmica**, illustrato dal celebre confronto tra **Ricerca Lineare** e **Ricerca Binaria**.
+
+---
+
+### Sviluppo dell'Argomento
+
+#### 1. Il Caos delle Origini e l'Istruzione `GOTO`
+Negli anni '50 e '60, i primi linguaggi di programmazione (come il vecchio FORTRAN o il BASIC) permettevano al programmatore di saltare liberamente da una riga qualsiasi del codice a un'altra tramite un comando chiamato **`GOTO`** (*"vai alla riga numero X"*).
+
+All'inizio sembrava comodo, ma appena i programmi superavano qualche centinaio di righe, le frecce di salto si intrecciavano in ogni direzione creando programmi illeggibili e impossibili da correggere, che gli informatici battezzarono ironicamente ***Spaghetti Code*** (codice a groviglio di spaghetti). Nel 1968 il celebre informatico Edsger Dijkstra pubblicò persino un articolo storico intitolato *"Go To Statement Considered Harmful"* ("L'istruzione GOTO è dannosa").
+
+#### 2. Il Teorema di Böhm-Jacopini (1966)
+La soluzione matematica al caos del `GOTO` era stata dimostrata due anni prima, nel **1966**, da due informatici italiani: **Corrado Böhm** e **Giuseppe Jacopini**.
+
+> **Enunciato del Teorema di Böhm-Jacopini:**
+> *Qualunque algoritmo (o diagramma di flusso) può essere scritto utilizzando esclusivamente la combinazione di **tre sole strutture di controllo fondamentali**:*
+> 1.  **Sequenza** (eseguire un'istruzione dopo l'altra);
+> 2.  **Selezione** (scegliere tra due percorsi in base a una condizione logica);
+> 3.  **Iterazione** (ripetere un blocco di istruzioni finché una condizione è vera).
+
+Questa scoperta è straordinaria per due ragioni:
+*   **Completezza teorica:** Non esiste alcun programma eseguibile da un computer (nemmeno il più complesso) che richieda "salti arbitrari" fuori da queste tre strutture.
+*   **Nascita della Programmazione Strutturata:** Ogni blocco ha **un solo punto di ingresso** (in alto) e **un solo punto di uscita** (in basso). Questo consente di incastrare i blocchi uno dentro l'altro come mattoncini Lego, rendendo gli algoritmi puliti, leggibili, verificabili e molto più facili da correggere.
+
+#### 3. Correttezza vs Efficienza di un Algoritmo
+Una volta che un algoritmo è ben strutturato e rispetta le 4 proprietà viste nella lezione `2.1` (finitezza, non ambiguità, determinismo, generalità), ci poniamo due domande fondamentali per valutarne la qualità:
+
+1.  **È corretto?** Produce sempre il risultato esatto per tutti i possibili input validi (compresi i casi limite)?
+2.  **È efficiente?** Quante risorse consuma per arrivare al risultato? Le due risorse preziose di un calcolatore sono:
+    *   **Tempo di calcolo** (quante operazioni elementari deve compiere la CPU al crescere della quantità di dati `N`);
+    *   **Spazio in memoria** (quanta RAM occupa durante l'esecuzione).
+
+Due algoritmi entrambi **corretti** possono avere efficienze abissalmente diverse quando i dati diventano grandi. Per capirlo alla lavagna senza formule complicate, analizziamo un problema che tutti conosciamo: **cercare un nome in un elenco**.
+
+#### 4. Un Confronto Illuminante: Ricerca Lineare vs Ricerca Binaria
+Immaginate di avere un elenco alfabetico (o un dizionario cartaceo) con **`1.000` nomi** ordinati dalla A alla Z, e di voler trovare il numero di telefono di *"Rossi"*. Esistono due strategie algoritmiche completamente diverse.
+
+##### Strategia A: La Ricerca Lineare (o Sequenziale)
+Partite dalla prima pagina e controllate un nome dopo l'altro in ordine: `1°, 2°, 3°...` finché non trovate *"Rossi"* (o finché l'elenco non finisce).
+*   **Pregio:** Funziona **sempre**, anche se l'elenco è completamente disordinato.
+*   **Limite (Caso Peggiore):** Se *"Rossi"* è in fondo (o non c'è affatto), dovete controllare tutti i **`1.000` nomi**. Se l'elenco avesse `1.000.000` di nomi, nel caso peggiore servirebbero **`1.000.000` di confronti**. Il tempo cresce in modo direttamente proporzionale alla dimensione `N` (**crescita lineare**).
+
+##### Strategia B: La Ricerca Binaria (o Dicotomica)
+Sfruttando il fatto che l'elenco è **ordinato**, aprite il dizionario esattamente **a metà** (posizione `500`).
+*   Se il nome a metà è proprio *"Rossi"*, avete vinto al primo colpo!
+*   Se il nome a metà viene *prima* di *"Rossi"* (es. *"Mauri"*), potete **scartare istantaneamente tutta la prima metà** (500 nomi eliminati con un solo sguardo!) e ripetere il trucco a metà della seconda parte (posizione `750`).
+*   Se viene *dopo*, scartate istantaneamente la seconda metà.
+
+A ogni singolo confronto, il problema si **dimezza** (`1.000 → 500 → 250 → 125 → 62 → 31 → 15 → 7 → 3 → 1`).
+
+##### La Tabella che Cambia la Prospettiva
+Guardate quanti confronti bastano nel **caso peggiore** al crescere della dimensione `N` dell'archivio:
+
+| Dimensione dell'Elenco (`N`) | Ricerca Lineare (max confronti) | Ricerca Binaria (max confronti) |
+| :--- | :---: | :---: |
+| **10 elementi** | 10 | **4** |
+| **100 elementi** | 100 | **7** |
+| **1.000 elementi** | 1.000 | **10** |
+| **1.000.000 di elementi** | 1.000.000 | **20** |
+| **1.000.000.000 (1 miliardo)** | 1.000.000.000 | **30** |
+
+*Osservate quel numero straordinario:* per cercare un utente tra **un miliardo** di account ordinati, alla ricerca lineare servono fino a un miliardo di passaggi, mentre alla ricerca binaria bastano **al massimo 30 passaggi** (perché `2^30` supera il miliardo)! Questo tipo di crescita lentissima si chiama **crescita logaritmica**.
+
+#### 5. La Lezione Teorica: Il Compromesso (*Trade-off*)
+Se la ricerca binaria è così infinitamente più veloce, perché esiste ancora la ricerca lineare?
+Perché la ricerca binaria ha un **prerequisito rigido**: **i dati devono essere già ordinati**. Se ricevete una lista disordinata e dovete fare una sola ricerca, ordinarla costerebbe più tempo che scorrerla una volta linearmente. Se invece dovete fare migliaia di ricerche sullo stesso archivio (come fa un motore di ricerca o un database), tenerlo ordinato per usare ricerche logaritmiche fa la differenza tra una risposta in un millisecondo e un'attesa di ore.
+
+In informatica, scegliere l'algoritmo giusto conta spesso molto più che comprare un processore più veloce!
+
+---
+
+<SimulatoreRicerca />
+
+:::tip[Idea chiave]
+Scegliere un algoritmo efficiente batte quasi sempre un computer più potente: su un miliardo di dati ordinati, la **Ricerca Binaria** impiega al massimo **30 confronti** contro **1 miliardo** della Ricerca Lineare!
+:::
+
+:::caution[Errore tipico in verifica]
+Non dire mai che la Ricerca Binaria è "sempre" migliore: se l'elenco **non è ordinato**, la Ricerca Binaria produce risultati sbagliati e occorre usare la Ricerca Lineare (oppure ordinare prima i dati).
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Quali sono le uniche tre strutture di controllo previste dal Teorema di Böhm-Jacopini?</summary>
+  <p><strong>Sequenza</strong>, <strong>Selezione</strong> e <strong>Iterazione</strong>.</p>
+</details>
+
+<details>
+  <summary><strong>2. Domanda rapida:</strong> Quanti confronti al massimo richiede la Ricerca Binaria su un elenco ordinato di 1.000 elementi?</summary>
+  <p>Al massimo <strong>10 confronti</strong> (perché 2¹⁰ = 1.024 &gt; 1.000).</p>
+</details>
+
+<details>
+  <summary><strong>3. Vero o Falso:</strong> Un algoritmo corretto è automaticamente anche efficiente.</summary>
+  <p><strong>Falso.</strong> Correttezza (dare il risultato esatto) ed efficienza (usare poco tempo e poca memoria al crescere di <code>N</code>) sono due proprietà distinte.</p>
+</details>
+
+---
+
+### Sintesi
+
+*   **Teorema di Böhm-Jacopini:** Dimostra che ogni algoritmo può essere espresso combinando unicamente **Sequenza**, **Selezione** e **Iterazione**, eliminando il caos dei salti `GOTO` (*Spaghetti Code*) e fondando la **Programmazione Strutturata**.
+*   **Correttezza ed Efficienza:** Un buon algoritmo non deve solo produrre il risultato esatto, ma anche contenere il consumo di **tempo** (numero di operazioni) e **spazio** (memoria RAM) al crescere dei dati `N`.
+*   **Ricerca Lineare:** Scorre gli elementi uno per uno; funziona anche su dati disordinati, ma nel caso peggiore richiede `N` confronti (crescita lineare).
+*   **Ricerca Binaria (Dicotomica):** Dimezza lo spazio di ricerca a ogni passo; esige dati **ordinati**, ma su 1.000 elementi richiede al massimo 10 confronti e su 1 miliardo appena 30 (crescita logaritmica).
+
+---
+
+### Glossario
+
+*   **Programmazione Strutturata:** Paradigma di progettazione che costruisce programmi chiari e verificabili combinando blocchi con un solo ingresso e una sola uscita (sequenza, selezione, iterazione), bandendo salti incondizionati (`GOTO`).
+*   **Teorema di Böhm-Jacopini:** Teorema fondamentale dell'informatica teorica (1966) che garantisce la sufficienza delle sole tre strutture di controllo (sequenza, selezione, iterazione) per codificare qualsiasi algoritmo.
+*   **Spaghetti Code:** Espressione gergale usata per indicare un codice sorgente o un diagramma disordinato e ricco di salti arbitrari, quasi impossibile da leggere e mantenere.
+*   **Efficienza Algoritmica:** Misura delle risorse (principalmente tempo di calcolo e memoria) impiegate da un algoritmo in relazione alla quantità di dati in ingresso (`N`).
+*   **Caso Peggiore (*Worst Case*):** Scenario di input più sfavorevole possibile per un algoritmo (es. cercare un elemento assente nell'elenco), usato dagli informatici per stimare il limite massimo di operazioni richieste.
+*   **Ricerca Lineare:** Algoritmo di ricerca che esamina gli elementi di una sequenza uno dopo l'altro dall'inizio alla fine; funziona anche su dati non ordinati.
+*   **Ricerca Binaria (Dicotomica):** Algoritmo di ricerca ad altissima efficienza applicabile solo su collezioni ordinate, che confronta il valore cercato con l'elemento centrale scartando metà dei dati a ogni iterazione.

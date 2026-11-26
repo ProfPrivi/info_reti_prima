@@ -1,13 +1,13 @@
 ---
-title: 1 Ripasso Generale (Moduli 1.1 - 1.6)
-description: Test di autovalutazione a risposte aperte sui fondamenti dell'informatica
+title: 1 Ripasso Generale (Moduli 1.1 - 1.9)
+description: Test di autovalutazione a risposte aperte sui fondamenti dell'informatica, architettura, aritmetica binaria, compressione e sistemi operativi
 ---
 
 ### Introduzione
 
-Complimenti! Siete arrivati alla fine del primo grande blocco di questo corso. Avete viaggiato dalla preistoria dell'informatica con i primi calcolatori meccanici, fino a scoprire l'architettura invisibile che fa funzionare i vostri smartphone e PC ogni singolo giorno.
+Complimenti! Siete arrivati alla fine del primo grande blocco di questo corso. Avete viaggiato dalla preistoria dell'informatica con i primi calcolatori meccanici, fino a scoprire l'architettura invisibile, l'aritmetica binaria, la compressione dei dati e il sistema operativo che fanno funzionare i vostri smartphone e PC ogni singolo giorno.
 
-Prima di procedere verso nuovi orizzonti (come la programmazione vera e propria o la scoperta delle reti), è il momento di fermarsi e consolidare quanto appreso. Questo modulo è una "palestra" per la vostra mente: troverete 30 domande a risposta aperta che coprono tutti i concetti chiave affrontati finora. 
+Prima di procedere verso nuovi orizzonti (come la programmazione vera e propria o la scoperta delle reti), è il momento di fermarsi e consolidare quanto appreso. Questo modulo è una "palestra" per la vostra mente: troverete 39 domande a risposta aperta che coprono tutti i concetti chiave affrontati finora. 
 Leggete la domanda, provate a formulare la risposta a voce alta o sul quaderno e poi cliccate su **"Mostra la risposta"** per verificare se avete centrato il bersaglio. Buono studio!
 
 ---
@@ -230,9 +230,70 @@ Leggete la domanda, provate a formulare la risposta a voce alta o sul quaderno e
   <summary><strong>Mostra la risposta</strong></summary>
   <p>Lo Scheduler assegna la CPU a un processo diverso ogni frazione infinitesimale di secondo (Time-Slicing). Alternando i processi a una velocità inumana, all'utente sembra che il computer stia facendo decine di cose contemporaneamente.</p>
 </details>
+<br/>
+
+#### Sezione 5: Ciclo della CPU, Memorie, Aritmetica Binaria e Compressione (Moduli 1.7 - 1.9)
+
+**31. Quali sono le tre fasi del Ciclo Macchina della CPU e che ruolo ha il *Program Counter*?**
+<details>
+  <summary><strong>Mostra la risposta</strong></summary>
+  <p>Le tre fasi sono <strong>Fetch</strong> (prelievo dell'istruzione dalla RAM), <strong>Decode</strong> (decodifica da parte della CU) ed <strong>Execute</strong> (esecuzione materiale tramite ALU o bus). Il <em>Program Counter</em> (PC) è il registro che memorizza sempre l'indirizzo in RAM della prossima istruzione da prelevare.</p>
+</details>
+<br/>
+
+**32. Che cos'è il "Collo di Bottiglia di Von Neumann" e come lo si attenua?**
+<details>
+  <summary><strong>Mostra la risposta</strong></summary>
+  <p>È il rallentamento dovuto al fatto che la CPU è molto più veloce della RAM e dei bus che trasportano dati e istruzioni. Per attenuarlo si interpone tra CPU e RAM la <strong>Memoria Cache</strong> (piccola ma velocissima), che conserva i dati usati più di frequente.</p>
+</details>
+<br/>
+
+**33. Elenca i livelli della Gerarchia delle Memorie dal più veloce al più lento e distingui quelle volatili da quelle non volatili.**
+<details>
+  <summary><strong>Mostra la risposta</strong></summary>
+  <p>Dal più veloce al più lento: <strong>Registri CPU → Cache → RAM → Memorie di massa (SSD / HDD)</strong>. Registri, Cache e RAM sono <strong>volatili</strong> (si svuotano allo spegnimento); ROM, SSD e HDD sono <strong>non volatili</strong> (permanenti).</p>
+</details>
+<br/>
+
+**34. Qual è la differenza costruttiva e prestazionale tra un disco HDD e un SSD?**
+<details>
+  <summary><strong>Mostra la risposta</strong></summary>
+  <p>L'HDD utilizza piatti magnetici rotanti e testine meccaniche (più lento, rumoroso e sensibile agli urti, ma economico ad alte capacità). L'SSD usa chip di memoria Flash a stato solido senza parti mobili: è silenzioso, resistente e molto più veloce.</p>
+</details>
+<br/>
+
+**35. Come si costruisce la rappresentazione di un numero negativo in Complemento a 2 e perché è preferita a Modulo e Segno?**
+<details>
+  <summary><strong>Mostra la risposta</strong></summary>
+  <p>Si parte dalla rappresentazione binaria del numero positivo su N bit, si invertono tutti i bit (Complemento a 1) e si somma <code>1</code>. È preferita perché elimina il doppio zero e permette alla CPU di eseguire le sottrazioni come semplici addizioni binarie usando lo stesso circuito.</p>
+</details>
+<br/>
+
+**36. Che cos'è l'Overflow nell'aritmetica del calcolatore?**
+<details>
+  <summary><strong>Mostra la risposta</strong></summary>
+  <p>È l'errore che si verifica quando il risultato di un'operazione supera il valore massimo (o scende sotto il minimo) rappresentabile nel numero fisso di bit disponibili, producendo un risultato completamente errato (es. un numero positivo grande che diventa negativo in CA2).</p>
+</details>
+<br/>
+
+**37. Che differenza c'è tra un Kilobyte (`KB`) e un Kibibyte (`KiB`)?**
+<details>
+  <summary><strong>Mostra la risposta</strong></summary>
+  <p>Il Kilobyte (<code>KB</code>) segue i prefissi decimali del Sistema Internazionale e vale esattamente <code>1.000 Byte</code> (10³). Il Kibibyte (<code>KiB</code>) segue lo standard binario IEC e vale <code>1.024 Byte</code> (2¹⁰).</p>
+</details>
+<br/>
+
+**38. Qual è la differenza fondamentale tra compressione *Lossless* e compressione *Lossy*?**
+<details>
+  <summary><strong>Mostra la risposta</strong></summary>
+  <p>La compressione <strong>Lossless</strong> (es. ZIP, PNG, FLAC) è reversibile al 100% e non perde alcun bit eliminando solo ridondanze matematiche. La compressione <strong>Lossy</strong> (es. JPEG, MP3, MP4) è irreversibile e scarta dettagli poco percepibili da occhio o orecchio umano per ottenere file molto più piccoli.</p>
+</details>
+<br/>
+
+**39. Come funziona in modo intuitivo l'algoritmo Lossless RLE (*Run-Length Encoding*)?**
+<details>
+  <summary><strong>Mostra la risposta</strong></summary>
+  <p>Sostituisce lunghe sequenze consecutive dello stesso simbolo con il numero di ripetizioni seguito dal simbolo stesso (es. <code>AAAAAAAABBBB</code> diventa <code>8A4B</code>), consentendo una ricostruzione identica all'originale.</p>
+</details>
 
 ---
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

@@ -19,6 +19,7 @@ export default defineConfig({
             components: {
                 ThemeSelect: './src/components/MenuToggle.astro',
                 SiteTitle: './src/components/ScrollProgress.astro',
+                Footer: './src/components/PageFooter.astro',
             },
             sidebar: [
                 // --- PRIMA CATEGORIA ---
@@ -42,12 +43,22 @@ export default defineConfig({
                     /*Qui vengono generate automaticamente le voci di menu per le lezioni di python, basate sulla struttura delle cartelle e dei file presenti nella directory specificata.*/
                 },
                 {
+                    label: '🌐 Reti di Comunicazione',
+                    autogenerate: { directory: 'Lezioni/reti' },
+                    collapsed: true,
+                },
+                {
                     label: '🤖 Educazione Civica',
                     collapsed: true,
                     items: [
                         { label: 'Uso consapevole della AI', link: '/civica/' }
                     ]
-                } // <-- Niente virgola qui, perché è l'ultima categoria
+                },
+                {
+                    label: '🧪 Laboratorio & Esercizi',
+                    autogenerate: { directory: 'Lezioni/laboratorio' },
+                    collapsed: true,
+                }
             ],
         }),
     ],

@@ -179,86 +179,30 @@ In Python, qualsiasi dato può essere convertito a valore logico tramite `bool()
 
 ---
 
-### Esempi Pratici e Script Completi Guidati
+:::tip[Script completi di laboratorio]
+Per provare in laboratorio gli script estesi (`calcolo_bmi.py`, `tempo_conversione.py` e `ispezione_variabili.py`), consulta la raccolta [**Lab 3 - Script Python (Modulo 3.2)**](/info_reti_prima/lezioni/laboratorio/04-lab-python-script/#modulo-32--tipi-di-dato-casting-e-operatori).
+:::
 
-#### Esempio 1: Calcolo dell'Indice di Massa Corporea (BMI)
-*Obiettivo:* Acquisire peso e altezza di un individuo, convertire i dati nei tipi appropriati, calcolare il BMI applicando la formula $\text{BMI} = \text{peso} / \text{altezza}^2$ e formattare l'output.
+:::caution[Errore tipico in verifica]
+Ricorda sempre che `input()` restituisce **una stringa (`str`)**: scrivere `input() + input()` concatena `"5" + "3" = "53"` invece di sommare `8`! Serve il casting `int()` o `float()`.
+:::
 
-```python
-# =======================================================
-# Script: calcolo_bmi.py
-# Scopo: Dimostrazione di input con casting e operatori
-# =======================================================
+### Mettiti alla prova (Domande Flash)
 
-print("--- CALCOLATORE INDICE DI MASSA CORPOREA (BMI) ---")
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Quanto valgono in Python <code>10 / 4</code>, <code>10 // 4</code> e <code>10 % 4</code>?</summary>
+  <p><code>10 / 4 = 2.5</code> (divisione reale <code>float</code>), <code>10 // 4 = 2</code> (quoziente intero), <code>10 % 4 = 2</code> (resto della divisione).</p>
+</details>
 
-# Acquisizione dati con casting diretto a float
-peso = float(input("Inserisci il tuo peso corporeo in kg (es. 72.5): "))
-altezza = float(input("Inserisci la tua altezza in metri (es. 1.78): "))
+<details>
+  <summary><strong>2. Vero o Falso:</strong> In Python la tipizzazione dinamica significa che si può sommare liberamente una stringa a un intero (<code>"5" + 3</code>).</summary>
+  <p><strong>Falso.</strong> Python ha tipizzazione dinamica ma <strong>forte</strong>: vieta conversioni implicite ambigue e solleva un <code>TypeError</code>.</p>
+</details>
 
-# Elaborazione matematica: uso dell'operatore potenza **
-bmi = peso / (altezza ** 2)
-
-# Output dei dati: arrotondamento a due cifre decimali
-print("\nElaborazione completata:")
-print("Peso registrato:", peso, "kg")
-print("Altezza registrata:", altezza, "m")
-print("Il tuo indice BMI calcolato e':", round(bmi, 2))
-```
-
-#### Esempio 2: Decomposizione Temporale con Divisione Intera e Modulo
-*Obiettivo:* Dato un intervallo temporale espresso in secondi complessivi, determinare quante ore, minuti e secondi residui compongono tale durata, sfruttando le proprietà di `//` e `%`.
-
-```python
-# =======================================================
-# Script: tempo_conversione.py
-# Scopo: Applicazione pratica degli operatori // e %
-# =======================================================
-
-# Acquisizione dei secondi totali (casting a int)
-secondi_totali = int(input("Inserisci il numero complessivo di secondi: "))
-
-# 1 ora = 3600 secondi
-ore = secondi_totali // 3600
-secondi_restanti = secondi_totali % 3600
-
-# 1 minuto = 60 secondi
-minuti = secondi_restanti // 60
-secondi_finali = secondi_restanti % 60
-
-# Visualizzazione dei risultati scomposti
-print("\nRisultato della scomposizione temporale:")
-print(secondi_totali, "secondi corrispondono esattamente a:")
-print(ore, "ore,", minuti, "minuti e", secondi_finali, "secondi.")
-```
-
-#### Esempio 3: Ispezione Dinamica della Memoria
-*Obiettivo:* Verificare empiricamente come cambia l'identificatore di memoria e il tipo di dato di una variabile quando viene riassegnata.
-
-```python
-# =======================================================
-# Script: ispezione_variabili.py
-# Scopo: Comprendere etichette, tipi e id di memoria
-# =======================================================
-
-dato = 500
-print("Valore:", dato)
-print("Tipo:", type(dato))
-print("Indirizzo di memoria ID:", id(dato))
-print("------------------------------------------")
-
-# Riassegniamo la medesima etichetta a una stringa
-dato = "Informatica"
-print("Nuovo Valore:", dato)
-print("Nuovo Tipo:", type(dato))
-print("Nuovo Indirizzo di memoria ID:", id(dato))
-print("------------------------------------------")
-
-# Test di concatenazione e casting
-conteggio = 5
-messaggio = "Tentativi rimasti: " + str(conteggio)
-print(messaggio)
-```
+<details>
+  <summary><strong>3. Domanda rapida:</strong> Quali valori risultano <em>Falsy</em> se convertiti con <code>bool()</code>?</summary>
+  <p>Lo <code>0</code>, <code>0.0</code>, la stringa vuota <code>""</code> e <code>None</code> (oltre alle collezioni vuote).</p>
+</details>
 
 ---
 
@@ -282,7 +226,3 @@ print(messaggio)
 *   **Casting (Conversione di Tipo):** Procedura formale mediante la quale un valore appartenente a un determinato tipo di dato viene esplicitamente trasformato in un altro tipo compatibile (es. da stringa a float).
 *   **Operatore Modulo (`%`):** Operatore aritmetico che restituisce il resto della divisione euclidea tra due operandi interi, ampiamente impiegato per verifiche di parità, divisibilità e scansione ciclica di intervalli.
 *   **Garbage Collector:** Componente del motore di runtime preposto al monitoraggio automatico della memoria RAM, responsabile della deallocazione e del recupero dello spazio occupato da oggetti non più referenziati da alcuna variabile.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

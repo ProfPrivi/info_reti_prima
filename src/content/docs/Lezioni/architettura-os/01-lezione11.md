@@ -89,6 +89,31 @@ Il modello di Von Neumann standardizza la costruzione di un computer dividendolo
   <figcaption><em>Figura 5: Architettura di Von Neumann</em></figcaption>
 </figure>
 
+:::tip[Idea chiave per l'interrogazione]
+Alan Turing separò teoricamente l'**Hardware** dal **Software** con la Macchina Universale; John von Neumann tradusse quell'idea in un progetto elettronico reale mettendo **dati e istruzioni nella stessa memoria centrale (RAM)**.
+:::
+
+:::caution[Errore tipico in verifica]
+Non confondere le direzioni dei Bus: il **Bus dei Dati** è *bidirezionale* (i dati vanno e vengono tra CPU e RAM), mentre il **Bus degli Indirizzi** è *unidirezionale* (parte sempre dalla CPU per indicare quale cella leggere o scrivere).
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Vero o Falso:</strong> La Pascalina era già un computer programmabile perché usava ruote dentate.</summary>
+  <p><strong>Falso.</strong> Eseguiva solo addizioni e sottrazioni meccaniche grazie al riporto automatico, ma non poteva memorizzare né cambiare programmi.</p>
+</details>
+
+<details>
+  <summary><strong>2. Domanda rapida:</strong> Quale parte della CPU esegue materialmente una somma o un confronto logico?</summary>
+  <p>L'<strong>ALU</strong> (<em>Arithmetic Logic Unit</em>), coordinata dalla <strong>CU</strong> (<em>Control Unit</em>).</p>
+</details>
+
+<details>
+  <summary><strong>3. Domanda rapida:</strong> Qual è il principio rivoluzionario del modello a programma memorizzato?</summary>
+  <p>Dati e istruzioni risiedono entrambi nella stessa memoria elettronica (RAM), permettendo di cambiare programma senza riprogrammare fisicamente cavi o interruttori.</p>
+</details>
+
 ---
 
 ### Sintesi
@@ -119,7 +144,3 @@ Il modello di Von Neumann standardizza la costruzione di un computer dividendolo
 *   **Bus di Controllo (Control Bus):** Insieme di linee che trasportano i segnali di comando (es. lettura, scrittura) e sincronizzazione tra le varie componenti.
 *   **Hardware:** L'insieme delle componenti fisiche, elettroniche e materiali di un computer.
 *   **Software:** L'insieme delle istruzioni, delle regole e dei programmi che indicano all'hardware quali operazioni eseguire.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

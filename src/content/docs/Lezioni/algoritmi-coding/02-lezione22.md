@@ -24,6 +24,24 @@ Per disegnare un diagramma di flusso si utilizza uno standard internazionale con
 *   **Blocco Rettangolare (Elaborazione e Calcolo):** È il blocco in cui la CPU lavora eseguendo operazioni di calcolo matematico o trasformazioni dei dati.
 *   **Blocco Rombo (Decisione Condizionale):** È il blocco del "bivio" al cui interno viene posta una domanda chiara (un test logico) che ammette solo due risposte: SÌ (VERO) o NO (FALSO).
 
+<figure class="schema-svg">
+  <svg viewBox="0 0 720 150" width="680" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Le quattro forme fondamentali dei diagrammi di flusso">
+  <rect x="15" y="38" width="140" height="54" rx="27" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/>
+  <text x="85" y="69" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#0c4a6e">Inizio / Fine</text>
+  <text x="85" y="122" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#94a3b8">Ovale</text>
+  <polygon points="205,38 335,38 315,92 185,92" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+  <text x="260" y="69" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#14532d">Input / Output</text>
+  <text x="260" y="122" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#94a3b8">Parallelogramma</text>
+  <rect x="368" y="38" width="144" height="54" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="2.5"/>
+  <text x="440" y="69" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#713f12">Calcolo / Assegn.</text>
+  <text x="440" y="122" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#94a3b8">Rettangolo</text>
+  <polygon points="625,22 700,65 625,108 550,65" fill="#ffedd5" stroke="#ea580c" stroke-width="2.5"/>
+  <text x="625" y="69" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="800" fill="#7c2d12">Condizione</text>
+  <text x="625" y="128" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" font-weight="700" fill="#94a3b8">Rombo (V / F)</text>
+  </svg>
+  <figcaption>L'alfabeto standard dei Diagrammi di Flusso: ogni forma geometrica comunica a colpo d'occhio il ruolo dell'istruzione.</figcaption>
+</figure>
+
 #### 2. Variabili e Costanti: I Cassetti della Memoria RAM
 Prima di fare calcoli, il programmatore utilizza le **Variabili** per salvare i dati. Immaginiamo la memoria RAM come un immenso armadio pieno di cassetti vuoti; creare una variabile significa scegliere un cassetto vuoto e attaccarci sopra un'etichetta con un nome univoco (Identificatore). Si chiamano "variabili" perché il contenuto del cassetto può variare, essere modificato, cancellato o sovrascritto durante l'esecuzione. Le **Costanti** sono invece dati che non devono mai cambiare (come un cassetto chiuso a lucchetto).
 
@@ -52,6 +70,33 @@ Parliamo di **selezione semplice** quando le operazioni sono presenti in un solo
 Quando traduciamo queste logiche in Flowgorithm, dobbiamo ricordare che il software disegnerà sempre automaticamente il ramo Falso (F) sul lato sinistro e il ramo Vero (T) sul lato destro del blocco Condizione. All'interno del rombo bisogna digitare esclusivamente la formula logica (es. `numeroA > numeroB`), senza scrivere le parole "se" o "allora".
 
 Per trovare errori di logica invisibili (i Bug), si usa lo strumento del **Debugging** tramite l'**Esecuzione Passo-Passo**. Avanzando di un singolo passo alla volta, si rallenta il tempo per vedere fisicamente quale blocco il processore sta leggendo. Questo permette di vedere il blocco della condizione "illuminarsi" e scegliere dinamicamente quale binario imboccare in base ai dati. Attivando la "Finestra di visualizzazione delle Variabili", si ottiene una "vista a Raggi X" sulla RAM, permettendo di osservare i cassetti che si creano e i numeri al loro interno che cambiano in tempo reale.
+
+---
+
+:::tip[Idea chiave]
+Dentro un blocco **Rombo** non si scrive mai una domanda aperta ("Quanti anni hai?"), ma solo un'**espressione booleana** che ammette due uniche risposte: `Vero` o `Falso` (es. `eta >= 18`).
+:::
+
+:::caution[Errore tipico in verifica]
+In Flowgorithm una variabile deve essere **dichiarata prima** di poterla leggere o usare nei calcoli, e dentro il rombo **non** si scrivono le parole `se` o `allora`, ma solo la condizione logica.
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Quale tipo di dato va dichiarato per salvare un prezzo come <code>12.90</code>?</summary>
+  <p>Il tipo <strong>Reale (Real)</strong>, perché contiene una parte decimale.</p>
+</details>
+
+<details>
+  <summary><strong>2. Domanda rapida:</strong> Che differenza c'è tra selezione semplice e selezione doppia?</summary>
+  <p>La selezione doppia ha istruzioni sia nel ramo Vero sia nel ramo Falso; la selezione semplice ha istruzioni solo nel ramo Vero (il ramo Falso rimane vuoto).</p>
+</details>
+
+<details>
+  <summary><strong>3. Vero o Falso:</strong> Una costante può cambiare valore durante l'esecuzione del diagramma.</summary>
+  <p><strong>Falso.</strong> Solo le variabili possono cambiare valore; una costante rimane fissa per l'intera esecuzione.</p>
+</details>
 
 ---
 

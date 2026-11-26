@@ -1,8 +1,9 @@
-
 ---
 title: 1.5 Logica Booleana, Porte e Reti Logiche
 description: Logica Booleana, Porte e Reti Logiche
 ---
+
+import SimulatorePorte from '/src/components/SimulatorePorte.astro';
 
 ### Introduzione
 
@@ -123,10 +124,39 @@ Una singola porta logica, da sola, esegue un calcolo microscopico e poco utile. 
 
 In una frazione di millesimo di secondo, la corrente elettrica attraversa questa Rete Logica applicando l'Algebra di Boole, e il computer "decide" infallibilmente se far squillare la sirena. La CPU (il processore) all'interno del vostro computer o smartphone non è altro che una città formata da miliardi e miliardi di queste Reti Logiche interconnesse su scala nanometrica, in grado di eseguire miliardi di decisioni al secondo.
 
-<figure style="text-align: center;">
-  <img src="/info_reti_prima/immagini/circuitlab.jpg" alt="Circuit lab" width="50%" style="display: block; margin: 0 auto;">
+<figure style={{ textAlign: 'center' }}>
+  <img src="/info_reti_prima/immagini/circuitlab.jpg" alt="Circuit lab" width="50%" style={{ display: 'block', margin: '0 auto' }} />
   <figcaption><em>Figura 1: L'ambiente simulativo Circuit Lab</em></figcaption>
 </figure>
+
+---
+
+<SimulatorePorte />
+
+:::tip[Idea chiave]
+La porta **NAND** è chiamata *porta universale*: combinando esclusivamente porte NAND è possibile costruire fisicamente qualsiasi altra porta logica (`NOT`, `AND`, `OR`, `XOR`) e quindi l'intera CPU.
+:::
+
+:::caution[Errore tipico in verifica]
+Attenzione alla riga `A=1, B=1`: nell'**OR** classico l'uscita è `1`, mentre nello **XOR** (OR esclusivo) l'uscita è `0` (perché gli ingressi sono uguali!).
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Se gli ingressi di una porta NAND sono <code>A=1</code> e <code>B=1</code>, quanto vale l'uscita?</summary>
+  <p>Vale <strong><code>0</code></strong>: è l'unico caso in cui la porta NAND (NOT-AND) restituisce Falso.</p>
+</details>
+
+<details>
+  <summary><strong>2. Domanda rapida:</strong> Che cosa indica un piccolo pallino vuoto disegnato sull'uscita o sull'ingresso di una porta logica?</summary>
+  <p>Indica un'operazione di negazione <strong>NOT</strong> applicata istantaneamente al segnale in quel punto.</p>
+</details>
+
+<details>
+  <summary><strong>3. Vero o Falso:</strong> Una porta XOR restituisce 1 quando almeno uno dei due ingressi è 1.</summary>
+  <p><strong>Falso.</strong> Questa è la regola dell'OR classico; lo XOR restituisce 1 solo quando i due ingressi sono <em>diversi tra loro</em>.</p>
+</details>
 
 ---
 
@@ -152,7 +182,3 @@ In una frazione di millesimo di secondo, la corrente elettrica attraversa questa
 *   **Porta Logica (Logic Gate):** Componente hardware elettronico microscopico (generalmente costituito da combinazioni di transistor) che riceve segnali di tensione in ingresso e realizza fisicamente una specifica operazione logica booleana in uscita.
 *   **Rete Logica:** Un complesso sistema elettronico formato da un insieme di porte logiche interconnesse tra loro tramite piste conduttrici. L'uscita di una rete dipende dalla combinazione dei segnali in ingresso e dal modo in cui le porte sono cablate.
 *   **XOR (eXclusive OR):** Operatore logico (e relativa porta hardware) che esegue una disgiunzione esclusiva: restituisce Vero (1) solo quando gli ingressi hanno valori opposti.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>

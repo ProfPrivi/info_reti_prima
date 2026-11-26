@@ -169,6 +169,33 @@ Grazie al passaggio per riferimento, il `Main` stamperà: `Dopo lo scambio: 99 -
 
 ---
 
+:::tip[Idea chiave]
+La **Procedura** *fa qualcosa* (non restituisce valori, si invoca con `Call`); la **Funzione** *calcola e restituisce un risultato* da assegnare a una variabile o usare in un'espressione.
+:::
+
+:::caution[Errore tipico in verifica]
+Nel passaggio **per valore** la variabile del `Main` rimane protetta (il modulo lavora su una copia); per modificarla realmente nel `Main` (come nello *Swap*) serve il passaggio **per riferimento**.
+:::
+
+### Mettiti alla prova (Domande Flash)
+
+<details>
+  <summary><strong>1. Domanda rapida:</strong> Che differenza c'è tra parametri formali e parametri attuali?</summary>
+  <p>I <strong>parametri formali</strong> sono i segnaposto dichiarati nella firma del sottoprogramma; i <strong>parametri attuali</strong> sono i valori o le variabili concrete passate nel momento della chiamata.</p>
+</details>
+
+<details>
+  <summary><strong>2. Vero o Falso:</strong> Il <code>Main</code> può leggere liberamente una variabile locale dichiarata dentro una funzione.</summary>
+  <p><strong>Falso.</strong> Le variabili locali esistono solo dentro lo <em>Scope</em> del proprio modulo e vengono distrutte sullo stack appena il modulo termina.</p>
+</details>
+
+<details>
+  <summary><strong>3. Domanda rapida:</strong> Con quale politica gestisce i record di attivazione il <em>Call Stack</em>?</summary>
+  <p>Con logica <strong>LIFO</strong> (<em>Last In, First Out</em>): l'ultimo sottoprogramma chiamato è il primo a terminare e a restituire il controllo al chiamante.</p>
+</details>
+
+---
+
 ### Sintesi
 
 *   **Il Principio della Modularità:** La frammentazione di un problema complesso in moduli indipendenti e circoscritti (*Divide et Impera*) garantisce chiarezza concettuale, riusabilità del codice e facilita la localizzazione degli errori.
@@ -192,7 +219,3 @@ Grazie al passaggio per riferimento, il `Main` stamperà: `Dopo lo scambio: 99 -
 *   **Scope (Ambito di Visibilità):** Porzione di codice all'interno della quale una determinata variabile è dichiarata, allocata e legalmente accessibile dalle istruzioni del calcolatore.
 *   **Call Stack (Pila delle Chiamate):** Struttura dati dinamica di sistema operante in logica LIFO, deputata alla memorizzazione sequenziale dei record di attivazione relativi alle funzioni e procedure in fase di esecuzione.
 *   **Record di Attivazione (Stack Frame):** Area di memoria allocata sullo stack contenente i parametri, le variabili locali e l'indirizzo di ritorno al chiamante per una specifica istanza di esecuzione di un sottoprogramma.
-
-<button onclick="window.print()" style="padding: 10px 15px; background-color: #dbae1a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">
-  🖨️ Stampa / Salva in PDF
-</button>
